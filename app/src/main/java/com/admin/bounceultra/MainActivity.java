@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         width = size.x;
         height = size.y;
 
-        final Button btn = findViewById(R.id.button);
+        final Button btn = (Button) findViewById(R.id.button);
 
         Room.create();
 
