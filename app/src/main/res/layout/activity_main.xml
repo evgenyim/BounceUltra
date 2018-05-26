@@ -29,4 +29,17 @@
         tools:layout_editor_absoluteX="147dp"
         tools:layout_editor_absoluteY="171dp" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="193dp"
+        android:layout_marginStart="117dp"
+        android:text="Paramonov's mother is chluha"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="117dp" />
+
+
 </RelativeLayout>
