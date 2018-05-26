@@ -1,0 +1,252 @@
+package com.example.user.flippy_box;
+
+import android.util.Log;
+
+import java.lang.reflect.Array;
+
+import static com.example.user.flippy_box.MainActivity.box;
+import static com.example.user.flippy_box.MainActivity.height1;
+import static com.example.user.flippy_box.MainActivity.hole_x_l;
+import static com.example.user.flippy_box.MainActivity.hole_x_r;
+import static com.example.user.flippy_box.MainActivity.image_side;
+import static com.example.user.flippy_box.MainActivity.last_box;
+import static com.example.user.flippy_box.MainActivity.space_to_bottom;
+import static java.lang.Math.*;
+import static com.example.user.flippy_box.Geometry.*;
+
+/**
+ * Created by User on 18.09.2017.
+ */
+
+class GameObject {
+    float x;
+    float y;
+    double f;
+    double m;
+    double constanta =0.2;
+    double shooting_angle;
+    double a;
+    double v;
+    double vy;
+    boolean moving;
+    boolean needs_spining;
+    float rotation_angle;
+    double flour_line_y = height1 - space_to_bottom;
+    double eps = 1e-4;
+    int intersected_with = 0;
+    Point intersection_point = new Point(0, 0);
+    boolean intersect_another = false;
+
+    void shot() {
+        double g = 9.8;
+        double variabla = flour_line_y - (cos(toRadians((abs(rotation_angle)) % 90 - 45)) * image_side / sqrt(2));
+        if (y <= height1 - space_to_bottom) {
+            if (cos(shooting_angle) > 0) {
+                rotation_angle += 3;
+            }
+            if (cos(shooting_angle) < 0) {
+                rotation_angle -= 3;
+            }
+            double vx = v * cos(shooting_angle);
+            vy = vy * sin(shooting_angle) - g * 0.1;
+            x += vx;
+            x = min(x, MainActivity.width1 - image_side / 2);
+            x = max(x, image_side / 2);
+            for (int i = 0; i < box.size() - 1; i++) {
+                if (intersect(box.get(i))) {
+                    intersected_with = i;
+                    while(intersect(box.get(i))) {
+                        x -=  0.01;
+                        y += vy / vx * 0.01;
+                    }
+                    moving = false;
+                    needs_spining = true;
+                    if (last_box.x > hole_x_l && last_box.x < hole_x_r) {
+                        MainActivity.winer = true;
+                    }
+                    return;
+                }
+            }
+            if(y - vy < variabla) {
+                y -= vy;
+            } else {
+                y = (float) variabla;
+                moving = false;
+                needs_spining = true;
+                if (last_box.x > hole_x_l && last_box.x < hole_x_r) {
+                    MainActivity.winer = true;
+                }
+                intersection_point = lowest_point();
+            }
+        }
+    }
+
+    void spin() {
+        double angle = rotation_angle % 90;
+        if (angle < 0) angle += 90;
+        if (angle > 45) {
+            if(rotation_angle % 90 != 0) {
+                if(!intersect_another) rotation_angle += 3;
+                else {
+                    if(Geometry.angle_ox(x, y, intersection_point) > 45) {
+                        rotation_angle += 3;
+                    } else {
+                        rotation_angle -= 3;
+                    }
+                }
+            }
+            Geometry.Point p = circle(intersection_point.x, intersection_point.y, 1);
+            x = (float) p.x;
+            y = (float) p.y;
+        } else {
+            if(rotation_angle % 90 != 0) {
+                if(!intersect_another) rotation_angle -= 3;
+                else {
+                    if(Geometry.angle_ox(x, y, intersection_point) > 45) {
+                        rotation_angle += 3;
+                    } else {
+                        rotation_angle -= 3;
+                    }
+                }
+            }
+            Geometry.Point p = circle(intersection_point.x, intersection_point.y, -1);
+            x = (float) p.x;
+            y = (float) p.y;
+        }
+        if (rotation_angle % 90 == 0) {
+            needs_spining = false;
+            box.add(new GameObject(image_side / 2, height1 - space_to_bottom - image_side / 2));
+            last_box = box.get(box.size()-1);
+            MainActivity.create_hole();
+        }
+    }
+
+    Point lowest_point() {
+        double angle = rotation_angle % 90;
+        double corner_x;
+        double corner_y;
+        if (angle < 0) angle += 90;
+        if (angle > 45) {
+            angle = 180 - (angle + 45);
+            corner_x = x - image_side / sqrt(2) * cos(toRadians(angle));
+            corner_y = y + image_side / sqrt(2) * sin(toRadians(angle));
+        } else {
+            angle = angle + 45;
+            corner_x = x + image_side / sqrt(2) * cos(toRadians(angle));
+            corner_y = y + image_side / sqrt(2) * sin(toRadians(angle));
+        }
+        Point p = new Point(corner_x, corner_y);
+        return p;
+    }
+
+    Geometry.Point circle(double corner_x, double corner_y, int sign) {
+        double r = sqrt((x - corner_x) * (x - corner_x) + (y - corner_y) * (y - corner_y));
+        Geometry.Point p = new Geometry.Point(x, y);
+        if (!intersect_another) {
+            if (corner_x - x > 0 && corner_y - y > 0) {
+                double angle = toDegrees(atan2(corner_y - y, corner_x - x));
+                double xx = (float) (corner_x - r * cos(toRadians(angle - 3)));
+                double yy = (float) (corner_y - r * sin(toRadians(angle - 3)));
+                p = new Geometry.Point(xx, yy);
+            } else {
+                double angle = toDegrees(atan2(corner_y - y, x - corner_x));
+                double xx = (float) (corner_x + r * cos(toRadians(angle - 3)));
+                double yy = (float) (corner_y - r * sin(toRadians(angle - 3)));
+                p = new Geometry.Point(xx, yy);
+            }
+        } else {
+            if (toDegrees(Geometry.angle_ox(x, y, intersection_point)) < 90) {
+                if (toDegrees(Geometry.angle_ox(x, y, intersection_point)) < 45) {
+                    double angle = toDegrees(atan2(corner_y - y, x - corner_x));
+                    double xx = (float) (corner_x - r * cos(toRadians(angle - 3)));
+                    double yy = (float) (corner_y - r * sin(toRadians(angle - 3)));
+                    p = new Geometry.Point(xx, yy);
+                } else {
+                    double angle = toDegrees(atan2(corner_y - y, x - corner_x));
+                    double xx = (float) (corner_x - r * cos(toRadians(angle + 3)));
+                    double yy = (float) (corner_y - r * sin(toRadians(angle + 3)));
+                    p = new Geometry.Point(xx, yy);
+                }
+            }
+        }
+        return p;
+    }
+
+    void angle(float aim_x, float aim_y){
+        shooting_angle = atan2(y - aim_y,aim_x-x);
+    }
+
+    void power(float aim_x, float aim_y){
+        int vec =(int) sqrt((y - aim_y)*(y - aim_y)+(aim_x-x)*(aim_x-x));
+        f = vec*constanta;
+        a = f / m;
+        v = a * constanta;
+        vy = v * sin(shooting_angle);
+    }
+
+    Geometry.Point[] corners() {
+        double corner_x;
+        double corner_y;
+        Geometry.Point[] mas = new Geometry.Point[4];
+        double angle = this.rotation_angle % 90;
+        if (angle < 0) angle += 90;
+        if (angle > 45) {
+            angle = 180 - (angle + 45);
+            corner_x = x - image_side / sqrt(2) * cos(toRadians(angle));
+            corner_y = y + image_side / sqrt(2) * sin(toRadians(angle));
+            mas[0] = new Geometry.Point(corner_x, corner_y);
+            angle = angle * (-1) + 135;
+            mas[1] = new Geometry.Point(corner_x - image_side * cos(toRadians(angle)), corner_y - image_side * sin(toRadians(angle)));
+            mas[3] = new Geometry.Point(corner_x + image_side * cos(toRadians(90 - angle)), corner_y - image_side * sin(toRadians(90 - angle)));
+            mas[2] = new Geometry.Point(corner_x + image_side * sqrt(2) * cos(toRadians(135 - angle)),
+                    corner_y - image_side * sqrt(2) * sin(toRadians(135 - angle)));
+        } else {
+            angle = angle + 45;
+            corner_x = x + image_side / sqrt(2) * cos(toRadians(angle));
+            corner_y = y + image_side / sqrt(2) * sin(toRadians(angle));
+            mas[0] = new Geometry.Point(corner_x, corner_y);
+            angle -= 45;
+            mas[1] = new Geometry.Point(corner_x - image_side * cos(toRadians(angle)), corner_y - image_side * sin(toRadians(angle)));
+            mas[3] = new Geometry.Point(corner_x + image_side * cos(toRadians(90 - angle)), corner_y - image_side * sin(toRadians(90 - angle)));
+            mas[2] = new Geometry.Point(corner_x + image_side * sqrt(2) * cos(toRadians(135 - angle)),
+                    corner_y - image_side * sqrt(2) * sin(toRadians(135 - angle)));
+        }
+        return mas;
+    }
+
+    boolean intersect(GameObject box) {
+        Geometry.Point[] first_corners = corners();
+        Geometry.Point[] second_corners = box.corners();
+        for (int j = 0; j < 4; j++) {
+            Geometry.Point p = new Geometry.Point(second_corners[j].x, second_corners[j].y);
+            if (point_in_rec(p, last_box)) {
+                intersection_point = p;
+                intersect_another = true;
+                return true;
+            }
+        }
+        for (int j = 0; j < 4; j++) {
+            Geometry.Point p = new Geometry.Point(first_corners[j].x, first_corners[j].y);
+            if (point_in_rec(p, box)) {
+                intersection_point = p;
+                intersect_another = false;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    GameObject(float xx,float yy) {
+        this.x = xx;
+        this.y = yy;
+        moving = false;
+        needs_spining = false;
+        shooting_angle = 0;
+        rotation_angle = 0;
+        f = 0;
+        a = 0;
+        v = 0;
+        vy = 0;
+        m = 1;
+    }
+}
