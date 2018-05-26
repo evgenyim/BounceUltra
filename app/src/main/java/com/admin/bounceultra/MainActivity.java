@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setContentView(R.layout.activity_main);
         final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
 
         Display display = getWindowManager().getDefaultDisplay();
