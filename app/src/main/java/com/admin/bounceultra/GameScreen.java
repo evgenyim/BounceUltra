@@ -38,7 +38,7 @@ public class GameScreen extends View {
 
     protected void onDraw(Canvas canvas) {
         Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
+        paint.setColor(Color.RED);
         canvas.drawCircle(200, 200, 50, paint);
     }
 }
