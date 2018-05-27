@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
         final View.OnTouchListener list = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                double x = event.getX();
-                double y = event.getY();
-
+                float x = event.getX();
+                float y = event.getY();
+                Room.ball.shot(x, y);
                 return true;
             }
         };

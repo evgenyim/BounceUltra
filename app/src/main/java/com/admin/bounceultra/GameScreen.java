@@ -42,5 +42,8 @@ public class GameScreen extends View {
             Room.ObjectList.get(i).draw(canvas, paint);
         }
 
+
+        Room.ball.move();
+        postInvalidateDelayed(0);
     }
 }
