@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Room {
     static ArrayList <GameObject> ObjectList = new ArrayList<GameObject>();
+    static ArrayList <Segment> segments = new ArrayList<>();
     static Ball ball;
     public static void create() {
         Point start_point = new Point(400, 400);
