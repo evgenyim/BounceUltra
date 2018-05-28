@@ -11,8 +11,9 @@ class Ball extends GameObject {
     static float r;
     static float x_speed;
     static float y_speed;
-    static double k = 1e-2;
+    static double k = 2e-2;
     static double g = MainActivity.height * 1.0 / 1500;
+    static double decreas = 0.2;
 
     void shot(float to_x, float to_y) {
         x_speed += (to_x - x) * k;
@@ -27,12 +28,20 @@ class Ball extends GameObject {
         if (y + y_speed > MainActivity.height - r - 300) {
             y_speed *= -1;
             y_speed += g;
-            y_speed *= 0.8;
+            y_speed *= 1 - decreas;
             if (Math.abs(y_speed) < 1) {
                 y_speed = 0;
             }
         }
-        
+
+        if (x + x_speed > MainActivity.width - r) {
+            x_speed *= -1;
+        }
+
+        if (x + x_speed < r) {
+            x_speed *= -(1 - decreas);
+        }
+
         x += x_speed;
         y += y_speed;
         y_speed += g;
