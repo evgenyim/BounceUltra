@@ -10,9 +10,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     static int width;
     static int height;
+    static ArrayList<Room> RoomList;
+    static int current_room;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         height = size.y;
 
         final Button btn = (Button) findViewById(R.id.button);
-
-        Room.create();
+        RoomList = new ArrayList<>();
+        RoomList = RoomCreate.RoomList;
 
         final View.OnTouchListener list = new View.OnTouchListener() {
             @Override
