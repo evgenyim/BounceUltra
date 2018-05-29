@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class RoomCreate {
     static ArrayList<Room> RoomList1 = new ArrayList<>();
+    //static ArrayList<Room>
     public static ArrayList<Room> create() {
         Point start_point = new Point(400, 400);
         Room Room0 = new Room();
