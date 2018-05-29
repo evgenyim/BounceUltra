@@ -12,7 +12,7 @@ class Room {
     void addObstacle(float x_left, float y_top, float x_right, float y_bottom) {
         obstacle = new Obstacle(x_left, y_top, x_right, y_bottom);
         ObjectList.add(obstacle);
-
+    }
     void addBall(Point p, float r) {
         ball = new Ball(p,r);
     }
