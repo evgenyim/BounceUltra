@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
+import static com.admin.bounceultra.Room.segments;
+
 class Ball extends GameObject {
     float x;
     float y;
@@ -24,27 +26,45 @@ class Ball extends GameObject {
         canvas.drawCircle(x, y, r, paint);
     }
 
-    void move() {
-        if (y + y_speed > MainActivity.height - r - 300) {
-            y_speed *= -1;
-            y_speed += g;
-            y_speed *= 1 - decreas;
-            if (Math.abs(y_speed) < 1) {
-                y_speed = 0;
+    static void move(Ball ball) {
+        if (ball.y + ball.y_speed > MainActivity.height - ball.r - 300) {
+            ball.y_speed *= -1;
+            ball.y_speed += g;
+            ball.y_speed *= 1 - decreas;
+            if (Math.abs(ball.y_speed) < 1) {
+                ball.y_speed = 0;
             }
         }
 
-        if (x + x_speed > MainActivity.width - r) {
-            x_speed *= -1;
+        if (ball.x + ball.x_speed > MainActivity.width - ball.r) {
+            ball.x_speed *= -1;
         }
 
-        if (x + x_speed < r) {
-            x_speed *= -(1 - decreas);
+        if (ball.x + ball.x_speed < ball.r) {
+            ball.x_speed *= -(1 - decreas);
         }
 
-        x += x_speed;
-        y += y_speed;
-        y_speed += g;
+        if (ball.y_speed == 0) {
+            ball.x_speed *= 0.99;
+            if (ball.x_speed < 1e-4) {
+                ball.x_speed = 0;
+            }
+        }
+
+        for (int i = 0; i < segments.size(); i++) {
+            if (segments.get(i).intersect_ball(ball)) {
+                Log.d("huy", "huy");
+                ball.velocity = new Vector(ball.x_speed, ball.y_speed);
+                Vector segment = new Vector(segments.get(i));
+                ball.velocity = Vector.reflect(ball.velocity, segment);
+                ball.x_speed = ball.velocity.x;
+                ball.y_speed = ball.velocity.y;
+            }
+        }
+
+        ball.x += ball.x_speed;
+        ball.y += ball.y_speed;
+        ball.y_speed += g;
     }
 
     Ball(Point p, float r) {

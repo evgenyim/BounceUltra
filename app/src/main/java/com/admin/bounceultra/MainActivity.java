@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         final Button btn = (Button) findViewById(R.id.button);
+
         final float[] xPress = new float[1];
         final float[] yPress = new float[1];
         final float[] xUnpress = new float[1];

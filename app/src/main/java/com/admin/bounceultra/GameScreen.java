@@ -45,7 +45,7 @@ public class GameScreen extends View {
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
 
     protected void onDraw(Canvas canvas) {
-        Paint paint = new Paint();
+
         paint.setColor(Color.BLUE);
         createBitmap();
         for(int i = 0; i < cur_room.size(); i++) {
@@ -54,8 +54,10 @@ public class GameScreen extends View {
         }
         paint.setColor(Color.RED);
         cur_ball.draw(canvas, paint);
-        cur_ball.move();
-        postInvalidateDelayed(0);
+        Ball.move(cur_ball);
+
+
+        postInvalidateDelayed(100);
     }
     void createBitmap() {
         bitmapList.add(cube);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 class Room {
     ArrayList <GameObject> ObjectList = new ArrayList<GameObject>();
-    static ArrayList <Segment> segments = new ArrayList<>();
+    ArrayList <Segment> segments = new ArrayList<>();
     Ball ball;
     static Obstacle obstacle;
 
