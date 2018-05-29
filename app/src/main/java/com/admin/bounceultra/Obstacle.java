@@ -17,6 +17,24 @@ class Obstacle extends GameObject {
          this.y_top = y_top;
      }
 
+     void addSegments(){
+         Point point_left_top = new Point(x_left, y_top);
+         Point point_right_top = new Point(x_right, y_top);
+         Point point_left_bottom = new Point(x_left, y_bottom);
+         Point point_right_bottom = new Point(x_right, y_bottom);
+         Segment segm_top = new Segment(point_left_top, point_right_top);
+         Segment segm_right = new Segment(point_right_top, point_right_bottom);
+         Segment segm_bottom = new Segment(point_left_bottom, point_right_bottom);
+         Segment segm_left = new Segment(point_left_top, point_left_bottom);
+         Room.segments.add(segm_top);
+         Room.segments.add(segm_right);
+         Room.segments.add(segm_bottom);
+         Room.segments.add(segm_left);
+     }
+     void move(float x, float y){
+
+     }
+
      boolean iftouchinside (float x, float y){
          if ((x <= x_right) && (x >= x_left) && (y >= y_bottom) && (y <= y_top)){
              return true;

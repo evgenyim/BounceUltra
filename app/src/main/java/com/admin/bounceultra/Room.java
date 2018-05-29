@@ -6,11 +6,13 @@ class Room {
     ArrayList <GameObject> ObjectList = new ArrayList<GameObject>();
     static ArrayList <Segment> segments = new ArrayList<>();
     Ball ball;
+    static Obstacle obstacle;
+
 
     void addObstacle(float x_left, float y_top, float x_right, float y_bottom) {
-        Obstacle obst = new Obstacle(x_left, y_top, x_right, y_bottom);
-        ObjectList.add(obst);
-    }
+        obstacle = new Obstacle(x_left, y_top, x_right, y_bottom);
+        ObjectList.add(obstacle);
+
     void addBall(Point p, float r) {
         ball = new Ball(p,r);
     }
