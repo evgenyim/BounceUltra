@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button btn = (Button) findViewById(R.id.button);
 
+
         final View.OnTouchListener list = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

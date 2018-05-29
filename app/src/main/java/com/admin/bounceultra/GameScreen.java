@@ -40,6 +40,7 @@ public class GameScreen extends View {
     }
 
     Paint paint = new Paint();
+    Vector vec = new Vector(100, 100);
 
     protected void onDraw(Canvas canvas) {
 
@@ -49,7 +50,9 @@ public class GameScreen extends View {
         }
         paint.setColor(Color.RED);
         cur_ball.draw(canvas, paint);
-        cur_ball.move();
-        postInvalidateDelayed(0);
+        Ball.move(cur_ball);
+
+
+        postInvalidateDelayed(100);
     }
 }
