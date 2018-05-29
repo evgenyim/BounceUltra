@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 float x = event.getX();
                 float y = event.getY();
                 Room.ball.shot(x, y);
+              //  Room.obstacle.move(x,y);
                 return true;
             }
         };
