@@ -43,7 +43,7 @@ public class GameScreen extends View {
     Bitmap cube = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 500, 300, false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
-
+    Paint paint = new Paint();
     protected void onDraw(Canvas canvas) {
 
         paint.setColor(Color.BLUE);
@@ -57,7 +57,7 @@ public class GameScreen extends View {
         Ball.move(cur_ball);
 
 
-        postInvalidateDelayed(100);
+        postInvalidateDelayed(0);
     }
     void createBitmap() {
         bitmapList.add(cube);

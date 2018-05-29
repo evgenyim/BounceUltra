@@ -13,10 +13,10 @@ class Ball extends GameObject {
     float r;
     float x_speed;
     float y_speed;
-    double k = 5e-2;
-    double g = MainActivity.height * 1.0 / 1500;
-    double decreas = 0.2;
-
+    static double k = 5e-2;
+    static double g = MainActivity.height * 1.0 / 1500;
+    static double decreas = 0.2;
+    static Vector velocity;
     void shot(float to_x, float to_y) {
         x_speed += (to_x) * k;
         y_speed += (to_y) * k;
