@@ -28,6 +28,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GameScreen extends View {
     static ArrayList<GameObject> cur_room = MainActivity.RoomList.get(MainActivity.current_room).ObjectList;
+    static Ball cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
     public GameScreen(@NonNull Context context) {
         super(context);
     }
@@ -44,9 +45,9 @@ public class GameScreen extends View {
         for(int i = 0; i < cur_room.size(); i++) {
             cur_room.get(i).draw(canvas, paint);
         }
-
-
-        Room.ball.move();
+        paint.setColor(Color.RED);
+        cur_ball.draw(canvas, paint);
+        cur_ball.move();
         postInvalidateDelayed(0);
     }
 }
