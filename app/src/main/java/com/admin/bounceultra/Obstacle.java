@@ -1,7 +1,14 @@
 package com.admin.bounceultra;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 
 class Obstacle extends GameObject {
 
@@ -9,12 +16,17 @@ class Obstacle extends GameObject {
      float y_top;
      float x_right;
      float y_bottom;
+     Matrix m = new Matrix();
+     float degrees;
 
-     Obstacle(float x_left,float y_top,float x_right,float y_bottom) {
+
+     Obstacle(float x_left,float y_top,float x_right,float y_bottom, float degrees, int id) {
          this.x_left = x_left;
          this.x_right = x_right;
          this.y_bottom = y_bottom;
          this.y_top = y_top;
+         this.degrees = degrees;
+         this.id = id;
      }
 
      void addSegments(){
@@ -42,8 +54,10 @@ class Obstacle extends GameObject {
          return false;
      }
 
-    void draw(Canvas canvas, Paint paint) {
-        canvas.drawRect(x_left, y_top, x_right, y_bottom, paint);
+    void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
+         m.setTranslate((x_left + x_right) / 2,(y_top + y_bottom) / 2);
+         m.preRotate(degrees);
+         canvas.drawBitmap(bitmap, m, null);
     }
 
  }

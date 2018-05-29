@@ -11,12 +11,13 @@ public class RoomCreate {
         Point start_point = new Point(400, 400);
         Room Room0 = new Room();
         Room0.addBall(start_point,50);
-        Room0.addObstacle(500,500,600,600);
+        Room0.addObstacle(500,500,600,600,30,0);
         RoomList1.add(Room0);
         Room Room1 = new Room();
         Point start_point2 = new Point(800,800);
         Room1.addBall(start_point2,100);
-        Room1.addObstacle(800,800,900,900);
+        Room1.addObstacle(800,800,900,900,50,0);
+        Room1.addObstacle(200,200,300,300,10,1);
         RoomList1.add(Room1);
         return RoomList1;
     }
