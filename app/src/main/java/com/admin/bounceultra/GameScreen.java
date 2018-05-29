@@ -39,15 +39,26 @@ public class GameScreen extends View {
         super(context, attrs, defStyleAttr);
     }
 
+    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
+    Bitmap cube = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
+    Bitmap rect = Bitmap.createScaledBitmap(bitmap, 500, 300, false);
+    ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
+
     protected void onDraw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(Color.BLUE);
+        createBitmap();
         for(int i = 0; i < cur_room.size(); i++) {
-            cur_room.get(i).draw(canvas, paint);
+            Bitmap bMap = bitmapList.get(cur_room.get(i).id);
+            cur_room.get(i).draw(canvas, paint,bMap);
         }
         paint.setColor(Color.RED);
         cur_ball.draw(canvas, paint);
         cur_ball.move();
         postInvalidateDelayed(0);
+    }
+    void createBitmap() {
+        bitmapList.add(cube);
+        bitmapList.add(rect);
     }
 }
