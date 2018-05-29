@@ -2,19 +2,18 @@ package com.admin.bounceultra;
 
 import java.util.ArrayList;
 
-public class Room {
-    static ArrayList <GameObject> ObjectList = new ArrayList<GameObject>();
+class Room {
+    ArrayList <GameObject> ObjectList = new ArrayList<GameObject>();
     static ArrayList <Segment> segments = new ArrayList<>();
-    static Ball ball;
-    public static void create() {
-        Point start_point = new Point(400, 400);
-        ball = new Ball(start_point, 50);
-        ObjectList.add(ball);
-        Obstacle obst = new Obstacle();
-        obst.x_left = 100;
-        obst.y_top = 100;
-        obst.x_left = 300;
-        obst.y_bottom = 300;
-        ObjectList.add(obst);
+    Ball ball;
+    static Obstacle obstacle;
+
+
+    void addObstacle(float x_left, float y_top, float x_right, float y_bottom) {
+        obstacle = new Obstacle(x_left, y_top, x_right, y_bottom);
+        ObjectList.add(obstacle);
+
+    void addBall(Point p, float r) {
+        ball = new Ball(p,r);
     }
 }

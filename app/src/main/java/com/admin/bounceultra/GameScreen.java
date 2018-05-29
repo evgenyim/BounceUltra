@@ -21,10 +21,14 @@ import android.view.Display;
 import android.view.View;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
+
+import java.util.ArrayList;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class GameScreen extends View {
-
+    static ArrayList<GameObject> cur_room = MainActivity.RoomList.get(MainActivity.current_room).ObjectList;
+    static Ball cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
     public GameScreen(@NonNull Context context) {
         super(context);
     }
@@ -40,12 +44,12 @@ public class GameScreen extends View {
     protected void onDraw(Canvas canvas) {
 
         paint.setColor(Color.BLUE);
-        for(int i = 0; i < Room.ObjectList.size(); i++) {
-            Room.ObjectList.get(i).draw(canvas, paint);
+        for(int i = 0; i < cur_room.size(); i++) {
+            cur_room.get(i).draw(canvas, paint);
         }
-
-
-        Room.ball.move();
+        paint.setColor(Color.RED);
+        cur_ball.draw(canvas, paint);
+        cur_ball.move();
         postInvalidateDelayed(0);
     }
 }
