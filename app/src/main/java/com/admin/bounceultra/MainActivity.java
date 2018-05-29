@@ -1,5 +1,7 @@
 package com.admin.bounceultra;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     static int height;
     static ArrayList<Room> RoomList;
     static int current_room = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -33,13 +36,32 @@ public class MainActivity extends AppCompatActivity {
 
 
         final Button btn = (Button) findViewById(R.id.button);
-
+        final float[] xPress = new float[1];
+        final float[] yPress = new float[1];
+        final float[] xUnpress = new float[1];
+        final float[] yUnpress = new float[1];
         final View.OnTouchListener list = new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                float x = event.getX();
-                float y = event.getY();
-                RoomList.get(current_room).ball.shot(x, y);
+                boolean unpress = false;
+                if(!unpress) {
+                    switch(event.getAction()) {
+                        case MotionEvent.ACTION_DOWN :
+                            xPress[0] = event.getX();
+                            yPress[0] = event.getY();
+                            unpress = false;
+                            break;
+                        case MotionEvent.ACTION_UP :
+                            xUnpress[0] = event.getX();
+                            yUnpress[0] = event.getY();
+                            unpress = true;
+                    }
+                }
+                if(unpress) {
+                    Log.d("fff1", String.valueOf(yPress[0]));
+                    Log.d("fff3", String.valueOf(yUnpress[0]));
+                    RoomList.get(current_room).ball.shot(xPress[0] - xUnpress[0],yPress[0] - yUnpress[0]);
+                }
                 return true;
             }
         };
