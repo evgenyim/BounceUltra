@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     static int width;
     static int height;
     static ArrayList<Room> RoomList;
-    static int current_room = 1;
+    static int current_room = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

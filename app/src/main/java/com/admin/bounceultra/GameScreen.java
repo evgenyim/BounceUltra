@@ -45,7 +45,7 @@ public class GameScreen extends View {
     Bitmap wall = Bitmap.createScaledBitmap(bitmap, 30,(int) (MainActivity.height), false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
     Paint paint = new Paint();
-
+  
     protected void onDraw(Canvas canvas) {
 
         paint.setColor(Color.BLUE);
