@@ -34,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
 
+        Vector vec1 = new Vector((float) -3, (float) 2);
+        Vector vec2 = new Vector(0, 1);
+        Vector res = Vector.reflect(vec1, vec2);
+        Log.d("x", String.valueOf(res.x));
+        Log.d("y", String.valueOf(res.y));
+
 
         final Button btn = (Button) findViewById(R.id.button);
 

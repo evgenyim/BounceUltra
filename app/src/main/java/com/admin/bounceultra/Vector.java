@@ -10,8 +10,9 @@ public class Vector {
         return x * vec.x + y * vec.y;
     }
 
-    float vec_mult(Vector vec) {
-        return x * vec.y - vec.x * y;
+    static float vec_mult(Vector vec1, Vector vec2) {
+        Log.d("vec_mult", String.valueOf(vec1.x * vec2.y - vec2.x * vec1.y));
+        return vec1.x * vec2.y - vec2.x * vec1.y;
     }
 
     float length() {
@@ -29,8 +30,8 @@ public class Vector {
         return (float) Math.acos(cosA);
     }
 
-    float orianted_angle(Vector vec) {
-        float sinA = vec_mult(vec) / (length() * vec.length());
+    static float orianted_angle(Vector vec1, Vector vec2) {
+        float sinA = vec_mult(vec1, vec2) / (vec1.length() * vec2.length());
         if (sinA > 1) {
             return (float) Math.PI / 2;
         }
@@ -75,9 +76,10 @@ public class Vector {
 
     static Vector reflect(Vector vec1, Vector vec2) {
         float angle = vec1.angle(normal(vec2));
-        if (vec1.orianted_angle(vec2) < 0) {
+        if (orianted_angle(vec1, vec2) < 0) {
             angle *= -1;
         }
+        Log.d("angle", String.valueOf(Math.toDegrees(angle)));
         vec1 = rotate_by_angle(vec1, angle * 2);
         vec1.x *= -1;
         vec1.y *= -1;
