@@ -1,6 +1,6 @@
 package com.admin.bounceultra;
 
-
+import static java.lang.Math.*;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
@@ -74,13 +74,30 @@ class Ball extends GameObject {
             } else {
                 ball.velocity = Vector.reflect(ball.velocity, segment);
             }
+            MindTheGap(ball, segments.get(index));
             ball.x_speed = ball.velocity.x * (1 - decreas);
             ball.y_speed = ball.velocity.y * (1 - decreas);
+            return;
         }
 
         ball.x += ball.x_speed;
         ball.y += ball.y_speed;
         ball.y_speed += g;
+    }
+
+    static void MindTheGap(Ball ball, Segment segment) {
+        Segment bias = new Segment(ball.x, ball.y, ball.x + ball.velocity.x, ball.y + ball.velocity.y);
+        Line n = new Line(bias);
+        Line m = new Line(segment);
+        Point A = Line.intersect(n, m);
+        float alfa = Segment.angle(bias, segment);
+        float l = (float) sqrt((ball.x - A.x) * (ball.x - A.x) + (ball.y - A.y) * (ball.y - A.y));
+        float d = (float) (ball.r / sin(alfa));
+        float new_x = (d * ball.x + (l - d) * A.x) / l;
+        float new_y = (d * ball.y + (l - d) * A.y) / l;
+
+        ball.x = new_x;
+        ball.y = new_y;
     }
 
     Ball(Point p, float r) {

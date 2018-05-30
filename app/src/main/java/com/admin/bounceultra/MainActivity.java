@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 if(unpress) {
-                    Log.d("fff1", String.valueOf(yPress[0]));
-                    Log.d("fff3", String.valueOf(yUnpress[0]));
                     RoomList.get(current_room).ball.shot(xPress[0] - xUnpress[0],yPress[0] - yUnpress[0]);
                 }
                 return true;

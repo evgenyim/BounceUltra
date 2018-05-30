@@ -66,7 +66,7 @@ public class GameScreen extends View {
         cur_ball.draw(canvas, paint);
         Ball.move(cur_ball, MainActivity.RoomList.get(MainActivity.current_room).segments);
 
-        postInvalidateDelayed(0);
+        postInvalidateDelayed(500);
     }
     void createBitmap() {
         bitmapList.add(cube);
