@@ -48,11 +48,13 @@ public class GameScreen extends View {
         for(int i = 0; i < cur_room.size(); i++) {
             cur_room.get(i).draw(canvas, paint);
         }
+        for(int i = 0; i < MainActivity.RoomList.get(MainActivity.current_room).segments.size(); i++) {
+            MainActivity.RoomList.get(MainActivity.current_room).segments.get(i).draw(canvas, paint);
+        }
         paint.setColor(Color.RED);
         cur_ball.draw(canvas, paint);
-        Ball.move(cur_ball);
+        Ball.move(cur_ball, MainActivity.RoomList.get(MainActivity.current_room).segments);
 
-
-        postInvalidateDelayed(100);
+        postInvalidateDelayed(0);
     }
 }

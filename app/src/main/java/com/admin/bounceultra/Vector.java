@@ -78,7 +78,6 @@ public class Vector {
         if (vec1.orianted_angle(vec2) < 0) {
             angle *= -1;
         }
-        Log.d("angle", String.valueOf(angle));
         vec1 = rotate_by_angle(vec1, angle * 2);
         vec1.x *= -1;
         vec1.y *= -1;

@@ -1,9 +1,12 @@
 package com.admin.bounceultra;
 
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 public class Segment {
-    static Point a;
-    static Point b;
+    Point a;
+    Point b;
 
     static float angle(Segment segment1, Segment segment2) {
         Vector vec1 = new Vector(segment1);
@@ -18,6 +21,9 @@ public class Segment {
             return false;
         }
         return true;
+    }
+    void draw(Canvas canvas, Paint paint) {
+        canvas.drawLine(a.x,a.y,b.x,b.y,paint);
     }
 
     Segment(Point a, Point b) {

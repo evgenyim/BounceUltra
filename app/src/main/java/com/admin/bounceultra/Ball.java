@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
-import static com.admin.bounceultra.Room.segments;
+import java.util.ArrayList;
 
 class Ball extends GameObject {
     float x;
@@ -27,7 +27,7 @@ class Ball extends GameObject {
         canvas.drawCircle(x, y, r, paint);
     }
 
-    static void move(Ball ball) {
+    static void move(Ball ball, ArrayList<Segment> segments) {
         if (ball.y + ball.y_speed > MainActivity.height - ball.r - 300) {
             ball.y_speed *= -1;
             ball.y_speed += g;
@@ -53,13 +53,18 @@ class Ball extends GameObject {
         }
 
         for (int i = 0; i < segments.size(); i++) {
+            ball.x += ball.x_speed;
+            ball.y += ball.y_speed;
             if (segments.get(i).intersect_ball(ball)) {
-                Log.d("huy", "huy");
+                Log.d("huy", "hay");
                 ball.velocity = new Vector(ball.x_speed, ball.y_speed);
                 Vector segment = new Vector(segments.get(i));
                 ball.velocity = Vector.reflect(ball.velocity, segment);
                 ball.x_speed = ball.velocity.x;
                 ball.y_speed = ball.velocity.y;
+            } else {
+                ball.x -= ball.x_speed;
+                ball.y -= ball.y_speed;
             }
         }
 
