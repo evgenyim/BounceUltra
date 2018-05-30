@@ -75,10 +75,9 @@ public class Vector {
 
     static Vector reflect(Vector vec1, Vector vec2) {
         float angle = vec1.angle(normal(vec2));
-        if (vec1.orianted_angle(vec2) < 0) {
+        if (vec1.orianted_angle(normal(vec2)) < 0) {
             angle *= -1;
         }
-        Log.d("angle", String.valueOf(Math.toDegrees(angle)));
         vec1 = rotate_by_angle(vec1, angle * 2);
         vec1.x *= -1;
         vec1.y *= -1;
