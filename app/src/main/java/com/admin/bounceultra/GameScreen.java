@@ -40,10 +40,12 @@ public class GameScreen extends View {
     }
 
     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
-    Bitmap cube = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
+    Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 500, 300, false);
+    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 30,(int) (MainActivity.height), false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
     Paint paint = new Paint();
+  
     protected void onDraw(Canvas canvas) {
 
         paint.setColor(Color.BLUE);
@@ -52,15 +54,23 @@ public class GameScreen extends View {
             Bitmap bMap = bitmapList.get(cur_room.get(i).id);
             cur_room.get(i).draw(canvas, paint,bMap);
         }
+        for(int i = 0; i < MainActivity.RoomList.get(MainActivity.current_room).segments.size(); i++) {
+            if (i == Ball.index) {
+                paint.setColor(Color.RED);
+            } else {
+                paint.setColor(Color.BLUE);
+            }
+            MainActivity.RoomList.get(MainActivity.current_room).segments.get(i).draw(canvas, paint);
+        }
         paint.setColor(Color.RED);
         cur_ball.draw(canvas, paint);
-        Ball.move(cur_ball);
-
+        Ball.move(cur_ball, MainActivity.RoomList.get(MainActivity.current_room).segments);
 
         postInvalidateDelayed(0);
     }
     void createBitmap() {
         bitmapList.add(cube);
         bitmapList.add(rect);
+        bitmapList.add(wall);
     }
 }

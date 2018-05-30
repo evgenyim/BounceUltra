@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
 
-
         final Button btn = (Button) findViewById(R.id.button);
 
         final float[] xPress = new float[1];

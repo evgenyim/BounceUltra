@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
-import static com.admin.bounceultra.Room.segments;
+import java.util.ArrayList;
 
 class Ball extends GameObject {
     float x;
@@ -15,8 +15,11 @@ class Ball extends GameObject {
     float y_speed;
     static double k = 5e-2;
     static double g = MainActivity.height * 1.0 / 1500;
-    static double decreas = 0.2;
-    static Vector velocity;
+    static float decreas = (float) 0.2;
+    Vector velocity;
+    static int index;
+
+
     void shot(float to_x, float to_y) {
         x_speed += (to_x) * k;
         y_speed += (to_y) * k;
@@ -26,7 +29,12 @@ class Ball extends GameObject {
         canvas.drawCircle(x, y, r, paint);
     }
 
-    static void move(Ball ball) {
+    Point centre() {
+        Point p = new Point(x, y);
+        return p;
+    }
+
+    static void move(Ball ball, ArrayList<Segment> segments) {
         if (ball.y + ball.y_speed > MainActivity.height - ball.r - 300) {
             ball.y_speed *= -1;
             ball.y_speed += g;
@@ -41,25 +49,34 @@ class Ball extends GameObject {
         }
 
         if (ball.x + ball.x_speed < ball.r) {
-            ball.x_speed *= -(1 - decreas);
+            ball.x_speed *= -1;
         }
 
-        if (ball.y_speed == 0) {
-            ball.x_speed *= 0.99;
-            if (ball.x_speed < 1e-4) {
-                ball.x_speed = 0;
-            }
-        }
+
+        ball.velocity = new Vector(ball.x_speed, ball.y_speed);
+        Segment bias = new Segment(ball.x, ball.y, ball.x + ball.velocity.x, ball.y + ball.velocity.y);
+        Ball future_ball = new Ball(ball.x + ball.x_speed, ball.y + ball.y_speed, ball.r);
+        float min_d = 1000000;
+        index = -1;
 
         for (int i = 0; i < segments.size(); i++) {
-            if (segments.get(i).intersect_ball(ball)) {
-                Log.d("huy", "huy");
-                ball.velocity = new Vector(ball.x_speed, ball.y_speed);
-                Vector segment = new Vector(segments.get(i));
-                ball.velocity = Vector.reflect(ball.velocity, segment);
-                ball.x_speed = ball.velocity.x;
-                ball.y_speed = ball.velocity.y;
+            if (Segment.segments_intersect(bias, segments.get(i)) || segments.get(i).intersect_ball(future_ball)) {
+                if (Vector.dPointSegment(segments.get(i).a, segments.get(i).b, ball.centre()) < min_d) {
+                    min_d = Vector.dPointSegment(segments.get(i).a, segments.get(i).b, ball.centre());
+                    index = i;
+                }
             }
+        }
+        if (index != - 1) {
+            Vector segment = new Vector(segments.get(index));
+            if (min_d  == ball.centre().dist(segments.get(index).a) || min_d  == ball.centre().dist(segments.get(index).b)) {
+                ball.velocity.x *= -1;
+                ball.velocity.y *= -1;
+            } else {
+                ball.velocity = Vector.reflect(ball.velocity, segment);
+            }
+            ball.x_speed = ball.velocity.x * (1 - decreas);
+            ball.y_speed = ball.velocity.y * (1 - decreas);
         }
 
         ball.x += ball.x_speed;
@@ -73,5 +90,11 @@ class Ball extends GameObject {
         this.r = r;
         this.x_speed = 0;
         this.y_speed = 0;
+    }
+
+    Ball(float x, float y, float r) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
     }
 }
