@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import static java.lang.Math.*;
 
 class Room {
+
     ArrayList<GameObject> ObjectList = new ArrayList<GameObject>();
     ArrayList<Segment> segments = new ArrayList<Segment>();
     Ball ball;

@@ -19,6 +19,7 @@ class Ball extends GameObject {
     Vector velocity;
     static int index;
 
+
     void shot(float to_x, float to_y) {
         x_speed += (to_x) * k;
         y_speed += (to_y) * k;
