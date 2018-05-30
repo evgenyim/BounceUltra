@@ -40,9 +40,10 @@ public class GameScreen extends View {
     }
 
     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
-    Bitmap cube = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
+    Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 500, 300, false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
+    Paint paint = new Paint();
 
     protected void onDraw(Canvas canvas) {
 
