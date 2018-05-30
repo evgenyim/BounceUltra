@@ -68,11 +68,12 @@ class Ball extends GameObject {
         }
         if (index != - 1) {
             Vector segment = new Vector(segments.get(index));
-            Log.d("pre_x", String.valueOf(ball.velocity.x));
-            Log.d("pre_y", String.valueOf(ball.velocity.y));
-            ball.velocity = Vector.reflect(ball.velocity, segment);
-            Log.d("post_x", String.valueOf(ball.velocity.x));
-            Log.d("post_y", String.valueOf(ball.velocity.y));
+            if (min_d  == ball.centre().dist(segments.get(index).a) || min_d  == ball.centre().dist(segments.get(index).b)) {
+                ball.velocity.x *= -1;
+                ball.velocity.y *= -1;
+            } else {
+                ball.velocity = Vector.reflect(ball.velocity, segment);
+            }
             ball.x_speed = ball.velocity.x * (1 - decreas);
             ball.y_speed = ball.velocity.y * (1 - decreas);
         }
