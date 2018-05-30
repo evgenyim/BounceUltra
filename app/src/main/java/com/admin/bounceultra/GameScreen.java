@@ -39,14 +39,18 @@ public class GameScreen extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    Paint paint = new Paint();
-    Vector vec = new Vector(100, 100);
+    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
+    Bitmap cube = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
+    Bitmap rect = Bitmap.createScaledBitmap(bitmap, 500, 300, false);
+    ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
 
     protected void onDraw(Canvas canvas) {
 
         paint.setColor(Color.BLUE);
+        createBitmap();
         for(int i = 0; i < cur_room.size(); i++) {
-            cur_room.get(i).draw(canvas, paint);
+            Bitmap bMap = bitmapList.get(cur_room.get(i).id);
+            cur_room.get(i).draw(canvas, paint,bMap);
         }
         for(int i = 0; i < MainActivity.RoomList.get(MainActivity.current_room).segments.size(); i++) {
             MainActivity.RoomList.get(MainActivity.current_room).segments.get(i).draw(canvas, paint);
@@ -56,5 +60,9 @@ public class GameScreen extends View {
         Ball.move(cur_ball, MainActivity.RoomList.get(MainActivity.current_room).segments);
 
         postInvalidateDelayed(0);
+    }
+    void createBitmap() {
+        bitmapList.add(cube);
+        bitmapList.add(rect);
     }
 }
