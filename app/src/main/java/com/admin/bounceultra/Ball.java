@@ -70,15 +70,22 @@ class Ball extends GameObject {
         if (index != - 1) {
             Vector segment = new Vector(segments.get(index));
             if (min_d  == ball.centre().dist(segments.get(index).a) || min_d  == ball.centre().dist(segments.get(index).b)) {
-                ball.velocity.x *= -1;
-                ball.velocity.y *= -1;
+                Vector new_velocity;
+                if (min_d  == ball.centre().dist(segments.get(index).a)) {
+                    new_velocity = new Vector(segments.get(index).a, ball.centre());
+                } else {
+                    new_velocity = new Vector(segments.get(index).b, ball.centre());
+                }
+                new_velocity.unit();
+                new_velocity.multiplying(ball.velocity.length());
+                ball.velocity = new_velocity;
             } else {
                 ball.velocity = Vector.reflect(ball.velocity, segment);
             }
-            MindTheGap(ball, segments.get(index));
+            //MindTheGap(ball, segments.get(index));
             ball.x_speed = ball.velocity.x * (1 - decreas);
             ball.y_speed = ball.velocity.y * (1 - decreas);
-            return;
+            //return;
         }
 
         ball.x += ball.x_speed;
