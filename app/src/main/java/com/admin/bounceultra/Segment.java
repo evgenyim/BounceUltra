@@ -11,7 +11,16 @@ public class Segment {
     static float angle(Segment segment1, Segment segment2) {
         Vector vec1 = new Vector(segment1);
         Vector vec2 = new Vector(segment2);
-        return vec1.angle(vec2);
+        float alfa =  vec1.angle(vec2);
+        if (alfa > Math.PI / 2) {
+            alfa = (float) Math.abs(alfa - Math.PI);
+        }
+        return alfa;
+    }
+
+    static Vector normal(Segment segment) {
+        Vector vec = new Vector(segment);
+        return Vector.normal(vec);
     }
 
     //метод, проверяющий пересекаются ли 2 отрезка [p1, p2] и [p3, p4]
@@ -97,8 +106,7 @@ public class Segment {
     }
 
     boolean intersect_ball(Ball ball) {
-        Point ball_center = new Point(ball.x, ball.y);
-        float dist = Vector.dPointSegment(a, b, ball_center);
+        float dist = Vector.dPointSegment(a, b, ball.centre());
         if (dist > ball.r) {
             return false;
         }

@@ -24,4 +24,12 @@ public class Line {
         this.b = segment.b.x - segment.a.x;
         this.c = segment.a.x * segment.b.y - segment.b.x * segment.a.y;
     }
+    Line(Point A, Vector vector) {
+        Point B = new Point(A.x + vector.x, A.y + vector.y);
+        Segment segment = new Segment(A, B);
+        Line L = new Line(segment);
+        this.a = L.a;
+        this.b = L.b;
+        this.c = L.c;
+    }
 }

@@ -64,7 +64,6 @@ public class Vector {
         this.x = this.x / l;
     }
 
-
     Vector multiplying(float k) {
         this.x *= k;
         this.y *= k;
