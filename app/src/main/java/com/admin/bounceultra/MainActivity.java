@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     static int width;
     static int height;
     static ArrayList<Room> RoomList;
-    static int current_room = 0;
+    static int current_room = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
 
         final Button btn = (Button) findViewById(R.id.button);
+        btn.setText("Baranov");
+
 
         final float[] xPress = new float[1];
         final float[] yPress = new float[1];
@@ -58,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 if(unpress) {
-                    Log.d("fff1", String.valueOf(yPress[0]));
-                    Log.d("fff3", String.valueOf(yUnpress[0]));
                     RoomList.get(current_room).ball.shot(xPress[0] - xUnpress[0],yPress[0] - yUnpress[0]);
                 }
                 return true;

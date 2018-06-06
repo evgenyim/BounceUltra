@@ -1,6 +1,6 @@
 package com.admin.bounceultra;
 
-
+import static java.lang.Math.*;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
@@ -68,20 +68,65 @@ class Ball extends GameObject {
             }
         }
         if (index != - 1) {
+            MindTheGap(ball, segments.get(index));
+            min_d = Vector.dPointSegment(segments.get(index).a, segments.get(index).b, ball.centre());
             Vector segment = new Vector(segments.get(index));
             if (min_d  == ball.centre().dist(segments.get(index).a) || min_d  == ball.centre().dist(segments.get(index).b)) {
-                ball.velocity.x *= -1;
-                ball.velocity.y *= -1;
+                Vector new_velocity;
+                if (min_d  == ball.centre().dist(segments.get(index).a)) {
+                    new_velocity = new Vector(segments.get(index).a, ball.centre());
+                } else {
+                    new_velocity = new Vector(segments.get(index).b, ball.centre());
+                }
+                new_velocity.unit();
+                new_velocity.multiplying(ball.velocity.length());
+                ball.velocity = new_velocity;
             } else {
                 ball.velocity = Vector.reflect(ball.velocity, segment);
             }
             ball.x_speed = ball.velocity.x * (1 - decreas);
             ball.y_speed = ball.velocity.y * (1 - decreas);
+            return;
         }
 
         ball.x += ball.x_speed;
         ball.y += ball.y_speed;
         ball.y_speed += g;
+    }
+
+    static void MindTheGap(Ball ball, Segment segment) {
+        Segment bias = new Segment(ball.x, ball.y, ball.x + ball.velocity.x, ball.y + ball.velocity.y);
+        Line n = new Line(bias);
+        Line m = new Line(segment);
+        Point A = Line.intersect(n, m);
+        float l;
+        float d;
+        float new_x;
+        float new_y;
+        if (A == null) {
+            Vector normal = Segment.normal(segment);
+            Point E;
+            if (ball.centre().dist(segment.a) < ball.centre().dist(segment.b)) {
+                E = segment.a;
+            } else{
+                E = segment.b;
+            }
+            Line p = new Line(E, normal);
+            Point B = Line.intersect(n, p);
+            l = (float) sqrt((ball.x - B.x) * (ball.x - B.x) + (ball.y - B.y) * (ball.y - B.y));
+            d = (float) sqrt(ball.r * ball.r - E.dist(B) * E.dist(B));
+            new_x = ball.x + (A.x - ball.x) * (l - d) / l;
+            new_y = ball.y + (A.y - ball.y) * (l - d) / l;
+        } else {
+            float alfa = Segment.angle(bias, segment);
+            l = (float) sqrt((ball.x - A.x) * (ball.x - A.x) + (ball.y - A.y) * (ball.y - A.y));
+            d = (float) (ball.r / sin(alfa));
+            new_x = ball.x + (A.x - ball.x) * (l - d) / l;
+            new_y = ball.y + (A.y - ball.y) * (l - d) / l;
+        }
+
+        ball.x = new_x;
+        ball.y = new_y;
     }
 
     Ball(Point p, float r) {
@@ -91,7 +136,6 @@ class Ball extends GameObject {
         this.x_speed = 0;
         this.y_speed = 0;
     }
-
     Ball(float x, float y, float r) {
         this.x = x;
         this.y = y;

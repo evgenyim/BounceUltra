@@ -58,6 +58,18 @@ public class Vector {
         }
     }
 
+    void unit(){
+        float l = this.length();
+        this.y = this.y / l;
+        this.x = this.x / l;
+    }
+
+    Vector multiplying(float k) {
+        this.x *= k;
+        this.y *= k;
+        return this;
+    }
+
     static Vector normal(Vector vec) {
         Vector res = new Vector(-vec.y, vec.x);
         return res;
@@ -93,8 +105,8 @@ public class Vector {
         this.y = p.y;
     }
     Vector(Point p1, Point p2) {
-        this.x = p1.x - p2.x;
-        this.y = p1.y - p2.y;
+        this.x = p2.x - p1.x;
+        this.y = p2.y - p1.y;
     }
     Vector(Segment segment) {
         this.x = segment.a.x - segment.b.x;

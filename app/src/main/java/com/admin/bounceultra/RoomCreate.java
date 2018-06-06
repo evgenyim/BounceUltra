@@ -14,12 +14,12 @@ public class RoomCreate {
         Room0.addSegments(100, 100, 600, 600, 0);
         RoomList1.add(Room0);
         Room Room1 = new Room();
-        Point start_point1 = new Point(MainActivity.width/2 + 200, 0);
+        Point start_point1 = new Point(750, 0);
         Room1.addBall(start_point1,50);
-        Room1.addObstacle(800,800,900,900, 30, 0);
+        Room1.addObstacle(750,1200,850,1300, 0, 0);
         Room1.addObstacle((MainActivity.width  / 2), MainActivity.height / 4, (MainActivity.width / 2), MainActivity.height, 0, 2);
         Room1.addSegments((MainActivity.width  / 2), MainActivity.height / 4, (MainActivity.width / 2 + 30), MainActivity.height, 0);
-        Room1.addSegments(800, 800, 900, 900, 30);
+        Room1.addSegments(750, 1200, 850, 1300, 0);
         RoomList1.add(Room1);
         return RoomList1;
     }
