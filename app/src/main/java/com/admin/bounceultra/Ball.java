@@ -13,11 +13,10 @@ class Ball extends GameObject {
     float r;
     float x_speed;
     float y_speed;
-    static double k = 5e-2;
-    static double g = MainActivity.height * 1.0 / 1500;
-    static float decreas = (float) 0.2;
+    double k = 5e-2;
+    double g = MainActivity.height * 1.0 / 1500;
+    float decreas = (float) 0.2;
     Vector velocity;
-    static int index;
 
 
     void shot(float to_x, float to_y) {
@@ -34,8 +33,8 @@ class Ball extends GameObject {
         return p;
     }
 
-    static void move(Ball ball, ArrayList<Segment> segments) {
-        if (ball.y + ball.y_speed > MainActivity.height - ball.r - 300) {
+    void move(ArrayList<GameObject> ObjectList) {
+        /*if (ball.y + ball.y_speed > MainActivity.height - ball.r - 300) {
             ball.y_speed *= -1;
             ball.y_speed += g;
             ball.y_speed *= 1 - decreas;
@@ -50,52 +49,58 @@ class Ball extends GameObject {
 
         if (ball.x + ball.x_speed < ball.r) {
             ball.x_speed *= -1;
-        }
+        }*/
 
 
-        ball.velocity = new Vector(ball.x_speed, ball.y_speed);
-        Segment bias = new Segment(ball.x, ball.y, ball.x + ball.velocity.x, ball.y + ball.velocity.y);
-        Ball future_ball = new Ball(ball.x + ball.x_speed, ball.y + ball.y_speed, ball.r);
+        velocity = new Vector(x_speed, y_speed);
+        Segment bias = new Segment(x, y, x + velocity.x, y + velocity.y);
+        Ball future_ball = new Ball(x + x_speed, y + y_speed, r);
         float min_d = 1000000;
-        index = -1;
+        int index = -1;
+        int index1 = -1;
 
-        for (int i = 0; i < segments.size(); i++) {
-            if (Segment.segments_intersect(bias, segments.get(i)) || segments.get(i).intersect_ball(future_ball)) {
-                if (Vector.dPointSegment(segments.get(i).a, segments.get(i).b, ball.centre()) < min_d) {
-                    min_d = Vector.dPointSegment(segments.get(i).a, segments.get(i).b, ball.centre());
-                    index = i;
+        for (int i = 0; i < ObjectList.size(); i++) {
+            ArrayList<Segment> segments = ObjectList.get(i).segments;
+            for(int j = 0; j < segments.size(); j++) {
+                if (Segment.segments_intersect(bias, segments.get(j)) || segments.get(j).intersect_ball(future_ball)) {
+                    if (Vector.dPointSegment(segments.get(j).a, segments.get(j).b, centre()) < min_d) {
+                        min_d = Vector.dPointSegment(segments.get(j).a, segments.get(j).b, centre());
+                        index = j;
+                        index1 = i;
+                    }
                 }
             }
         }
         if (index != - 1) {
-            MindTheGap(ball, segments.get(index));
-            min_d = Vector.dPointSegment(segments.get(index).a, segments.get(index).b, ball.centre());
+            ArrayList<Segment> segments = ObjectList.get(index1).segments;
+            MindTheGap(segments.get(index));
+            min_d = Vector.dPointSegment(segments.get(index).a, segments.get(index).b, centre());
             Vector segment = new Vector(segments.get(index));
-            if (min_d  == ball.centre().dist(segments.get(index).a) || min_d  == ball.centre().dist(segments.get(index).b)) {
+            if (min_d  == centre().dist(segments.get(index).a) || min_d  == centre().dist(segments.get(index).b)) {
                 Vector new_velocity;
-                if (min_d  == ball.centre().dist(segments.get(index).a)) {
-                    new_velocity = new Vector(segments.get(index).a, ball.centre());
+                if (min_d  == centre().dist(segments.get(index).a)) {
+                    new_velocity = new Vector(segments.get(index).a, centre());
                 } else {
-                    new_velocity = new Vector(segments.get(index).b, ball.centre());
+                    new_velocity = new Vector(segments.get(index).b, centre());
                 }
                 new_velocity.unit();
-                new_velocity.multiplying(ball.velocity.length());
-                ball.velocity = new_velocity;
+                new_velocity.multiplying(velocity.length());
+                velocity = new_velocity;
             } else {
-                ball.velocity = Vector.reflect(ball.velocity, segment);
+                velocity = Vector.reflect(velocity, segment);
             }
-            ball.x_speed = ball.velocity.x * (1 - decreas);
-            ball.y_speed = ball.velocity.y * (1 - decreas);
+            x_speed = velocity.x * (1 - decreas);
+            y_speed = velocity.y * (1 - decreas);
             return;
         }
 
-        ball.x += ball.x_speed;
-        ball.y += ball.y_speed;
-        ball.y_speed += g;
+        x += x_speed;
+        y += y_speed;
+        y_speed += g;
     }
 
-    static void MindTheGap(Ball ball, Segment segment) {
-        Segment bias = new Segment(ball.x, ball.y, ball.x + ball.velocity.x, ball.y + ball.velocity.y);
+    void MindTheGap(Segment segment) {
+        Segment bias = new Segment(x, y, x + velocity.x, y + velocity.y);
         Line n = new Line(bias);
         Line m = new Line(segment);
         Point A = Line.intersect(n, m);
@@ -106,27 +111,26 @@ class Ball extends GameObject {
         if (A == null) {
             Vector normal = Segment.normal(segment);
             Point E;
-            if (ball.centre().dist(segment.a) < ball.centre().dist(segment.b)) {
+            if (centre().dist(segment.a) < centre().dist(segment.b)) {
                 E = segment.a;
             } else{
                 E = segment.b;
             }
             Line p = new Line(E, normal);
             Point B = Line.intersect(n, p);
-            l = (float) sqrt((ball.x - B.x) * (ball.x - B.x) + (ball.y - B.y) * (ball.y - B.y));
-            d = (float) sqrt(ball.r * ball.r - E.dist(B) * E.dist(B));
-            new_x = ball.x + (A.x - ball.x) * (l - d) / l;
-            new_y = ball.y + (A.y - ball.y) * (l - d) / l;
+            l = (float) sqrt((x - B.x) * (x - B.x) + (y - B.y) * (y - B.y));
+            d = (float) sqrt(Math.abs(r * r - E.dist(B) * E.dist(B)));
+            new_x = x + (B.x - x) * (l - d) / l;
+            new_y = y + (B.y - y) * (l - d) / l;
         } else {
             float alfa = Segment.angle(bias, segment);
-            l = (float) sqrt((ball.x - A.x) * (ball.x - A.x) + (ball.y - A.y) * (ball.y - A.y));
-            d = (float) (ball.r / sin(alfa));
-            new_x = ball.x + (A.x - ball.x) * (l - d) / l;
-            new_y = ball.y + (A.y - ball.y) * (l - d) / l;
+            l = (float) sqrt((x - A.x) * (x - A.x) + (y - A.y) * (y - A.y));
+            d = (float) (r / sin(alfa));
+            new_x = x + (A.x - x) * (l - d) / l;
+            new_y = y + (A.y - y) * (l - d) / l;
         }
-
-        ball.x = new_x;
-        ball.y = new_y;
+        x = new_x;
+        y = new_y;
     }
 
     Ball(Point p, float r) {

@@ -5,7 +5,7 @@ public class Line {
     float b;
     float c;
 
-    public static Point intersect(Line n, Line m) {
+    static Point intersect(Line n, Line m) {
         double d = m.a * n.b - m.b * n.a;
         double d1 = -m.c * n.b + m.b * n.c;
         double d2 = -n.c * m.a + n.a * m.c;

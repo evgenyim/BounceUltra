@@ -39,27 +39,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         final float[] xPress = new float[1];
-        final float[] yPress = new float[1];
-        final float[] xUnpress = new float[1];
-        final float[] yUnpress = new float[1];
-        final View.OnTouchListener list = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                boolean unpress = false;
-                if(!unpress) {
-                    switch(event.getAction()) {
-                        case MotionEvent.ACTION_DOWN :
-                            xPress[0] = event.getX();
-                            yPress[0] = event.getY();
-                            unpress = false;
-                            break;
-                        case MotionEvent.ACTION_UP :
-                            xUnpress[0] = event.getX();
-                            yUnpress[0] = event.getY();
-                            unpress = true;
-                    }
+                    final float[] yPress = new float[1];
+                    final float[] xUnpress = new float[1];
+                    final float[] yUnpress = new float[1];
+                    final View.OnTouchListener list = new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            boolean unpress = false;
+                            if(!unpress) {
+                                switch(event.getAction()) {
+                                    case MotionEvent.ACTION_DOWN :
+                                        xPress[0] = event.getX();
+                                        yPress[0] = event.getY();
+                                        unpress = false;
+                                        break;
+                                    case MotionEvent.ACTION_UP :
+                                        xUnpress[0] = event.getX();
+                                        yUnpress[0] = event.getY();
+                                        unpress = true;
+                                }
                 }
-                if(unpress) {
+                if(unpress /*&& RoomList.get(current_room).ball.x_speed == 0 && RoomList.get(current_room).ball.y_speed == 0 */) {
                     RoomList.get(current_room).ball.shot(xPress[0] - xUnpress[0],yPress[0] - yUnpress[0]);
                 }
                 return true;
