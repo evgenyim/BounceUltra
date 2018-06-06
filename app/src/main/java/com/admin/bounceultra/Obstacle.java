@@ -10,6 +10,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 
+import java.util.ArrayList;
+
 class Obstacle extends GameObject {
 
      float x_left;
@@ -18,6 +20,8 @@ class Obstacle extends GameObject {
      float y_bottom;
      Matrix m = new Matrix();
      float degrees;
+     ArrayList<Segment> segments = new ArrayList<Segment>();
+
 
 
      Obstacle(float x_left,float y_top,float x_right,float y_bottom, float degrees, int id) {
