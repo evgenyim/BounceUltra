@@ -14,6 +14,7 @@ class Room {
     void addObstacle(float x_left, float y_top, float x_right, float y_bottom, float degrees, int id) {
         obstacle = new Obstacle(x_left, y_top, x_right, y_bottom, degrees, id);
         ObjectList.add(obstacle);
+        addSegments(x_left, y_top, x_right, y_bottom, degrees);
     }
 
     void addSegments(float x_left, float y_top, float x_right, float y_bottom, float degree) {

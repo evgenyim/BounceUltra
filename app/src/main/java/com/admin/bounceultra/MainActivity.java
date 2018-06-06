@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         final Button btn = (Button) findViewById(R.id.button);
         btn.setText("Baranov");
 
+        Vector vec = new Vector(0, 1);
+        Vector vec1 = new Vector(-1, 0);
+//        Log.d("angle", String.valueOf(Math.toDegrees(vec.orianted_angle(vec1))));
+        Log.d("g", String.valueOf(Ball.g));
 
         final float[] xPress = new float[1];
         final float[] yPress = new float[1];

@@ -55,11 +55,6 @@ public class GameScreen extends View {
             cur_room.get(i).draw(canvas, paint,bMap);
         }
         for(int i = 0; i < MainActivity.RoomList.get(MainActivity.current_room).segments.size(); i++) {
-            if (i == Ball.index) {
-                paint.setColor(Color.RED);
-            } else {
-                paint.setColor(Color.BLUE);
-            }
             MainActivity.RoomList.get(MainActivity.current_room).segments.get(i).draw(canvas, paint);
         }
         paint.setColor(Color.RED);
