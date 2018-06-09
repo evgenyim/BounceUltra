@@ -96,6 +96,28 @@ public class Vector {
         return vec1;
     }
 
+    void reverse() {
+        this.x *= -1;
+        this.y *= -1;
+    }
+
+    void write() {
+        Log.d("vector_x", String.valueOf(this.x));
+        Log.d("vector_y", String.valueOf(this.y));
+    }
+
+    static float good_angle(Vector vec1, Vector vec2) {
+        if (vec1.angle(vec2) > Math.PI / 2) {
+            vec2.reverse();
+        }
+        return vec1.orianted_angle(vec2);
+    }
+
+    static float first_quater(float alfa) {
+        alfa = (float) Math.abs(Math.asin(Math.sin(alfa)));
+        return alfa;
+    }
+
     Vector(float x, float y) {
         this.x = x;
         this.y = y;
