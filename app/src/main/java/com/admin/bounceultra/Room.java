@@ -7,7 +7,6 @@ import static java.lang.Math.*;
 class Room {
 
     ArrayList<GameObject> ObjectList = new ArrayList<GameObject>();
-
     Ball ball;
     static Obstacle obstacle;
 
@@ -36,6 +35,24 @@ class Room {
 
     void addBall(Point p, float r) {
         ball = new Ball(p, r);
+    }
+
+    void addGate(float x_left, float y_top, float x_right, float y_bottom, float degree, int next_room_id, int id) {
+        Gate gate = new Gate(x_left, y_top, x_right, y_bottom, degree, next_room_id, id);
+
+        Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
+        Point point_left_top = new Point(x_left, y_top);
+        Point point_left_bottom = new Point(x_left + (x_left - x_left)  * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_left - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        Point point_right_bottom = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        Segment segm_right = new Segment(point_right_top, point_right_bottom);
+        Segment segm_bottom = new Segment(point_left_bottom, point_right_bottom);
+        Segment segm_left = new Segment(point_left_top, point_left_bottom);
+        Segment segm_top = new Segment(point_left_top, point_right_top);
+        gate.segments.add(segm_left);
+        gate.segments.add(segm_right);
+        gate.segments.add(segm_bottom);
+        gate.main_segment = segm_top;
+        ObjectList.add(gate);
     }
 
    // void addWall()

@@ -11,6 +11,8 @@ public class GameObject {
     float y;
     int id;
     ArrayList<Segment> segments = new ArrayList<Segment>();
+    Segment main_segment;
+    int next_room_id;
 
     void draw(Canvas canvas, Paint paint, Bitmap bitmap){
     }
