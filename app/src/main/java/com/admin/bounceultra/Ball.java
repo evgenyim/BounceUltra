@@ -14,9 +14,10 @@ class Ball extends GameObject {
     float x_speed;
     float y_speed;
     double k = 5e-2;
+    double mu = 1 - 2e-2;
     double g = MainActivity.height * 1.0 / 1500;
     float decreas = (float) 0.2;
-    float eps = (float) 1e-2;
+    float eps = (float) 1e-1;
     Vector velocity;
 
 
@@ -49,7 +50,7 @@ class Ball extends GameObject {
         for (int i = 0; i < ObjectList.size(); i++) {
             ArrayList<Segment> segments = ObjectList.get(i).segments;
             for(int j = 0; j < segments.size(); j++) {
-                if (Segment.segments_intersect(bias, segments.get(j)) || segments.get(j).intersect_ball(future_ball)) {
+                if (segments.get(j).intersect_ball(future_ball) || Segment.segments_intersect(bias, segments.get(j))) {
                     if (Vector.dPointSegment(segments.get(j).a, segments.get(j).b, centre()) < min_d) {
                         min_d = Vector.dPointSegment(segments.get(j).a, segments.get(j).b, centre());
                         intersected_seg_ind = j;
@@ -65,7 +66,9 @@ class Ball extends GameObject {
         }
         if (intersected_seg_ind != - 1 && !stick_to_segment(cur_seg)) {
             ArrayList<Segment> segments = ObjectList.get(intersected_obst_ind).segments;
-            MindTheGap(segments.get(intersected_seg_ind));
+            float axil = 1;
+            MindTheGap(segments.get(intersected_seg_ind), axil);
+            axil *= g;
             min_d = Vector.dPointSegment(segments.get(intersected_seg_ind).a, segments.get(intersected_seg_ind).b, centre());
             Vector segment = new Vector(segments.get(intersected_seg_ind));
             if (min_d  == centre().dist(segments.get(intersected_seg_ind).a) || min_d  == centre().dist(segments.get(intersected_seg_ind).b)) {
@@ -79,8 +82,11 @@ class Ball extends GameObject {
                 new_velocity.multiplying(velocity.length());
                 velocity = new_velocity;
             } else {
-                velocity = Vector.reflect(velocity, segment);
+                if (!velocity.if_null()) {
+                    velocity = Vector.reflect(velocity, segment);
+                }
             }
+            velocity.y = (float) (velocity.y - g + axil);
             x_speed = velocity.x * (1 - decreas);
             y_speed = velocity.y * (1 - decreas);
             return;
@@ -90,11 +96,14 @@ class Ball extends GameObject {
             roll(cur_seg);
             x_speed = velocity.x;
             y_speed = velocity.y;
+            x += x_speed;
+            y += y_speed;
+            return;
         }
 
+        y_speed += g;
         x += x_speed;
         y += y_speed;
-        y_speed += g;
 
         for (int i = 0; i < cur_room.size(); i++) {
             if(cur_room.get(i).id == 3) {
@@ -115,24 +124,38 @@ class Ball extends GameObject {
                 }
             }
         }
+
     }
 
     void roll(Segment segment) {
+        Vector horizon = new Vector(1, 0);
         Vector seg = new Vector(segment);
+        float betta = Math.abs(Vector.good_angle(seg, horizon));
+        float a = (float) (g * Math.sin(betta));
         Vector vel = new Vector(x_speed, y_speed);
         float alfa = Vector.good_angle(vel, seg);
-        if (Math.abs(vel.length() * Math.sin(alfa) * decreas) <  g + eps) {
-            vel = Vector.rotate_by_angle(vel, alfa);
-            velocity.x = (float) (vel.x  * Math.cos(alfa));
-            velocity.y = (float) (vel.y  * Math.cos(alfa));
+        vel = Vector.rotate_by_angle(vel, alfa);
+        float sin = seg.y / seg.length();
+        float cos = seg.x / seg.length();
+        Vector axi = new Vector(a * cos, a * sin);
+        if (axi.y < 0) {
+            axi.reverse();
         }
+        vel.add(axi);
+        if (vel.length() < eps) {
+            vel.x = 0;
+            vel.y = 0;
+        }
+        vel.x *= mu;
+        vel.y *= mu;
+        velocity.x = vel.x;
+        velocity.y = vel.y;
     }
 
     boolean stick_to_segment(Segment segment) {
         Vector seg = new Vector(segment);
         Vector vel = new Vector(x_speed, y_speed);
         float alfa = Vector.good_angle(vel, seg);
-        Log.d("dist", String.valueOf(Math.abs(vel.length() * Math.sin(alfa))));
         if (Math.abs(vel.length() * Math.sin(alfa)) <  1) {
             return true;
         } else {
@@ -140,7 +163,10 @@ class Ball extends GameObject {
         }
     }
 
-    void MindTheGap(Segment segment) {
+    void MindTheGap(Segment segment, float axil) {
+        if (velocity.x == 0 && velocity.y == 0) {
+            return;
+        };
         Segment bias = new Segment(x, y, x + velocity.x, y + velocity.y);
         Line n = new Line(bias);
         Line m = new Line(segment);
@@ -169,6 +195,12 @@ class Ball extends GameObject {
             d = (float) (r / sin(alfa));
             new_x = x + (A.x - x) * (l - d) / l;
             new_y = y + (A.y - y) * (l - d) / l;
+        }
+        Segment real_bias = new Segment(x, y, new_x, new_y);
+        if (bias.length() == 0) {
+            axil = 1;
+        } else {
+            axil = real_bias.length() / bias.length();
         }
         x = new_x;
         y = new_y;
