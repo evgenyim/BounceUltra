@@ -96,9 +96,21 @@ public class Vector {
         return vec1;
     }
 
+    void add(Vector vector) {
+        this.x += vector.x;
+        this.y += vector.y;
+    }
+
     void reverse() {
         this.x *= -1;
         this.y *= -1;
+    }
+
+    boolean if_null() {
+        if (this.x == 0 && this.y == 0) {
+            return true;
+        }
+        return false;
     }
 
     void write() {

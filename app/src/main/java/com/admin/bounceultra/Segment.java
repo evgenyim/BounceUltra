@@ -7,6 +7,7 @@ import android.graphics.Paint;
 public class Segment {
     Point a;
     Point b;
+    float eps = (float) 1e-4;
 
     static float angle(Segment segment1, Segment segment2) {
         Vector vec1 = new Vector(segment1);
@@ -21,6 +22,10 @@ public class Segment {
     static Vector normal(Segment segment) {
         Vector vec = new Vector(segment);
         return Vector.normal(vec);
+    }
+    float length(){
+        Vector vec = new Vector(this);
+        return vec.length();
     }
 
     //метод, проверяющий пересекаются ли 2 отрезка [p1, p2] и [p3, p4]
