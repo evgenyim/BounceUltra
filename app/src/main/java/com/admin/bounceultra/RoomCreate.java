@@ -13,7 +13,7 @@ public class RoomCreate {
         Room0.addObstacle(0,0,0,0, 0, 0);
         RoomList1.add(Room0);
         Room Room1 = new Room();
-        Point start_point1 = new Point(800, MainActivity.height / 4 - 85);
+        Point start_point1 = new Point(300, 300);
         Room1.addBall(start_point1,50);
         Room1.addObstacle(700,1200,900,1300, 0, 1);
         Room1.addObstacle(0, 0, MainActivity.width, MainActivity.height - 200,0,1);
