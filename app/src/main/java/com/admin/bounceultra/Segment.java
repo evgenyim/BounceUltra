@@ -4,6 +4,8 @@ package com.admin.bounceultra;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import java.util.ArrayList;
+
 public class Segment {
     Point a;
     Point b;
@@ -18,7 +20,6 @@ public class Segment {
         }
         return alfa;
     }
-
     static Vector normal(Segment segment) {
         Vector vec = new Vector(segment);
         return Vector.normal(vec);
@@ -27,8 +28,6 @@ public class Segment {
         Vector vec = new Vector(this);
         return vec.length();
     }
-
-    //метод, проверяющий пересекаются ли 2 отрезка [p1, p2] и [p3, p4]
     static boolean segments_intersect(Segment seg1, Segment seg2) {
         Point p1 = seg1.a;
         Point p2 = seg1.b;
@@ -109,7 +108,6 @@ public class Segment {
             return true;
         }
     }
-
     boolean intersect_ball(Ball ball) {
         float dist = Vector.dPointSegment(a, b, ball.centre());
         if (dist > ball.r) {
@@ -119,6 +117,9 @@ public class Segment {
     }
     void draw(Canvas canvas, Paint paint) {
         canvas.drawLine(a.x,a.y,b.x,b.y,paint);
+    }
+    void comunicate(Ball ball, int intersected_seg_ind, Segment cur_seg, ArrayList<GameObject> ObjectList, int intersected_obst_ind, float min_d){
+
     }
 
     Segment(Point a, Point b) {

@@ -66,47 +66,12 @@ class Ball extends GameObject {
         Segment cur_seg = null;
         if (intersected_seg_ind != -1) {
             cur_seg = ObjectList.get(intersected_obst_ind).segments.get(intersected_seg_ind);
-        }
-        if (intersected_seg_ind != - 1 && !stick_to_segment(cur_seg)) {
-            ArrayList<Segment> segments = ObjectList.get(intersected_obst_ind).segments;
-            float axil = 1;
-            MindTheGap(segments.get(intersected_seg_ind), axil);
-            axil *= g;
-            min_d = Vector.dPointSegment(segments.get(intersected_seg_ind).a, segments.get(intersected_seg_ind).b, centre());
-            Vector segment = new Vector(segments.get(intersected_seg_ind));
-            if (min_d  == centre().dist(segments.get(intersected_seg_ind).a) || min_d  == centre().dist(segments.get(intersected_seg_ind).b)) {
-                Vector new_velocity;
-                if (min_d  == centre().dist(segments.get(intersected_seg_ind).a)) {
-                    new_velocity = new Vector(segments.get(intersected_seg_ind).a, centre());
-                } else {
-                    new_velocity = new Vector(segments.get(intersected_seg_ind).b, centre());
-                }
-                new_velocity.unit();
-                new_velocity.multiplying(velocity.length());
-                velocity = new_velocity;
-            } else {
-                if (!velocity.if_null()) {
-                    velocity = Vector.reflect(velocity, segment);
-                }
-            }
-            velocity.y = (float) (velocity.y - g + axil);
-            x_speed = velocity.x * (1 - decreas);
-            y_speed = velocity.y * (1 - decreas);
-            return;
-        }
-
-        if (intersected_seg_ind != - 1 && stick_to_segment(cur_seg)) {
-            roll(cur_seg);
-            x_speed = velocity.x;
-            y_speed = velocity.y;
+            cur_seg.comunicate(this, intersected_seg_ind, cur_seg, ObjectList, intersected_obst_ind, min_d);
+        } else {
+            y_speed += g;
             x += x_speed;
             y += y_speed;
-            return;
         }
-
-        y_speed += g;
-        x += x_speed;
-        y += y_speed;
 
         for (int i = 0; i < cur_room.size(); i++) {
             if (cur_room.get(i).id == 3) {
