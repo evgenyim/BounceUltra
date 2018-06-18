@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     static int current_room = 1;
     static ArrayList <com.admin.bounceultra.Point> trajectory = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

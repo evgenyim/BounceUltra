@@ -43,16 +43,21 @@ public class GameScreen extends View {
     Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
     Bitmap wall = Bitmap.createScaledBitmap(bitmap, 2,(int) (MainActivity.height) * 3 / 4, false);
+    Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
     Paint paint = new Paint();
   
     protected void onDraw(Canvas canvas) {
 
+        Log.d("room", String.valueOf(MainActivity.current_room));
+        cur_room = MainActivity.RoomList.get(MainActivity.current_room).ObjectList;
+        cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
+
         paint.setColor(Color.BLUE);
         createBitmap();
         for(int i = 0; i < cur_room.size(); i++) {
             Bitmap bMap = bitmapList.get(cur_room.get(i).id);
-            cur_room.get(i).draw(canvas, paint,bMap);
+            cur_room.get(i).draw(canvas, paint, bMap);
             for (int j = 0; j < cur_room.get(i).segments.size(); j++){
                 cur_room.get(i).segments.get(j).draw(canvas,paint);
             }
@@ -79,5 +84,6 @@ public class GameScreen extends View {
         bitmapList.add(cube);
         bitmapList.add(rect);
         bitmapList.add(wall);
+        bitmapList.add(gate);
     }
 }
