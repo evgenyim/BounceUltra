@@ -18,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
     static int width;
     static int height;
     static ArrayList<Room> RoomList;
-    static int current_room = 0;
+    static int current_room = 1;
+    static ArrayList <com.admin.bounceultra.Point> trajectory = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,31 +43,49 @@ public class MainActivity extends AppCompatActivity {
         Vector vec1 = new Vector(-1, 0);
 //        Log.d("angle", String.valueOf(Math.toDegrees(vec.orianted_angle(vec1))));
 
-        final float[] xPress = new float[1];
-                    final float[] yPress = new float[1];
-                    final float[] xUnpress = new float[1];
-                    final float[] yUnpress = new float[1];
-                    final View.OnTouchListener list = new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            boolean unpress = false;
-                            if(!unpress) {
-                                switch(event.getAction()) {
-                                    case MotionEvent.ACTION_DOWN :
-                                        xPress[0] = event.getX();
-                                        yPress[0] = event.getY();
-                                        unpress = false;
-                                        break;
-                                    case MotionEvent.ACTION_UP :
-                                        xUnpress[0] = event.getX();
-                                        yUnpress[0] = event.getY();
-                                        unpress = true;
-                                }
-                }
-                if(unpress /*&& RoomList.get(current_room).ball.x_speed == 0 && RoomList.get(current_room).ball.y_speed == 0 */) {
-                    RoomList.get(current_room).ball.shot(xPress[0] - xUnpress[0],yPress[0] - yUnpress[0]);
-                }
-                return true;
+
+        final View.OnTouchListener list = new View.OnTouchListener() {
+            float xPress;
+            float yPress;
+            float xUnpress;
+            float yUnpress;
+            float xMove;
+            float yMove;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                boolean unpress = false;
+                if(!unpress) {
+                    switch(event.getAction()) {
+                        case MotionEvent.ACTION_DOWN :
+                            xPress = event.getX();
+                            yPress = event.getY();
+                            unpress = false;
+                            break;
+                        case MotionEvent.ACTION_UP :
+                            xUnpress = event.getX();
+                            yUnpress = event.getY();
+                            unpress = true;
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            trajectory.clear();
+                            Ball draft_ball = new Ball(RoomList.get(current_room).ball.x, RoomList.get(current_room).ball.y, RoomList.get(current_room).ball.r);
+                            xMove = event.getX();
+                            yMove = event.getY();
+                            draft_ball.shot(xPress - xMove, yPress - yMove);
+                            for (int i = 0; i < 100; i++) {
+                                draft_ball.move(RoomList.get(current_room).ObjectList);
+                                com.admin.bounceultra.Point p = new com.admin.bounceultra.Point(draft_ball.x, draft_ball.y);
+                                trajectory.add(p);
+                            }
+                            break;
+                    }
+            }
+            if(unpress /*&& RoomList.get(current_room).ball.x_speed == 0 && RoomList.get(current_room).ball.y_speed == 0 */) {
+                RoomList.get(current_room).ball.shot(xPress - xUnpress,yPress - yUnpress);
+                trajectory.clear();
+            }
+            return true;
             }
         };
         gameScreen.setOnTouchListener(list);
