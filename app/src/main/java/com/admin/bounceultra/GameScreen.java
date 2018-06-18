@@ -49,7 +49,6 @@ public class GameScreen extends View {
   
     protected void onDraw(Canvas canvas) {
 
-        Log.d("room", String.valueOf(MainActivity.current_room));
         cur_room = MainActivity.RoomList.get(MainActivity.current_room).ObjectList;
         cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
 
@@ -76,7 +75,7 @@ public class GameScreen extends View {
         }*/
         paint.setColor(Color.RED);
         cur_ball.draw(canvas, paint);
-        cur_ball.move(MainActivity.RoomList.get(MainActivity.current_room).ObjectList);
+        cur_ball.move(MainActivity.RoomList.get(MainActivity.current_room).ObjectList, false);
 
         postInvalidateDelayed(0);
     }

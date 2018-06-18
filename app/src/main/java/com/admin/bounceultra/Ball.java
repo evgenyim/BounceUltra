@@ -18,6 +18,7 @@ class Ball extends GameObject {
     double g = MainActivity.height * 1.0 / 1500;
     float decreas = (float) 0.2;
     float eps = (float) 1e-1;
+    boolean stop;
     Vector velocity;
 
 
@@ -35,8 +36,10 @@ class Ball extends GameObject {
         return p;
     }
 
-    void move(ArrayList<GameObject> ObjectList) {
-
+    void move(ArrayList<GameObject> ObjectList, boolean draft) {
+        if (stop) {
+            return;
+        }
         velocity = new Vector(x_speed, y_speed);
         Segment bias = new Segment(x, y, x + velocity.x, y + velocity.y);
         Ball future_ball = new Ball(x + x_speed, y + y_speed, r);
@@ -106,25 +109,29 @@ class Ball extends GameObject {
         y += y_speed;
 
         for (int i = 0; i < cur_room.size(); i++) {
-            if(cur_room.get(i).id == 3) {
+            if (cur_room.get(i).id == 3) {
                 Segment main_segment = cur_room.get(i).main_segment;
                 if (Segment.segments_intersect(bias, main_segment) || main_segment.intersect_ball(future_ball)) {
-                    room = MainActivity.RoomList.get(cur_room.get(i).next_room_id);
-                    room.ball.y_speed = this.y_speed;
-                    room.ball.x_speed = this.x_speed;
-                    room.ball.velocity = this.velocity;
-                    for (int j = 0; j < room.ObjectList.size(); j++) {
-                        if (room.ObjectList.get(j).id == 3 && room.ObjectList.get(j).next_room_id == MainActivity.current_room) {
-                            room.ball.x = room.ObjectList.get(j).x;
-                            room.ball.y = room.ObjectList.get(j).y;
+                    if (!draft) {
+                        room = MainActivity.RoomList.get(cur_room.get(i).next_room_id);
+                        room.ball.y_speed = this.y_speed;
+                        room.ball.x_speed = this.x_speed;
+                        room.ball.velocity = this.velocity;
+                        for (int j = 0; j < room.ObjectList.size(); j++) {
+                            if (room.ObjectList.get(j).id == 3 && room.ObjectList.get(j).next_room_id == MainActivity.current_room) {
+                                room.ball.x = room.ObjectList.get(j).x;
+                                room.ball.y = room.ObjectList.get(j).y;
+                            }
                         }
+                        MainActivity.current_room = cur_room.get(i).next_room_id;
+                        return;
+                    } else {
+                        stop = true;
+                        return;
                     }
-                    MainActivity.current_room = cur_room.get(i).next_room_id;
-                    return;
                 }
             }
         }
-
     }
 
     void roll(Segment segment) {

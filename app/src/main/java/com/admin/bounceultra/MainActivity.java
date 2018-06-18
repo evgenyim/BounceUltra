@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                             yMove = event.getY();
                             draft_ball.shot(xPress - xMove, yPress - yMove);
                             for (int i = 0; i < 100; i++) {
-                                draft_ball.move(RoomList.get(current_room).ObjectList);
+                                draft_ball.move(RoomList.get(current_room).ObjectList, true);
                                 com.admin.bounceultra.Point p = new com.admin.bounceultra.Point(draft_ball.x, draft_ball.y);
                                 trajectory.add(p);
                             }
