@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList<Room> RoomList;
     static int current_room = 0;
     static ArrayList <com.admin.bounceultra.Point> trajectory = new ArrayList<>();
+    int dots_in_trajectory = 20;
 
 
     @Override
@@ -71,10 +72,12 @@ public class MainActivity extends AppCompatActivity {
                             xMove = event.getX();
                             yMove = event.getY();
                             draft_ball.shot(xPress - xMove, yPress - yMove);
-                            for (int i = 0; i < 100; i++) {
+                            for (int i = 0; i < (dots_in_trajectory + 1) * 5; i++) {
                                 draft_ball.move(RoomList.get(current_room).ObjectList, true);
-                                com.admin.bounceultra.Point p = new com.admin.bounceultra.Point(draft_ball.x, draft_ball.y);
-                                trajectory.add(p);
+                                if (i % 1 == 0) {
+                                    com.admin.bounceultra.Point p = new com.admin.bounceultra.Point(draft_ball.x, draft_ball.y);
+                                    trajectory.add(p);
+                                }
                             }
                             break;
                     }
