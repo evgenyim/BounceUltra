@@ -40,10 +40,12 @@ public class GameScreen extends View {
     }
 
     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
+    Bitmap bitmap_brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
     Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
     Bitmap wall = Bitmap.createScaledBitmap(bitmap, 2,(int) (MainActivity.height) * 3 / 4, false);
     Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
+    Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
     Paint paint = new Paint();
   
@@ -52,7 +54,7 @@ public class GameScreen extends View {
         cur_room = MainActivity.RoomList.get(MainActivity.current_room).ObjectList;
         cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
 
-        paint.setColor(Color.BLUE);
+        paint.setColor(Color.RED);
         createBitmap();
         for(int i = 0; i < cur_room.size(); i++) {
             Bitmap bMap = bitmapList.get(cur_room.get(i).id);
@@ -84,5 +86,6 @@ public class GameScreen extends View {
         bitmapList.add(rect);
         bitmapList.add(wall);
         bitmapList.add(gate);
+        bitmapList.add(brick);
     }
 }

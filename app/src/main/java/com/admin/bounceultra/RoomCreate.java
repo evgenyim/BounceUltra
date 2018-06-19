@@ -11,7 +11,7 @@ public class RoomCreate {
        // Point start_point = new Point(100, 51);
         Room Room0 = new Room();
         Room0.addBall(start_point,50);
-        Room0.addObstacle(MainActivity.width - 300, MainActivity.height / 2 + 20, MainActivity.width, MainActivity.height / 2, 0, 2);
+        Room0.addObstacle(MainActivity.width - 300, MainActivity.height / 2 + 100, MainActivity.width, MainActivity.height / 2, 0, 2);
         Room0.addObstacle(0, 0, MainActivity.width, MainActivity.height - 200,0,1);
         Room0.addGate(0, (float) (MainActivity.height * 0.9)-100,200, (float) (MainActivity.height * 0.9),0,1, 3);
         RoomList1.add(Room0);
