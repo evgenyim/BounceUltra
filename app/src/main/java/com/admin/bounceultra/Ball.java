@@ -63,7 +63,7 @@ class Ball extends GameObject {
             }
         }
 
-        Segment cur_seg = null;
+        Segment cur_seg;
         if (intersected_seg_ind != -1) {
             cur_seg = ObjectList.get(intersected_obst_ind).segments.get(intersected_seg_ind);
             cur_seg.comunicate(this, intersected_seg_ind, cur_seg, ObjectList, intersected_obst_ind, min_d);
