@@ -118,7 +118,7 @@ public class Segment {
     void draw(Canvas canvas, Paint paint) {
         canvas.drawLine(a.x,a.y,b.x,b.y,paint);
     }
-    void comunicate(Ball ball, int intersected_seg_ind, Segment cur_seg, ArrayList<GameObject> ObjectList, int intersected_obst_ind, float min_d){
+    void comunicate(Ball ball, int intersected_seg_ind, Segment cur_seg, ArrayList<GameObject> ObjectList, int intersected_obst_ind, float min_d, boolean draft){
 
     }
 

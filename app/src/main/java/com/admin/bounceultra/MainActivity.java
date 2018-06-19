@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         Vector vec = new Vector(0, 1);
         Vector vec1 = new Vector(-1, 0);
 //        Log.d("angle", String.valueOf(Math.toDegrees(vec.orianted_angle(vec1))));
-
-
         final View.OnTouchListener list = new View.OnTouchListener() {
             float xPress;
             float yPress;

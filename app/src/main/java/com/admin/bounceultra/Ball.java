@@ -63,17 +63,17 @@ class Ball extends GameObject {
             }
         }
 
-        Segment cur_seg = null;
+        Segment cur_seg;
         if (intersected_seg_ind != -1) {
             cur_seg = ObjectList.get(intersected_obst_ind).segments.get(intersected_seg_ind);
-            cur_seg.comunicate(this, intersected_seg_ind, cur_seg, ObjectList, intersected_obst_ind, min_d);
+            cur_seg.comunicate(this, intersected_seg_ind, cur_seg, ObjectList, intersected_obst_ind, min_d, draft);
         } else {
             y_speed += g;
             x += x_speed;
             y += y_speed;
         }
 
-        for (int i = 0; i < cur_room.size(); i++) {
+   /*     for (int i = 0; i < cur_room.size(); i++) {
             if (cur_room.get(i).id == 3) {
                 Segment main_segment = cur_room.get(i).main_segment;
                 if (Segment.segments_intersect(bias, main_segment) || main_segment.intersect_ball(future_ball)) {
@@ -96,7 +96,7 @@ class Ball extends GameObject {
                     }
                 }
             }
-        }
+        }*/
     }
 
     void roll(Segment segment) {

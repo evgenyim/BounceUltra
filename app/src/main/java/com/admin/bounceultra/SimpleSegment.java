@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 class SimpleSegment extends Segment {
 
-    void comunicate(Ball ball, int intersected_seg_ind, Segment cur_seg, ArrayList<GameObject> ObjectList, int intersected_obst_ind, float min_d) {
+    void comunicate(Ball ball, int intersected_seg_ind, Segment cur_seg, ArrayList<GameObject> ObjectList, int intersected_obst_ind, float min_d, boolean draft) {
         if (!ball.stick_to_segment(cur_seg)) {
             ArrayList<Segment> segments = ObjectList.get(intersected_obst_ind).segments;
             float axil = 1;
