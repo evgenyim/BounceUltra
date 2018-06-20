@@ -31,7 +31,7 @@ public class LevelsScreen extends View {
     Bitmap bitmap_brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
     Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
-    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainActivity.height) * 3 / 4, false);
+   // Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainActivity.height) * 3 / 4, false);
     Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
     Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
@@ -41,14 +41,14 @@ public class LevelsScreen extends View {
         paint.setColor(Color.RED);
         createBitmap();
 
-        MainActivity.RoomList.get(MainActivity.current_room).draw(100, 100, 6, canvas, paint, bitmapList);
+     //   MainActivity.RoomList.get(MainActivity.current_room).draw(100, 100, 6, canvas, paint, bitmapList);
 
     }
 
     void createBitmap() {
         bitmapList.add(cube);
         bitmapList.add(rect);
-        bitmapList.add(wall);
+       // bitmapList.add(wall);
         bitmapList.add(gate);
         bitmapList.add(brick);
     }

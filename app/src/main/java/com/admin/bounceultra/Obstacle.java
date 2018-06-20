@@ -47,7 +47,7 @@ class Obstacle extends GameObject {
      }
 
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
-         m.setTranslate(x_left, y_top);
+         m.setTranslate(x_left, y_bottom);
          m.preRotate(degrees);
          canvas.drawBitmap(bitmap, m, null);
     }

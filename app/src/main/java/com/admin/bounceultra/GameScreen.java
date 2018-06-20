@@ -67,7 +67,7 @@ public class GameScreen extends View {
             com.admin.bounceultra.Point p = MainActivity.trajectory.get(i);
             canvas.drawCircle(p.x, p.y, 10, paint);
         }
-
+       // MainActivity.RoomList.get(MainActivity.current_room).draw(100, 100, 6, canvas, paint, bitmapList);
       /*  for(int i = 0; i < MainActivity.RoomList.get(MainActivity.current_room).segments.size(); i++) {
             if (i == Ball.index) {
                 paint.setColor(Color.RED);

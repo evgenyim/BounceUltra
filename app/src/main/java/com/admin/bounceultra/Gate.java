@@ -42,7 +42,7 @@ class Gate extends GameObject {
         Log.d("y", String.valueOf(y));
     }
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
-        m.setTranslate(x, y);
+        m.setTranslate(x_left, y_top);
         m.preRotate((float) degree);
         canvas.drawBitmap(bitmap, m, null);
     }

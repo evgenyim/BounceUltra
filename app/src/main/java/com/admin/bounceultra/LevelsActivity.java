@@ -12,6 +12,7 @@ public class LevelsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levels);
+        final LevelsScreen gameScreen = findViewById(R.id.game_screen);
 
         final LevelsActivity this_ = this;
         Button play_button = findViewById(R.id.play_button);
