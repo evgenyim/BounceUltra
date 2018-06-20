@@ -14,7 +14,7 @@ class GateSegment extends Segment {
                     for (int j = 0; j < room.ObjectList.size(); j++) {
                         if (room.ObjectList.get(j).id == 3 && room.ObjectList.get(j).next_room_id == MainActivity.current_room) {
                             room.ball.x = room.ObjectList.get(j).x;
-                            room.ball.y = room.ObjectList.get(j).y;
+                            room.ball.y = room.ObjectList.get(j).y + Math.signum(ball.y_speed) * 50;
                         }
                     }
                     MainActivity.current_room = ObjectList.get(intersected_obst_ind).next_room_id;
