@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
         display.getSize(size);
         width = size.x;
         height = size.y;
-
+        
         RoomList = RoomCreate.create();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final GameScreen gameScreen = (GameScreen) findViewById(R.id.game_screen);
+        final GameScreen gameScreen = findViewById(R.id.game_screen);
 
         final Button btn = (Button) findViewById(R.id.button);
         btn.setText("Baranov");

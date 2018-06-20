@@ -8,29 +8,42 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class Gate extends GameObject {
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.toRadians;
+
+class Gate extends GameObject {
 
     float x_left;
     float y_top;
     float x_right;
     float y_bottom;
     Matrix m = new Matrix();
-    float degrees;
+    double degree;
 
-    Gate(float x_left,float y_top,float x_right,float y_bottom, float degrees, int next_room_id, int id) {
+    Gate(float x_left,float y_top,float x_right,float y_bottom, double degree, int next_room_id, int id) {
         this.x_left = x_left;
         this.x_right = x_right;
         this.y_bottom = y_bottom;
         this.y_top = y_top;
-        this.degrees = degrees;
+        this.degree = degree;
         this.next_room_id = next_room_id;
         this.id = id;
-        x = (this.x_left + this.x_right) / 2;
-        y = this.y_bottom + 2;
+        degree = (toRadians(degree));
+        start_x = (this.x_left + this.x_right) / 2;
+        start_y = this.y_top + 2;
+        Point A = new Point(this.x_left, this.y_top);
+        Point B = new Point(start_x, start_y);
+        Vector vec = new Vector(A,B);
+        Vector new_vec = Vector.rotate_by_angle(vec,(float) degree);
+        start_x = this.x_left + new_vec.x;
+        start_y = this.y_top + new_vec.y;
+        Log.d("x", String.valueOf(start_x));
+        Log.d("y", String.valueOf(y));
     }
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
         m.setTranslate(x_left, y_top);
-        m.preRotate(degrees);
+        m.preRotate((float) degree);
         canvas.drawBitmap(bitmap, m, null);
     }
 }
