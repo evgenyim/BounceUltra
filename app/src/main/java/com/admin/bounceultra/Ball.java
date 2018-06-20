@@ -70,6 +70,8 @@ class Ball extends GameObject {
             x += x_speed;
             y += y_speed;
         }
+        Log.d("x", String.valueOf(x));
+        Log.d("y", String.valueOf(y));
     }
 
     void roll(Segment segment) {
@@ -108,10 +110,10 @@ class Ball extends GameObject {
         }
     }
 
-    void MindTheGap(Segment segment, float axil) {
+    void MindTheGap(Segment segment, float axil, float min_d) {
         if (velocity.x == 0 && velocity.y == 0) {
             return;
-        };
+        }
         Segment bias = new Segment(x, y, x + velocity.x, y + velocity.y);
         Line n = new Line(bias);
         Line m = new Line(segment);
@@ -120,7 +122,7 @@ class Ball extends GameObject {
         float d;
         float new_x;
         float new_y;
-        if (A == null) {
+        if ((A == null)) {
             Vector normal = Segment.normal(segment);
             Point E;
             if (centre().dist(segment.a) < centre().dist(segment.b)) {
@@ -135,12 +137,52 @@ class Ball extends GameObject {
             new_x = x + (B.x - x) * (l - d) / l;
             new_y = y + (B.y - y) * (l - d) / l;
         } else {
-            float alfa = Segment.angle(bias, segment);
-            l = (float) sqrt((x - A.x) * (x - A.x) + (y - A.y) * (y - A.y));
-            d = (float) (r / sin(alfa));
-            new_x = x + (A.x - x) * (l - d) / l;
-            new_y = y + (A.y - y) * (l - d) / l;
+            if ((min_d == centre().dist(segment.a)) || (min_d == centre().dist(segment.b))) {
+                Point p;
+                if (min_d == centre().dist(segment.a)) {
+                    p = segment.a;
+                } else {
+                    p = segment.b;
+                }
+
+
+                float a = (n.a / n.b) * (n.a / n.b) + 1;
+                float b = (2 * (p.y + n.c / n.b) * (n.a / n.b) - 2 * p.x);
+                float c = (p.y + n.c / n.b) * (p.y + n.c / n.b) + p.x * p.x - r * r;
+                float discr = b * b - 4 * a * c;
+
+                float x1 = (float) ((-b + sqrt(discr)) / (2 * a));
+                float x2 = (float) ((-b - sqrt(discr)) / (2 * a));
+                float y_1_1 = (float) (p.y - sqrt(r * r - (p.x - x1) * (p.x - x1)));
+                float y_1_2 = (float) (p.y + sqrt(r * r - (p.x - x1) * (p.x - x1)));
+                float y_2_1 = (float) (p.y - sqrt(r * r - (p.x - x2) * (p.x - x2)));
+                float y_2_2 = (float) (p.y + sqrt(r * r - (p.x - x2) * (p.x - x2)));
+
+                Log.d("x1", String.valueOf(x1));
+                Log.d("x2", String.valueOf(x2));
+               // Log.d("y1", String.valueOf(y1));
+               // Log.d("y2", String.valueOf(y2));
+
+                Point centre1 = new Point(x1, y_1_1);
+                Point centre2 = new Point(x1, y_1_2);
+                Point centre3 = new Point(x1, y_2_1);
+                Point centre4 = new Point(x1, y_2_2);
+                if (Vector.dPointSegment(centre1, segment.a, segment.b) >= r) {
+                    new_x = x1;
+                    new_y = y_1_1;
+                } else {
+                    new_x = x2;
+                    new_y = y_2_1;
+                }
+            } else {
+                float alfa = Segment.angle(bias, segment);
+                l = (float) sqrt((x - A.x) * (x - A.x) + (y - A.y) * (y - A.y));
+                d = (float) (r / sin(alfa));
+                new_x = x + (A.x - x) * (l - d) / l;
+                new_y = y + (A.y - y) * (l - d) / l;
+            }
         }
+
         Segment real_bias = new Segment(x, y, new_x, new_y);
         if (bias.length() == 0) {
             axil = 1;
