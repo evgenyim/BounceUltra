@@ -43,7 +43,7 @@ public class GameScreen extends View {
     Bitmap bitmap_brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
     Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
-    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 2,(int) (MainActivity.height) * 3 / 4, false);
+    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainActivity.height) * 3 / 4, false);
     Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
     Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
@@ -67,6 +67,7 @@ public class GameScreen extends View {
             com.admin.bounceultra.Point p = MainActivity.trajectory.get(i);
             canvas.drawCircle(p.x, p.y, 10, paint);
         }
+
       /*  for(int i = 0; i < MainActivity.RoomList.get(MainActivity.current_room).segments.size(); i++) {
             if (i == Ball.index) {
                 paint.setColor(Color.RED);

@@ -6,9 +6,11 @@ import android.graphics.Paint;
 
 import java.util.ArrayList;
 
-public class GameObject {
+class GameObject {
     float x;
     float y;
+    float start_x;
+    float start_y;
     int id;
     ArrayList<Segment> segments = new ArrayList<Segment>();
     Segment main_segment;

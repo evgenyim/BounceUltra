@@ -18,6 +18,8 @@ class Obstacle extends GameObject {
      float y_top;
      float x_right;
      float y_bottom;
+     float x_centre;
+     float y_centre;
      Matrix m = new Matrix();
      float degrees;
      ArrayList<Segment> segments = new ArrayList<Segment>();
@@ -45,7 +47,7 @@ class Obstacle extends GameObject {
      }
 
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
-         m.setTranslate(x_left, y_bottom);
+         m.setTranslate(x_left, y_top);
          m.preRotate(degrees);
          canvas.drawBitmap(bitmap, m, null);
     }

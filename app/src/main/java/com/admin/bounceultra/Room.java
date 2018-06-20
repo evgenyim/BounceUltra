@@ -1,5 +1,12 @@
 package com.admin.bounceultra;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import static java.lang.Math.*;
@@ -10,8 +17,27 @@ class Room {
     Ball ball;
     static Obstacle obstacle;
 
+    @SuppressLint("NewApi")
+    void draw(float x, float y, float k, Canvas canvas, Paint paint, ArrayList<Bitmap> bitmap_list) {
+        for (int i = 0; i < ObjectList.size(); i++) {
+            GameObject cur_object = ObjectList.get(i);
+            cur_object.x /= k;
+            cur_object.y /= k;
+            cur_object.x += x;
+            cur_object.y += y;
+            Bitmap cur_bitmap = Bitmap.createBitmap(bitmap_list.get(cur_object.id));
+            Log.d("height", String.valueOf(cur_bitmap.getHeight()));
+            Log.d("width", String.valueOf(cur_bitmap.getWidth()));
+            cur_bitmap.setHeight((int) (cur_bitmap.getHeight() / k));
+            cur_bitmap.setWidth((int) (cur_bitmap.getWidth() / k));
+            cur_object.draw(canvas, paint, cur_bitmap);
+        }
+    }
+
     void addObstacle(float x_left, float y_top, float x_right, float y_bottom, float degrees, int id) {
         obstacle = new Obstacle(x_left, y_top, x_right, y_bottom, degrees, id);
+        obstacle.x_centre = (x_left + x_right) / 2;
+        obstacle.y_centre = (y_bottom + y_top) / 2;
         ObjectList.add(obstacle);
         int obstId = ObjectList.size() - 1;
         addSegments(x_left, y_top, x_right, y_bottom, degrees, obstId);
