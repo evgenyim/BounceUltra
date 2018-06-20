@@ -17,8 +17,8 @@ class Room {
         addSegments(x_left, y_top, x_right, y_bottom, degrees, obstId);
     }
 
-    void addSegments(float x_left, float y_top, float x_right, float y_bottom, float degree, int obstId) {
-        degree = (float)(toRadians(degree));
+    void addSegments(float x_left, float y_top, float x_right, float y_bottom, double degree, int obstId) {
+        degree = toRadians(degree);
         Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
         Point point_left_top = new Point(x_left, y_top);
         Point point_left_bottom = new Point(x_left + (x_left - x_left)  * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_left - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
@@ -39,7 +39,7 @@ class Room {
 
     void addGate(float x_left, float y_top, float x_right, float y_bottom, float degree, int next_room_id, int id) {
         Gate gate = new Gate(x_left, y_top, x_right, y_bottom, degree, next_room_id, id);
-
+        degree = (float) toRadians(degree);
         Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
         Point point_left_top = new Point(x_left, y_top);
         Point point_left_bottom = new Point(x_left + (x_left - x_left)  * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_left - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
