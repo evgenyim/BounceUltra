@@ -18,6 +18,8 @@ class Obstacle extends GameObject {
      float y_top;
      float x_right;
      float y_bottom;
+     float x_centre;
+     float y_centre;
      Matrix m = new Matrix();
      float degrees;
      ArrayList<Segment> segments = new ArrayList<Segment>();

@@ -30,15 +30,15 @@ class Gate extends GameObject {
         this.next_room_id = next_room_id;
         this.id = id;
         degree = (toRadians(degree));
-        x = (this.x_left + this.x_right) / 2;
-        y = this.y_top + 2;
+        start_x = (this.x_left + this.x_right) / 2;
+        start_y = this.y_top + 2;
         Point A = new Point(this.x_left, this.y_top);
-        Point B = new Point(x, y);
+        Point B = new Point(start_x, start_y);
         Vector vec = new Vector(A,B);
         Vector new_vec = Vector.rotate_by_angle(vec,(float) degree);
-        x = this.x_left + new_vec.x;
-        y = this.y_top + new_vec.y;
-        Log.d("x", String.valueOf(x));
+        start_x = this.x_left + new_vec.x;
+        start_y = this.y_top + new_vec.y;
+        Log.d("x", String.valueOf(start_x));
         Log.d("y", String.valueOf(y));
     }
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {

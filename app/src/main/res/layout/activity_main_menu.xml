@@ -6,24 +6,20 @@
     android:orientation="vertical">
 
 
-    <com.admin.bounceultra.GameScreen
+    <com.admin.bounceultra.MainMenuScreen
         android:id="@+id/game_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:background="@drawable/underground">
 
-    </com.admin.bounceultra.GameScreen>
+    </com.admin.bounceultra.MainMenuScreen>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp"
+        android:layout_centerInParent="true"
         android:text="Button" />
 
 </RelativeLayout>
