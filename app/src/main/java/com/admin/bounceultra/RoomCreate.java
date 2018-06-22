@@ -7,8 +7,7 @@ import java.util.ArrayList;
 public class RoomCreate {
     static ArrayList<Room> RoomList1 = new ArrayList<>();
     public static ArrayList<Room> create() {
-        //Point start_point = new Point(MainActivity.width - 200, 51);
-        Point start_point = new Point(300, 51);
+        Point start_point = new Point(900, 51);
         Room Room0 = new Room();
         Room0.addBall(start_point,50);
         Room0.addObstacle(MainActivity.width - 300, MainActivity.height / 2 + 100, MainActivity.width, MainActivity.height / 2, 0, 4);

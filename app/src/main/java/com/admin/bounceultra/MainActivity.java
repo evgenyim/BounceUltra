@@ -41,18 +41,6 @@ public class MainActivity extends AppCompatActivity {
         final Button btn = (Button) findViewById(R.id.button);
         btn.setText("Baranov");
 
-        Vector vec = new Vector(0, 1);
-        Vector vec1 = new Vector(-1, 0);
-//        Log.d("angle", String.valueOf(Math.toDegrees(vec.orianted_angle(vec1))));
-
-        ArrayList <Integer> a = new ArrayList<>();
-        a.add(1);
-        a.add(2);
-        a.add(3);
-        int b = a.get(1);
-        b += 100;
-        Log.d("popa", String.valueOf(a.get(1)));
-
         final View.OnTouchListener list = new View.OnTouchListener() {
             float xPress;
             float yPress;
@@ -83,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                             yMove = event.getY();
                             draft_ball.shot(xPress - xMove, yPress - yMove);
                             for (int i = 0; i < (dots_in_trajectory + 1) * dist_between_dots; i++) {
-                                draft_ball.move(RoomList.get(current_room).ObjectList, true);
+                                draft_ball.move(RoomList.get(current_room).objectList, true);
                                 if (i % dist_between_dots == 0) {
                                     com.admin.bounceultra.Point p = new com.admin.bounceultra.Point(draft_ball.x, draft_ball.y);
                                     trajectory.add(p);

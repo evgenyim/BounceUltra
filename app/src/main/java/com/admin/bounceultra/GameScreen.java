@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import static android.content.Context.MODE_PRIVATE;
 
 public class GameScreen extends View {
-    static ArrayList<GameObject> cur_room = MainActivity.RoomList.get(MainActivity.current_room).ObjectList;
+    static ArrayList<GameObject> cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
     static Ball cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
     public GameScreen(@NonNull Context context) {
         super(context);
@@ -46,28 +46,29 @@ public class GameScreen extends View {
     Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainActivity.height) * 3 / 4, false);
     Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
     Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
-    ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
+    ArrayList<Bitmap> bitmapList = new ArrayList<>();
     Paint paint = new Paint();
   
     protected void onDraw(Canvas canvas) {
 
-        cur_room = MainActivity.RoomList.get(MainActivity.current_room).ObjectList;
+        cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
         cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
 
         paint.setColor(Color.RED);
         createBitmap();
-        for(int i = 0; i < cur_room.size(); i++) {
-            Bitmap bMap = bitmapList.get(cur_room.get(i).id);
-            cur_room.get(i).draw(canvas, paint, bMap);
-            for (int j = 0; j < cur_room.get(i).segments.size(); j++){
-                cur_room.get(i).segments.get(j).draw(canvas,paint);
+        for(int i = 0; i < cur_room_objects.size(); i++) {
+            Bitmap bMap = bitmapList.get(cur_room_objects.get(i).id);
+//            Log.d("x", String.valueOf(cur_room_objects.get(i).x));
+            cur_room_objects.get(i).draw(canvas, paint, bMap);
+            for (int j = 0; j < cur_room_objects.get(i).segments.size(); j++){
+                cur_room_objects.get(i).segments.get(j).draw(canvas,paint);
             }
         }
         for (int i = 0; i < MainActivity.trajectory.size(); i++) {
             com.admin.bounceultra.Point p = MainActivity.trajectory.get(i);
             canvas.drawCircle(p.x, p.y, 10, paint);
         }
-       // MainActivity.RoomList.get(MainActivity.current_room).draw(100, 100, 6, canvas, paint, bitmapList);
+        MainActivity.RoomList.get(MainActivity.current_room).draw(100, 100, 6, canvas, paint, bitmapList, MainActivity.RoomList.get(MainActivity.current_room).objectList);
       /*  for(int i = 0; i < MainActivity.RoomList.get(MainActivity.current_room).segments.size(); i++) {
             if (i == Ball.index) {
                 paint.setColor(Color.RED);
@@ -77,8 +78,8 @@ public class GameScreen extends View {
             MainActivity.RoomList.get(MainActivity.current_room).segments.get(i).draw(canvas, paint);
         }*/
         paint.setColor(Color.RED);
-        cur_ball.draw(canvas, paint);
-        cur_ball.move(MainActivity.RoomList.get(MainActivity.current_room).ObjectList, false);
+        cur_ball.draw(canvas, paint, cube);
+        cur_ball.move(MainActivity.RoomList.get(MainActivity.current_room).objectList, false);
 
         postInvalidateDelayed(0);
     }

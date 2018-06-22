@@ -12,13 +12,12 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
-class Gate extends GameObject {
+class Gate extends GameObject implements Cloneable{
 
     float x_left;
     float y_top;
     float x_right;
     float y_bottom;
-    Matrix m = new Matrix();
     double degree;
 
     Gate(float x_left,float y_top,float x_right,float y_bottom, double degree, int next_room_id, int id) {
@@ -38,12 +37,32 @@ class Gate extends GameObject {
         Vector new_vec = Vector.rotate_by_angle(vec,(float) degree);
         start_x = this.x_left + new_vec.x;
         start_y = this.y_top + new_vec.y;
-        Log.d("x", String.valueOf(start_x));
-        Log.d("y", String.valueOf(y));
+        this.x = (x_left + x_right) / 2;
+        this.y = (y_bottom + y_top) / 2;
     }
+
+    void moveToXY(float newX, float newY){
+        float deltaX = newX - x;
+        float deltaY = newY - y;
+        x_right += deltaX;
+        x_left += deltaX;
+        y_top += deltaY;
+        y_bottom += deltaY;
+        x += deltaX;
+        y += deltaY;
+
+    }
+
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
+        Matrix m = new Matrix();
         m.setTranslate(x_left, y_top);
         m.preRotate((float) degree);
         canvas.drawBitmap(bitmap, m, null);
+    }
+
+    public Gate clone() throws CloneNotSupportedException{
+
+        Gate newGate = (Gate) super.clone();
+        return newGate;
     }
 }

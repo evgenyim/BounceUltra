@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.Log;
 
@@ -13,23 +14,27 @@ import static java.lang.Math.*;
 
 class Room {
 
-    ArrayList<GameObject> ObjectList = new ArrayList<GameObject>();
+    ArrayList<GameObject> objectList = new ArrayList<GameObject>();
     Ball ball;
     static Obstacle obstacle;
 
-    @SuppressLint("NewApi")
-    void draw(float x, float y, float k, Canvas canvas, Paint paint, ArrayList<Bitmap> bitmap_list) {
-        for (int i = 0; i < ObjectList.size(); i++) {
-            GameObject cur_object = ObjectList.get(i);
-            cur_object.x /= k;
-            cur_object.y /= k;
-            cur_object.x += x;
-            cur_object.y += y;
+    void draw(float x, float y, float k, Canvas canvas, Paint paint, ArrayList<Bitmap> bitmap_list, ArrayList<GameObject> objectList) {
+        for (int i = 0; i < objectList.size(); i++) {
+            GameObject cur_object = null;
+            try {
+                cur_object = objectList.get(i).clone();
+            } catch (CloneNotSupportedException ex){
+                System.out.println("Clonable not implemented");
+            }
+            float newX = cur_object.x / k + x;
+            float newY = cur_object.y / k + y;
+            cur_object.moveToXY(newX, newY);
             Bitmap cur_bitmap = Bitmap.createBitmap(bitmap_list.get(cur_object.id));
-            Log.d("height", String.valueOf(cur_bitmap.getHeight()));
-            Log.d("width", String.valueOf(cur_bitmap.getWidth()));
-            cur_bitmap.setHeight((int) (cur_bitmap.getHeight() / k));
-            cur_bitmap.setWidth((int) (cur_bitmap.getWidth() / k));
+            cur_bitmap = Bitmap.createScaledBitmap(cur_bitmap, cur_bitmap.getWidth(), cur_bitmap.getHeight(), false);
+            cur_object.draw(canvas, paint, cur_bitmap);
+//            Matrix m = new Matrix();
+//            m.setTranslate(300, 300);
+//            canvas.drawBitmap(cur_bitmap, m, paint);
             cur_object.draw(canvas, paint, cur_bitmap);
         }
     }
@@ -38,8 +43,8 @@ class Room {
         obstacle = new Obstacle(x_left, y_top, x_right, y_bottom, degrees, id);
         obstacle.x_centre = (x_left + x_right) / 2;
         obstacle.y_centre = (y_bottom + y_top) / 2;
-        ObjectList.add(obstacle);
-        int obstId = ObjectList.size() - 1;
+        objectList.add(obstacle);
+        int obstId = objectList.size() - 1;
         addSegments(x_left, y_top, x_right, y_bottom, degrees, obstId);
     }
 
@@ -53,10 +58,10 @@ class Room {
         SimpleSegment segm_right = new SimpleSegment(point_right_top, point_right_bottom);
         SimpleSegment segm_bottom = new SimpleSegment(point_left_bottom, point_right_bottom);
         SimpleSegment segm_left = new SimpleSegment(point_left_top, point_left_bottom);
-        ObjectList.get(obstId).segments.add(segm_top);
-        ObjectList.get(obstId).segments.add(segm_right);
-        ObjectList.get(obstId).segments.add(segm_bottom);
-        ObjectList.get(obstId).segments.add(segm_left);
+        objectList.get(obstId).segments.add(segm_top);
+        objectList.get(obstId).segments.add(segm_right);
+        objectList.get(obstId).segments.add(segm_bottom);
+        objectList.get(obstId).segments.add(segm_left);
     }
 
     void addBall(Point p, float r) {
@@ -79,7 +84,7 @@ class Room {
         gate.segments.add(segm_bottom);
        //gate.main_segment = segm_top;
         gate.segments.add(segm_top);
-        ObjectList.add(gate);
+        objectList.add(gate);
     }
 
    // void addWall()
