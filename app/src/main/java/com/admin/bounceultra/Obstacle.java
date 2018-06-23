@@ -9,10 +9,11 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import java.util.ArrayList;
 
-class Obstacle extends GameObject {
+class Obstacle extends GameObject implements Cloneable{
 
      float x_left;
      float y_top;
@@ -20,24 +21,39 @@ class Obstacle extends GameObject {
      float y_bottom;
      float x_centre;
      float y_centre;
-     Matrix m = new Matrix();
      float degrees;
-     ArrayList<Segment> segments = new ArrayList<Segment>();
 
 
-
-     Obstacle(float x_left,float y_top,float x_right,float y_bottom, float degrees, int id) {
+     Obstacle(float x_left,float y_top, float x_right,float y_bottom, float degrees, int id) {
          this.x_left = x_left;
          this.x_right = x_right;
          this.y_bottom = y_bottom;
          this.y_top = y_top;
          this.degrees = degrees;
          this.id = id;
+         this.x = (x_left + x_right) / 2;
+         this.y = (y_bottom + y_top) / 2;
      }
 
-     void move(float x, float y){
-
+     void moveToXY(float newX, float newY){
+         float deltaX = newX - x;
+         float deltaY = newY - y;
+         x_right += deltaX;
+         x_left += deltaX;
+         y_top += deltaY;
+         y_bottom += deltaY;
+         x += deltaX;
+         y += deltaY;
      }
+
+    void compress(float k) {
+        float width = x_right - x_left;
+        float hight = y_top - y_bottom;
+        x_left = x - width / k / 2;
+        x_right = x + width / k / 2;
+        y_bottom = y - hight / k / 2;
+        y_top = y + hight / k / 2;
+    }
 
      boolean iftouchinside (float x, float y){
          if ((x <= x_right) && (x >= x_left) && (y >= y_bottom) && (y <= y_top)){
@@ -47,9 +63,15 @@ class Obstacle extends GameObject {
      }
 
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
-         m.setTranslate(x_left, y_bottom);
+         Matrix m = new Matrix();
+         m.setTranslate(x_left, y_top);
          m.preRotate(degrees);
          canvas.drawBitmap(bitmap, m, null);
     }
 
+    public Obstacle clone() throws CloneNotSupportedException{
+
+        Obstacle newObstacle = (Obstacle) super.clone();
+        return newObstacle;
+    }
  }

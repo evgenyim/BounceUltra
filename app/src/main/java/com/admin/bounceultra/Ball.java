@@ -1,13 +1,15 @@
 package com.admin.bounceultra;
 
 import static java.lang.Math.*;
+
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
 import java.util.ArrayList;
 
-class Ball extends GameObject {
+class Ball extends GameObject implements Cloneable{
     float x;
     float y;
     float r;
@@ -27,13 +29,23 @@ class Ball extends GameObject {
         y_speed += (to_y) * k;
     }
 
-    void draw(Canvas canvas, Paint paint) {
+    @Override
+    void moveToXY(float newX, float newY) {
+        x = newX;
+        y = newY;
+    }
+
+    void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
         canvas.drawCircle(x, y, r, paint);
     }
 
     Point centre() {
         Point p = new Point(x, y);
         return p;
+    }
+
+    void compress(float k) {
+        r /= k;
     }
 
     void move(ArrayList<GameObject> ObjectList, boolean draft) {
@@ -70,8 +82,6 @@ class Ball extends GameObject {
             x += x_speed;
             y += y_speed;
         }
-        Log.d("x", String.valueOf(x));
-        Log.d("y", String.valueOf(y));
     }
 
     void roll(Segment segment) {
@@ -158,11 +168,6 @@ class Ball extends GameObject {
                 float y_2_1 = (float) (p.y - sqrt(r * r - (p.x - x2) * (p.x - x2)));
                 float y_2_2 = (float) (p.y + sqrt(r * r - (p.x - x2) * (p.x - x2)));
 
-                Log.d("x1", String.valueOf(x1));
-                Log.d("x2", String.valueOf(x2));
-               // Log.d("y1", String.valueOf(y1));
-               // Log.d("y2", String.valueOf(y2));
-
                 Point centre1 = new Point(x1, y_1_1);
                 Point centre2 = new Point(x1, y_1_2);
                 Point centre3 = new Point(x1, y_2_1);
@@ -204,5 +209,12 @@ class Ball extends GameObject {
         this.x = x;
         this.y = y;
         this.r = r;
+    }
+
+    public Ball clone() throws CloneNotSupportedException{
+
+        Ball newBall = (Ball) super.clone();
+        newBall.velocity = (Vector) velocity.clone();
+        return newBall;
     }
 }

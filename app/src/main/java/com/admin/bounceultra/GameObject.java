@@ -6,7 +6,7 @@ import android.graphics.Paint;
 
 import java.util.ArrayList;
 
-class GameObject {
+abstract class GameObject implements Cloneable{
     float x;
     float y;
     float start_x;
@@ -16,6 +16,19 @@ class GameObject {
     Segment main_segment;
     int next_room_id;
 
-    void draw(Canvas canvas, Paint paint, Bitmap bitmap){
+    abstract void draw(Canvas canvas, Paint paint, Bitmap bitmap);
+
+    abstract void moveToXY(float newX, float newY);
+
+    abstract void compress(float k);
+
+    GameObject() {
     }
+
+    public GameObject clone() throws CloneNotSupportedException{
+
+        GameObject newGameObject = (GameObject) super.clone();
+        return newGameObject;
+    }
+
 }
