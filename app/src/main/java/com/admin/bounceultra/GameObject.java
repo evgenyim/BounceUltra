@@ -20,6 +20,8 @@ abstract class GameObject implements Cloneable{
 
     abstract void moveToXY(float newX, float newY);
 
+    abstract void compress(float k);
+
     GameObject() {
     }
 

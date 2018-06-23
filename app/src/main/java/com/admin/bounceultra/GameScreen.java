@@ -58,7 +58,6 @@ public class GameScreen extends View {
         createBitmap();
         for(int i = 0; i < cur_room_objects.size(); i++) {
             Bitmap bMap = bitmapList.get(cur_room_objects.get(i).id);
-//            Log.d("x", String.valueOf(cur_room_objects.get(i).x));
             cur_room_objects.get(i).draw(canvas, paint, bMap);
             for (int j = 0; j < cur_room_objects.get(i).segments.size(); j++){
                 cur_room_objects.get(i).segments.get(j).draw(canvas,paint);
@@ -68,7 +67,10 @@ public class GameScreen extends View {
             com.admin.bounceultra.Point p = MainActivity.trajectory.get(i);
             canvas.drawCircle(p.x, p.y, 10, paint);
         }
-        MainActivity.RoomList.get(MainActivity.current_room).draw(100, 100, 6, canvas, paint, bitmapList, MainActivity.RoomList.get(MainActivity.current_room).objectList);
+
+//        MainActivity.RoomList.get(MainActivity.current_room).draw(0, 0, 2, canvas, paint, bitmapList);
+//        canvas.drawLine(0, MainActivity.height / 2, MainActivity.width / 2, MainActivity.height / 2, paint);
+//        canvas.drawLine(MainActivity.width / 2, 0, MainActivity.width / 2, MainActivity.height / 2, paint);
       /*  for(int i = 0; i < MainActivity.RoomList.get(MainActivity.current_room).segments.size(); i++) {
             if (i == Ball.index) {
                 paint.setColor(Color.RED);

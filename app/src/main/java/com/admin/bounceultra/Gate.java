@@ -50,7 +50,15 @@ class Gate extends GameObject implements Cloneable{
         y_bottom += deltaY;
         x += deltaX;
         y += deltaY;
+    }
 
+    void compress(float k) {
+        float width = x_right - x_left;
+        float hight = y_top - y_bottom;
+        x_left = x - width / k / 2;
+        x_right = x + width / k / 2;
+        y_bottom = y - hight / k / 2;
+        y_top = y + hight / k / 2;
     }
 
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {

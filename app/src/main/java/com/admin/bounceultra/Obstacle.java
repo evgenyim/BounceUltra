@@ -24,7 +24,7 @@ class Obstacle extends GameObject implements Cloneable{
      float degrees;
 
 
-     Obstacle(float x_left,float y_top,float x_right,float y_bottom, float degrees, int id) {
+     Obstacle(float x_left,float y_top, float x_right,float y_bottom, float degrees, int id) {
          this.x_left = x_left;
          this.x_right = x_right;
          this.y_bottom = y_bottom;
@@ -44,8 +44,16 @@ class Obstacle extends GameObject implements Cloneable{
          y_bottom += deltaY;
          x += deltaX;
          y += deltaY;
-
      }
+
+    void compress(float k) {
+        float width = x_right - x_left;
+        float hight = y_top - y_bottom;
+        x_left = x - width / k / 2;
+        x_right = x + width / k / 2;
+        y_bottom = y - hight / k / 2;
+        y_top = y + hight / k / 2;
+    }
 
      boolean iftouchinside (float x, float y){
          if ((x <= x_right) && (x >= x_left) && (y >= y_bottom) && (y <= y_top)){
@@ -56,7 +64,7 @@ class Obstacle extends GameObject implements Cloneable{
 
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
          Matrix m = new Matrix();
-         m.setTranslate(x_left, y_bottom);
+         m.setTranslate(x_left, y_top);
          m.preRotate(degrees);
          canvas.drawBitmap(bitmap, m, null);
     }

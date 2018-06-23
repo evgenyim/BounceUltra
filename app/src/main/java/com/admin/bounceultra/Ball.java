@@ -44,6 +44,10 @@ class Ball extends GameObject implements Cloneable{
         return p;
     }
 
+    void compress(float k) {
+        r /= k;
+    }
+
     void move(ArrayList<GameObject> ObjectList, boolean draft) {
         if (stop) {
             return;

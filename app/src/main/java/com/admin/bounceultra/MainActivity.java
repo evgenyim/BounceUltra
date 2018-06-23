@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         final Button btn = (Button) findViewById(R.id.button);
         btn.setText("Baranov");
 
+
         final View.OnTouchListener list = new View.OnTouchListener() {
             float xPress;
             float yPress;

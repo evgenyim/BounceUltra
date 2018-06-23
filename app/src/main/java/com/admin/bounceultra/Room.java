@@ -18,7 +18,7 @@ class Room {
     Ball ball;
     static Obstacle obstacle;
 
-    void draw(float x, float y, float k, Canvas canvas, Paint paint, ArrayList<Bitmap> bitmap_list, ArrayList<GameObject> objectList) {
+    void draw(float x, float y, float k, Canvas canvas, Paint paint, ArrayList<Bitmap> bitmap_list) {
         for (int i = 0; i < objectList.size(); i++) {
             GameObject cur_object = null;
             try {
@@ -29,12 +29,9 @@ class Room {
             float newX = cur_object.x / k + x;
             float newY = cur_object.y / k + y;
             cur_object.moveToXY(newX, newY);
+            cur_object.compress(k);
             Bitmap cur_bitmap = Bitmap.createBitmap(bitmap_list.get(cur_object.id));
-            cur_bitmap = Bitmap.createScaledBitmap(cur_bitmap, cur_bitmap.getWidth(), cur_bitmap.getHeight(), false);
-            cur_object.draw(canvas, paint, cur_bitmap);
-//            Matrix m = new Matrix();
-//            m.setTranslate(300, 300);
-//            canvas.drawBitmap(cur_bitmap, m, paint);
+            cur_bitmap = Bitmap.createScaledBitmap(cur_bitmap, (int) (cur_bitmap.getWidth() / k), (int) (cur_bitmap.getHeight() / k), false);
             cur_object.draw(canvas, paint, cur_bitmap);
         }
     }
