@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList<Room> RoomList;
     static int current_room = 0;
     static ArrayList <com.admin.bounceultra.Point> trajectory = new ArrayList<>();
-    int dots_in_trajectory = 50;
+    int dots_in_trajectory = 20;
     int dist_between_dots =  1;
 
 
@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final GameScreen gameScreen = findViewById(R.id.game_screen);
 
-        final Button btn = (Button) findViewById(R.id.button);
-        btn.setText("Baranov");
 
 
         final View.OnTouchListener list = new View.OnTouchListener() {
