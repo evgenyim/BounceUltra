@@ -18,6 +18,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class GameScreen extends View {
+public class GameScreen extends SurfaceView {
     static ArrayList<GameObject> cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
     static Ball cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
     public GameScreen(@NonNull Context context) {
