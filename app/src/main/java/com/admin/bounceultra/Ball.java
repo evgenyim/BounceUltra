@@ -1,15 +1,13 @@
 package com.admin.bounceultra;
 
 import static java.lang.Math.*;
-
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
 import java.util.ArrayList;
 
-class Ball extends GameObject implements Cloneable{
+class Ball extends GameObject {
     float x;
     float y;
     float r;
@@ -29,23 +27,13 @@ class Ball extends GameObject implements Cloneable{
         y_speed += (to_y) * k;
     }
 
-    @Override
-    void moveToXY(float newX, float newY) {
-        x = newX;
-        y = newY;
-    }
-
-    void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
+    void draw(Canvas canvas, Paint paint) {
         canvas.drawCircle(x, y, r, paint);
     }
 
     Point centre() {
         Point p = new Point(x, y);
         return p;
-    }
-
-    void compress(float k) {
-        r /= k;
     }
 
     void move(ArrayList<GameObject> ObjectList, boolean draft) {
@@ -82,6 +70,8 @@ class Ball extends GameObject implements Cloneable{
             x += x_speed;
             y += y_speed;
         }
+        Log.d("x", String.valueOf(x));
+        Log.d("y", String.valueOf(y));
     }
 
     void roll(Segment segment) {
@@ -162,22 +152,48 @@ class Ball extends GameObject implements Cloneable{
                 float discr = b * b - 4 * a * c;
 
                 float x1 = (float) ((-b + sqrt(discr)) / (2 * a));
-                float x2 = (float) ((-b - sqrt(discr)) / (2 * a));
+                float y1;
                 float y_1_1 = (float) (p.y - sqrt(r * r - (p.x - x1) * (p.x - x1)));
                 float y_1_2 = (float) (p.y + sqrt(r * r - (p.x - x1) * (p.x - x1)));
+                float check_1 = abs (n.b * y_1_1);
+                float check_2 = abs (n.b * y_1_2);
+                if (check_1 < check_2) {
+                    y1 = y_1_1;
+                } else {
+                    y1 = y_1_2;
+                }
+
+                float x2 = (float) ((-b - sqrt(discr)) / (2 * a));
+                float y2;
                 float y_2_1 = (float) (p.y - sqrt(r * r - (p.x - x2) * (p.x - x2)));
                 float y_2_2 = (float) (p.y + sqrt(r * r - (p.x - x2) * (p.x - x2)));
+                check_1 = abs (n.b * y_2_1);
+                check_2 = abs (n.b * y_2_2);
+                if (check_1 < check_2) {
+                    y2 = y_2_1;
+                } else {
+                    y2 = y_2_2;
+                }
+                Log.d("asdfghjk", "asdfghjk");
+                Log.d("x1", String.valueOf(x1));
+                Log.d("x2", String.valueOf(x2));
+                Log.d("y1", String.valueOf(y1));
+                Log.d("y2", String.valueOf(y2));
+                Log.d("y_1_1", String.valueOf(y_1_1));
+                Log.d("y_1_2", String.valueOf(y_1_2));
+                Log.d("y_2_1", String.valueOf(y_2_1));
+                Log.d("y_2_2", String.valueOf(y_2_2));
+                Log.d("n.a", String.valueOf(n.a));
+                Log.d("n.b", String.valueOf(n.b));
+                Log.d("n.c", String.valueOf(n.c));
 
-                Point centre1 = new Point(x1, y_1_1);
-                Point centre2 = new Point(x1, y_1_2);
-                Point centre3 = new Point(x1, y_2_1);
-                Point centre4 = new Point(x1, y_2_2);
-                if (Vector.dPointSegment(centre1, segment.a, segment.b) >= r) {
+                Point centre1 = new Point(x1, y1);
+                if (Vector.dPointSegment(centre1, segment.a, segment.b) == r) {
                     new_x = x1;
-                    new_y = y_1_1;
+                    new_y = y1;
                 } else {
                     new_x = x2;
-                    new_y = y_2_1;
+                    new_y = y2;
                 }
             } else {
                 float alfa = Segment.angle(bias, segment);
@@ -209,12 +225,5 @@ class Ball extends GameObject implements Cloneable{
         this.x = x;
         this.y = y;
         this.r = r;
-    }
-
-    public Ball clone() throws CloneNotSupportedException{
-
-        Ball newBall = (Ball) super.clone();
-        newBall.velocity = (Vector) velocity.clone();
-        return newBall;
     }
 }

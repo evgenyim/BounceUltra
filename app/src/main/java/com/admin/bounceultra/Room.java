@@ -79,7 +79,6 @@ class Room {
         gate.segments.add(segm_left);
         gate.segments.add(segm_right);
         gate.segments.add(segm_bottom);
-       //gate.main_segment = segm_top;
         gate.segments.add(segm_top);
         objectList.add(gate);
     }
