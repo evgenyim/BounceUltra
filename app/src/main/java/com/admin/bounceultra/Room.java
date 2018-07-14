@@ -36,6 +36,24 @@ class Room {
         }
     }
 
+    void addItem(float x_left, float y_top, float x_right, float y_bottom, float degree, String name, int id) {
+        Item item = new Item(x_left, y_top, x_right, y_bottom, degree, name, id);
+        degree = (float) toRadians(degree);
+        Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
+        Point point_left_top = new Point(x_left, y_top);
+        Point point_left_bottom = new Point(x_left + (x_left - x_left)  * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_left - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        Point point_right_bottom = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        ItemSegment segm_right =  new ItemSegment(point_right_top, point_right_bottom);
+        ItemSegment segm_bottom =  new ItemSegment(point_left_bottom, point_right_bottom);
+        ItemSegment segm_left = new ItemSegment(point_left_top, point_left_bottom);
+        ItemSegment segm_top = new ItemSegment(point_left_top, point_right_top);
+        item.segments.add(segm_left);
+        item.segments.add(segm_right);
+        item.segments.add(segm_bottom);
+        item.segments.add(segm_top);
+        objectList.add(item);
+    }
+
     void addObstacle(float x_left, float y_top, float x_right, float y_bottom, float degrees, int id) {
         obstacle = new Obstacle(x_left, y_top, x_right, y_bottom, degrees, id);
         obstacle.x_centre = (x_left + x_right) / 2;
@@ -79,10 +97,7 @@ class Room {
         gate.segments.add(segm_left);
         gate.segments.add(segm_right);
         gate.segments.add(segm_bottom);
-       //gate.main_segment = segm_top;
         gate.segments.add(segm_top);
         objectList.add(gate);
     }
-
-   // void addWall()
 }

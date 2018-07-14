@@ -10,10 +10,12 @@ public class RoomCreate {
         Point start_point = new Point(900, 51);
         Room Room0 = new Room();
         Room0.addBall(start_point,50);
+        Room0.addItem(200, 200, 500, 300, 0, "branch", 5);
         Room0.addObstacle(MainActivity.width - 300, MainActivity.height / 2 - 100, MainActivity.width, MainActivity.height / 2, 0, 4);
         Room0.addObstacle(0, 0, MainActivity.width, MainActivity.height,0,1);
         Room0.addGate(200, (float) (MainActivity.height * 0.9) - 100,400, (float) (MainActivity.height * 0.9),0,1, 3);
         RoomList1.add(Room0);
+
         Room Room1 = new Room();
         Point start_point1 = new Point(300, 300);
         Room1.addGate(MainActivity.width / 2,100,MainActivity.width / 2 + 200,200, 180,0,3);
