@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 class SimpleSegment extends Segment {
 
-    void comunicate(Ball ball, int intersected_seg_ind, Segment cur_seg, ArrayList<GameObject> ObjectList, int intersected_obst_ind, float min_d, boolean draft) {
-        ArrayList<Segment> segments = ObjectList.get(intersected_obst_ind).segments;
+    void comunicate(Ball ball, int intersected_seg_ind, Segment cur_seg, ArrayList<GameObject> ObjectList, int intersected_obj_ind, float min_d, boolean draft) {
+        ArrayList<Segment> segments = ObjectList.get(intersected_obj_ind).segments;
         if ((!ball.stick_to_segment(cur_seg)) ||  (min_d  == ball.centre().dist(segments.get(intersected_seg_ind).a) || min_d  == ball.centre().dist(segments.get(intersected_seg_ind).b))) {
             float axil = 1;
             ball.MindTheGap(segments.get(intersected_seg_ind), axil, min_d);

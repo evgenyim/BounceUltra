@@ -20,6 +20,7 @@ class Ball extends GameObject {
     float eps = (float) 1e-1;
     boolean stop;
     Vector velocity;
+    ArrayList<GameObject> inventory = new ArrayList<>();
 
 
     void shot(float to_x, float to_y) {
@@ -46,7 +47,7 @@ class Ball extends GameObject {
 
         float min_d = 1000000;
         int intersected_seg_ind = -1;
-        int intersected_obst_ind = -1;
+        int intersected_obj_ind = -1;
 
         for (int i = 0; i < ObjectList.size(); i++) {
             ArrayList<Segment> segments = ObjectList.get(i).segments;
@@ -55,7 +56,7 @@ class Ball extends GameObject {
                     if (Vector.dPointSegment(segments.get(j).a, segments.get(j).b, centre()) < min_d) {
                         min_d = Vector.dPointSegment(segments.get(j).a, segments.get(j).b, centre());
                         intersected_seg_ind = j;
-                        intersected_obst_ind = i;
+                        intersected_obj_ind = i;
                     }
                 }
             }
@@ -63,8 +64,8 @@ class Ball extends GameObject {
 
         Segment cur_seg;
         if (intersected_seg_ind != -1) {
-            cur_seg = ObjectList.get(intersected_obst_ind).segments.get(intersected_seg_ind);
-            cur_seg.comunicate(this, intersected_seg_ind, cur_seg, ObjectList, intersected_obst_ind, min_d, draft);
+            cur_seg = ObjectList.get(intersected_obj_ind).segments.get(intersected_seg_ind);
+            cur_seg.comunicate(this, intersected_seg_ind, cur_seg, ObjectList, intersected_obj_ind, min_d, draft);
         } else {
             y_speed += g;
             x += x_speed;
