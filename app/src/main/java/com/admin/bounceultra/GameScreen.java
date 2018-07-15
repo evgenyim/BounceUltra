@@ -44,7 +44,7 @@ public class GameScreen extends SurfaceView {
     Bitmap bitmap_brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
     Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
-    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainActivity.height) * 3 / 4, false);
+    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainMenu.height) * 3 / 4, false);
     Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
     Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
     ArrayList<Bitmap> bitmapList = new ArrayList<>();
@@ -56,7 +56,9 @@ public class GameScreen extends SurfaceView {
         cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
 
         paint.setColor(Color.RED);
-        createBitmap();
+        if (bitmapList.size() == 0) {
+            createBitmap();
+        }
         for(int i = 0; i < cur_room_objects.size(); i++) {
             Bitmap bMap = bitmapList.get(cur_room_objects.get(i).id);
             cur_room_objects.get(i).draw(canvas, paint, bMap);

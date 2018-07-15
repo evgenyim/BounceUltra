@@ -17,7 +17,7 @@ class Ball extends GameObject implements Cloneable{
     float y_speed;
     double k = 5e-2;
     double mu = 1 - 2e-2;
-    double g = MainActivity.height * 1.0 / 1500;
+    double g = MainMenu.height * 1.0 / 1500;
     float decreas = (float) 0.2;
     float eps = (float) 1e-1;
     boolean stop;

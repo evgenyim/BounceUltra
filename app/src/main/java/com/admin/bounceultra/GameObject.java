@@ -13,7 +13,6 @@ abstract class GameObject implements Cloneable{
     float start_y;
     int id;
     ArrayList<Segment> segments = new ArrayList<Segment>();
-    Segment main_segment;
     int next_room_id;
 
     abstract void draw(Canvas canvas, Paint paint, Bitmap bitmap);

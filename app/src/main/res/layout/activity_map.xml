@@ -6,13 +6,9 @@
     android:orientation="vertical">
 
 
-    <com.admin.bounceultra.GameScreen
-        android:id="@+id/game_screen"
+    <com.admin.bounceultra.LevelsScreen
+        android:id="@+id/levelsScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/underground">
-
-    </com.admin.bounceultra.GameScreen>
-
+        android:background="@drawable/underground"/>
 </RelativeLayout>

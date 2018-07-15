@@ -1,5 +1,6 @@
 package com.admin.bounceultra;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -22,23 +23,15 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList <com.admin.bounceultra.Point> trajectory = new ArrayList<>();
     int dots_in_trajectory = 20;
     int dist_between_dots =  1;
-
+    static boolean firstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        width = size.x;
-        height = size.y;
-        
         RoomList = RoomCreate.create();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final GameScreen gameScreen = findViewById(R.id.game_screen);
-
-
 
         final View.OnTouchListener list = new View.OnTouchListener() {
             float xPress;
