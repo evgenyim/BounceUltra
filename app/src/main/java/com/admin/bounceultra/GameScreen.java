@@ -99,12 +99,12 @@ public class GameScreen extends SurfaceView {
         bitmapList.add(branch);
     }
 
-    void drawInventory(Ball ball, Canvas cnavas) {
+    void drawInventory(Ball ball, Canvas canvas) {
         for (int i = 0; i < ball.inventory.size(); i++) {
             Matrix m = new Matrix();
             m.setTranslate(i * 100, MainActivity.height - 100);
             Bitmap bitmap = bitmapList.get(ball.inventory.get(i).id);
-            cnavas.drawBitmap(bitmap, m, null);
+            canvas.drawBitmap(bitmap, m, null);
         }
     }
 }
