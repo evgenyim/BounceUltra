@@ -10,6 +10,7 @@ import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class LevelsScreen extends View {
     Bitmap bitmap_brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
     Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
-   // Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainActivity.height) * 3 / 4, false);
+    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainMenu.height) * 2 / 4, false);
     Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
     Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
@@ -39,16 +40,27 @@ public class LevelsScreen extends View {
 
     protected void onDraw(Canvas canvas) {
         paint.setColor(Color.RED);
-        createBitmap();
+        if(bitmapList.size() == 0) {
+            createBitmap();
+        }
+        int roomAmount =(int) Math.sqrt(MapActivity.roomAmount);
+        for(int i = MapActivity.startRoom; i <= MapActivity.startRoom + MapActivity.roomAmount; i++) {
+            int num = i - MapActivity.startRoom;
+            LevelsActivity.RoomList.get(i).draw(MainMenu.width / roomAmount * (num % roomAmount), MainMenu.height / roomAmount * (num / roomAmount), roomAmount, canvas, paint, bitmapList);
+        }
+        for(int i = 0; i < roomAmount; i++) {
+            canvas.drawLine(MainMenu.width * (i + 1) / roomAmount, 0, MainMenu.width * (i + 1) / roomAmount, MainMenu.height, paint);
+            canvas.drawLine(0, MainMenu.height * (i + 1) / roomAmount, MainMenu.width, MainMenu.height * (i + 1) / roomAmount, paint);
 
-     //   MainActivity.RoomList.get(MainActivity.current_room).draw(100, 100, 6, canvas, paint, bitmapList);
+        }
+
 
     }
 
     void createBitmap() {
         bitmapList.add(cube);
         bitmapList.add(rect);
-       // bitmapList.add(wall);
+        bitmapList.add(wall);
         bitmapList.add(gate);
         bitmapList.add(brick);
     }
