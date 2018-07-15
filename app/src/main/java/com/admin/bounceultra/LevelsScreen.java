@@ -30,11 +30,14 @@ public class LevelsScreen extends View {
 
     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
     Bitmap bitmap_brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
+    Bitmap bitmap_branch = BitmapFactory.decodeResource(getResources(), R.drawable.branch);
+
     Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
     Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainMenu.height) * 2 / 4, false);
     Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
     Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
+    Bitmap branch = Bitmap.createScaledBitmap(bitmap_branch, 300, 100,false);
     ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
     Paint paint = new Paint();
 
@@ -63,6 +66,7 @@ public class LevelsScreen extends View {
         bitmapList.add(wall);
         bitmapList.add(gate);
         bitmapList.add(brick);
+        bitmapList.add(branch);
     }
 
 }
