@@ -18,6 +18,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Display;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class GameScreen extends View {
+public class GameScreen extends SurfaceView {
     static ArrayList<GameObject> cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
     static Ball cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
     public GameScreen(@NonNull Context context) {
@@ -45,7 +46,7 @@ public class GameScreen extends View {
 
     Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
     Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
-    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainActivity.height) * 3 / 4, false);
+    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainMenu.height) * 3 / 4, false);
     Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
     Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
     Bitmap branch = Bitmap.createScaledBitmap(bitmap_branch, 300, 100,false);
@@ -63,7 +64,9 @@ public class GameScreen extends View {
         cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
 
         paint.setColor(Color.RED);
-
+        if (bitmapList.size() == 0) {
+            createBitmap();
+        }
         for(int i = 0; i < cur_room_objects.size(); i++) {
             Bitmap bMap = bitmapList.get(cur_room_objects.get(i).id);
             cur_room_objects.get(i).draw(canvas, paint, bMap);
@@ -96,12 +99,13 @@ public class GameScreen extends View {
         bitmapList.add(branch);
     }
 
-    void drawInventory(Ball ball, Canvas cnavas) {
+    void drawInventory(Ball ball, Canvas canvas) {
         for (int i = 0; i < ball.inventory.size(); i++) {
             Matrix m = new Matrix();
-            m.setTranslate(i * 100, MainActivity.height - 100);
+            m.setTranslate(i * 200, MainMenu.height - 100);
+            Log.d("ki", String.valueOf(ball.inventory.get(i).id));
             Bitmap bitmap = bitmapList.get(ball.inventory.get(i).id);
-            cnavas.drawBitmap(bitmap, m, null);
+            canvas.drawBitmap(bitmap, m, null);
         }
     }
 }
