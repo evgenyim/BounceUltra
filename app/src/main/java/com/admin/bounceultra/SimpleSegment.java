@@ -6,15 +6,11 @@ import java.util.ArrayList;
 
 class SimpleSegment extends Segment {
 
-    void comunicate(Ball ball, int intersected_seg_ind, Segment cur_seg, ArrayList<GameObject> ObjectList, int intersected_obst_ind, float min_d, boolean draft) {
-        ArrayList<Segment> segments = ObjectList.get(intersected_obst_ind).segments;
+    void comunicate(Ball ball, int intersected_seg_ind, Segment cur_seg, ArrayList<GameObject> ObjectList, int intersected_obj_ind, float min_d, boolean draft) {
+        ArrayList<Segment> segments = ObjectList.get(intersected_obj_ind).segments;
         if ((!ball.stick_to_segment(cur_seg)) ||  (min_d  == ball.centre().dist(segments.get(intersected_seg_ind).a) || min_d  == ball.centre().dist(segments.get(intersected_seg_ind).b))) {
-            Log.d("ball.centre()_1", String.valueOf(ball.centre().x));
-            Log.d("ball.centre()_1", String.valueOf(ball.centre().y));
             float axil = 1;
             ball.MindTheGap(segments.get(intersected_seg_ind), axil, min_d);
-            Log.d("ball.centre()_2", String.valueOf(ball.centre().x));
-            Log.d("ball.centre()_2", String.valueOf(ball.centre().y));
             axil *= ball.g;
             min_d = Vector.dPointSegment(segments.get(intersected_seg_ind).a, segments.get(intersected_seg_ind).b, ball.centre());
             Vector segment = new Vector(segments.get(intersected_seg_ind));
@@ -27,8 +23,6 @@ class SimpleSegment extends Segment {
                 }
                 new_velocity.unit();
                 new_velocity.multiplying(ball.velocity.length());
-                Log.d("new_vel_x", String.valueOf(new_velocity.x));
-                Log.d("new_vel_y", String.valueOf(new_velocity.y));
                 ball.velocity = new_velocity;
             } else {
                 if (!ball.velocity.if_null()) {
@@ -39,7 +33,6 @@ class SimpleSegment extends Segment {
             ball.x_speed = ball.velocity.x * (1 - ball.decreas);
             ball.y_speed = ball.velocity.y * (1 - ball.decreas);
         } else {
-            Log.d("no", "blya");
             ball.roll(cur_seg);
             ball.x_speed = ball.velocity.x;
             ball.y_speed = ball.velocity.y;

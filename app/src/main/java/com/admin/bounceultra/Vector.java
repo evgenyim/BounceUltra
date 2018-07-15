@@ -2,7 +2,7 @@ package com.admin.bounceultra;
 
 import android.util.Log;
 
-public class Vector {
+public class Vector implements Cloneable{
     float x;
     float y;
 
@@ -145,6 +145,11 @@ public class Vector {
     Vector(Segment segment) {
         this.x = segment.a.x - segment.b.x;
         this.y = segment.a.y - segment.b.y;
+    }
+
+    public Vector clone() throws CloneNotSupportedException{
+        Vector newVector = (Vector) super.clone();
+        return newVector;
     }
 
 }
