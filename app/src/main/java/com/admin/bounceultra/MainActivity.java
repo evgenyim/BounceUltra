@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList <com.admin.bounceultra.Point> trajectory = new ArrayList<>();
     int dots_in_trajectory = 20;
     int dist_between_dots =  1;
-    static boolean firstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
