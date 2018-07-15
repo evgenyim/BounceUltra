@@ -102,7 +102,8 @@ public class GameScreen extends SurfaceView {
     void drawInventory(Ball ball, Canvas canvas) {
         for (int i = 0; i < ball.inventory.size(); i++) {
             Matrix m = new Matrix();
-            m.setTranslate(i * 100, MainActivity.height - 100);
+            m.setTranslate(i * 200, MainMenu.height - 100);
+            Log.d("ki", String.valueOf(ball.inventory.get(i).id));
             Bitmap bitmap = bitmapList.get(ball.inventory.get(i).id);
             canvas.drawBitmap(bitmap, m, null);
         }
