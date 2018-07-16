@@ -16,14 +16,11 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    static int width;
-    static int height;
     static ArrayList<Room> RoomList;
     static int current_room = 0;
     static ArrayList <com.admin.bounceultra.Point> trajectory = new ArrayList<>();
     int dots_in_trajectory = 20;
     int dist_between_dots =  1;
-    static boolean firstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
