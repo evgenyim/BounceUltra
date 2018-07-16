@@ -32,6 +32,11 @@ public class LevelsScreen extends View {
     Bitmap brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
     Bitmap branch = BitmapFactory.decodeResource(getResources(), R.drawable.branch);
     Bitmap alfa_chanel = BitmapFactory.decodeResource(getResources(), R.drawable.alfa_chanel);
+    Bitmap upLattice = BitmapFactory.decodeResource(getResources(), R.drawable.up_lattice);
+    Bitmap downLattice = BitmapFactory.decodeResource(getResources(), R.drawable.down_lattice);
+    Bitmap key = BitmapFactory.decodeResource(getResources(), R.drawable.key);
+    Bitmap lock = BitmapFactory.decodeResource(getResources(), R.drawable.lock);
+
 
     ArrayList<Bitmap> imageList = new ArrayList<>();
 
@@ -59,5 +64,9 @@ public class LevelsScreen extends View {
         imageList.add(cube);
         imageList.add(brick);
         imageList.add(branch);
+        imageList.add(upLattice);
+        imageList.add(downLattice);
+        imageList.add(key);
+        imageList.add(lock);
     }
 }

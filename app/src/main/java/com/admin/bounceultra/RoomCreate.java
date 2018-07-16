@@ -12,15 +12,20 @@ public class RoomCreate {
         int cube = 1;
         int brick = 2;
         int branch = 3;
+        int upLattice = 4;
+        int downLattice = 5;
+        int key = 6;
+        int lock = 7;
+
         RoomList1 = new ArrayList<>();
         Point start_point = new Point(75, MainMenu.height - 100);
         Room Room0 = new Room();
         Room0.addBall(start_point,50);
-        Room0.addLock(500, MainMenu.height / 2 - 100, 700, MainMenu.height / 2 + 100, 0, brick);
-        Room0.addItem(0, 300, 300, 400, 0, "key", branch);
+        Room0.addLock(500, MainMenu.height / 2 - 100, 700, MainMenu.height / 2 + 100, 0, lock);
+        Room0.addItem(0, 300, 300, 400, 0, "key", key);
         Room0.addObstacle(0, 400,  300, 500, 0, brick);
-        Room0.addObstacle(500, 0, 700, MainMenu.height / 2 - 100, 0, cube);
-        Room0.addObstacle(500, MainMenu.height / 2 + 100, 700, MainMenu.height, 0, cube);
+        Room0.addObstacle(500, 0, 700, MainMenu.height / 2 - 100, 0, upLattice);
+        Room0.addObstacle(500, MainMenu.height / 2 + 100, 700, MainMenu.height, 0, downLattice);
         Room0.addObstacle(0, 0, MainMenu.width, MainMenu.height,0, alfa_chanel);
         Room0.addGate(MainMenu.width - 200,  MainMenu.height - 100, MainMenu.width, MainMenu.height,0,1, cube);
         RoomList1.add(Room0);
