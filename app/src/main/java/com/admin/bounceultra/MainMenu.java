@@ -12,7 +12,6 @@ import android.widget.Button;
 public class MainMenu extends AppCompatActivity {
     static int width;
     static int height;
-    static boolean firstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
