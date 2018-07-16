@@ -39,29 +39,23 @@ public class GameScreen extends SurfaceView {
         super(context, attrs, defStyleAttr);
     }
 
-    static ArrayList<GameObject> cur_room_objects;
-    static Ball cur_ball;
+    ArrayList<GameObject> cur_room_objects;
+    Ball cur_ball;
 
     Bitmap cube = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
     Bitmap brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
     Bitmap branch = BitmapFactory.decodeResource(getResources(), R.drawable.branch);
     Bitmap alfa_chanel = BitmapFactory.decodeResource(getResources(), R.drawable.alfa_chanel);
 
-    //    Bitmap cube = Bitmap.createScaledBitmap(bitmap_cube, 100, 100, false);
-//    Bitmap rect = Bitmap.createScaledBitmap(bitmap_cube, 200, 100, false);
-//    Bitmap wall = Bitmap.createScaledBitmap(bitmap_cube, 10,(int) (MainMenu.height) * 3 / 4, false);
-//    Bitmap gate = Bitmap.createScaledBitmap(bitmap_cube, 200, 100,false);
-//    Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
-//    Bitmap branch = Bitmap.createScaledBitmap(bitmap_branch, 300, 100,false);
     ArrayList<Bitmap> imageList = new ArrayList<>();
     ArrayList<Bitmap> bitmapList = new ArrayList<>();
     Paint paint = new Paint();
-    boolean firstTime = true;
+    static boolean newRoom = true;
 
     protected void onDraw(Canvas canvas) {
         cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
         cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
-        if (firstTime) {
+        if (newRoom) {
             createImage();
             for(int i = 0; i < cur_room_objects.size(); i++) {
                 Bitmap source = imageList.get(cur_room_objects.get(i).imageId);
@@ -72,7 +66,7 @@ public class GameScreen extends SurfaceView {
                 bitmapList.add(bMap);
                 cur_room_objects.get(i).bitmapId = bitmapList.size() - 1;
             }
-            firstTime = false;
+            newRoom = false;
         }
 
         paint.setColor(Color.RED);

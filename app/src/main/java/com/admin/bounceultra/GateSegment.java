@@ -12,6 +12,7 @@ class GateSegment extends Segment {
             room.ball.x_speed = ball.x_speed;
             room.ball.velocity = ball.velocity;
             room.ball.inventory = ball.inventory;
+            GameScreen.newRoom = true;
             for (int j = 0; j < room.objectList.size(); j++) {
                 if (room.objectList.get(j).imageId == 3 && room.objectList.get(j).next_room_id == MainActivity.current_room) {
                     room.ball.x = room.objectList.get(j).start_x;
