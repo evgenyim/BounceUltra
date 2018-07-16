@@ -72,6 +72,42 @@ class Room {
         objectList.add(lock);
     }
 
+    void addHole(float x_left, float y_top, float x_right, float y_bottom, float degree, int id, Point startPoint) {
+        Hole hole = new Hole(x_left, y_top, x_right, y_bottom, degree, id, startPoint);
+        degree = (float) toRadians(degree);
+        Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
+        Point point_left_top = new Point(x_left, y_top);
+        Point point_left_bottom = new Point(x_left + (x_left - x_left)  * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_left - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        Point point_right_bottom = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        HoleSegment segm_right =  new HoleSegment(point_right_top, point_right_bottom);
+        HoleSegment segm_bottom =  new HoleSegment(point_left_bottom, point_right_bottom);
+        HoleSegment segm_left = new HoleSegment(point_left_top, point_left_bottom);
+        HoleSegment segm_top = new HoleSegment(point_left_top, point_right_top);
+        hole.segments.add(segm_left);
+        hole.segments.add(segm_right);
+        hole.segments.add(segm_bottom);
+        hole.segments.add(segm_top);
+        objectList.add(hole);
+    }
+
+    void addFlow(float x_left, float y_top, float x_right, float y_bottom, float degree, int id, float a) {
+        Flow flow = new Flow(x_left, y_top, x_right, y_bottom, degree, id, a);
+        degree = (float) toRadians(degree);
+        Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
+        Point point_left_top = new Point(x_left, y_top);
+        Point point_left_bottom = new Point(x_left + (x_left - x_left)  * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_left - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        Point point_right_bottom = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        FlowSegment segm_right =  new FlowSegment(point_right_top, point_right_bottom);
+        FlowSegment segm_bottom =  new FlowSegment(point_left_bottom, point_right_bottom);
+        FlowSegment segm_left = new FlowSegment(point_left_top, point_left_bottom);
+        FlowSegment segm_top = new FlowSegment(point_left_top, point_right_top);
+        /*flow.segments.add(segm_left);
+        flow.segments.add(segm_right);
+        flow.segments.add(segm_bottom);
+        flow.segments.add(segm_top);*/
+        objectList.add(flow);
+    }
+
     void addObstacle(float x_left, float y_top, float x_right, float y_bottom, float degrees, int id) {
         obstacle = new Obstacle(x_left, y_top, x_right, y_bottom, degrees, id);
         obstacle.x_centre = (x_left + x_right) / 2;

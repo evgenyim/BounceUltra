@@ -40,6 +40,32 @@ public class Vector implements Cloneable{
         return (float) Math.asin(sinA);
     }
 
+    float bigOriantedAngle(Vector vec) {
+        float sinA = vec_mult(vec) / (length() * vec.length());
+        float cosA = scalar(vec) / (length() * vec.length());
+        if (sinA > 1) {
+            return (float) Math.PI / 2;
+        }
+        if (sinA < -1) {
+            return (float) - Math.PI / 2;
+        }
+        if (cosA > 1) {
+            return 0;
+        }
+        if (cosA < -1) {
+            return (float) Math.PI;
+        }
+        if (cosA >= 0) {
+            return (float) Math.asin(sinA);
+        } else {
+            if (sinA < 0) {
+                return (float)(-Math.PI - Math.asin(sinA));
+            } else {
+                return (float) (Math.PI - Math.asin(sinA));
+            }
+        }
+    }
+
     public static float dPointSegment(Point a, Point b, Point c) {
         Vector ab = new Vector(a, b);
         Vector ac = new Vector(a, c);
