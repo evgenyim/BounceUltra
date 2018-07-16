@@ -14,7 +14,7 @@ class Gate extends GameObject implements Cloneable{
         this.imageId = imageId;
         degrees = (float) (toRadians(degrees));
         start_x = (this.x_left + this.x_right) / 2;
-        start_y = this.y_top + 2;
+        start_y = this.y_top - 51;
         Point A = new Point(this.x_left, this.y_top);
         Point B = new Point(start_x, start_y);
         Vector vec = new Vector(A,B);
