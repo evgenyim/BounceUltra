@@ -30,14 +30,14 @@ class Room {
             float newY = cur_object.y / k + y;
             cur_object.moveToXY(newX, newY);
             cur_object.compress(k);
-            Bitmap cur_bitmap = Bitmap.createBitmap(bitmap_list.get(cur_object.id));
+            Bitmap cur_bitmap = Bitmap.createBitmap(bitmap_list.get(cur_object.imageId));
             cur_bitmap = Bitmap.createScaledBitmap(cur_bitmap, (int) (cur_bitmap.getWidth() / k), (int) (cur_bitmap.getHeight() / k), false);
             cur_object.draw(canvas, paint, cur_bitmap);
         }
     }
 
-    void addItem(float x_left, float y_top, float x_right, float y_bottom, float degree, String name, int id) {
-        Item item = new Item(x_left, y_top, x_right, y_bottom, degree, name, id);
+    void addItem(float x_left, float y_top, float x_right, float y_bottom, float degree, String name, int imageId) {
+        Item item = new Item(x_left, y_top, x_right, y_bottom, degree, name, imageId);
         degree = (float) toRadians(degree);
         Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
         Point point_left_top = new Point(x_left, y_top);
@@ -54,8 +54,8 @@ class Room {
         objectList.add(item);
     }
 
-    void addLock(float x_left, float y_top, float x_right, float y_bottom, float degree, int id) {
-        Lock lock = new Lock(x_left, y_top, x_right, y_bottom, degree, id);
+    void addLock(float x_left, float y_top, float x_right, float y_bottom, float degree, int imageId) {
+        Lock lock = new Lock(x_left, y_top, x_right, y_bottom, degree, imageId);
         degree = (float) toRadians(degree);
         Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
         Point point_left_top = new Point(x_left, y_top);
@@ -72,8 +72,8 @@ class Room {
         objectList.add(lock);
     }
 
-    void addObstacle(float x_left, float y_top, float x_right, float y_bottom, float degrees, int id) {
-        obstacle = new Obstacle(x_left, y_top, x_right, y_bottom, degrees, id);
+    void addObstacle(float x_left, float y_top, float x_right, float y_bottom, float degrees, int imageId) {
+        obstacle = new Obstacle(x_left, y_top, x_right, y_bottom, degrees, imageId);
         obstacle.x_centre = (x_left + x_right) / 2;
         obstacle.y_centre = (y_bottom + y_top) / 2;
         objectList.add(obstacle);
@@ -101,8 +101,8 @@ class Room {
         ball = new Ball(p, r);
     }
 
-    void addGate(float x_left, float y_top, float x_right, float y_bottom, float degree, int next_room_id, int id) {
-        Gate gate = new Gate(x_left, y_top, x_right, y_bottom, degree, next_room_id, id);
+    void addGate(float x_left, float y_top, float x_right, float y_bottom, float degree, int next_room_id, int imageId) {
+        Gate gate = new Gate(x_left, y_top, x_right, y_bottom, degree, next_room_id, imageId);
         degree = (float) toRadians(degree);
         Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
         Point point_left_top = new Point(x_left, y_top);

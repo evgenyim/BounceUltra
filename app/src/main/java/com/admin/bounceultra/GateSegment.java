@@ -13,10 +13,10 @@ class GateSegment extends Segment {
             room.ball.velocity = ball.velocity;
             room.ball.inventory = ball.inventory;
             for (int j = 0; j < room.objectList.size(); j++) {
-                if (room.objectList.get(j).id == 3 && room.objectList.get(j).next_room_id == MainActivity.current_room) {
+                if (room.objectList.get(j).imageId == 3 && room.objectList.get(j).next_room_id == MainActivity.current_room) {
                     room.ball.x = room.objectList.get(j).start_x;
                     room.ball.y = room.objectList.get(j).start_y + Math.signum(ball.y_speed) * 50;
-                    }
+                }
             }
             MainActivity.current_room = objectList.get(intersected_obj_ind).next_room_id;
         }

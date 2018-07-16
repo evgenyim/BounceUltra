@@ -8,17 +8,21 @@ import java.util.ArrayList;
 public class RoomCreate {
     static ArrayList<Room> RoomList1;
     public static ArrayList<Room> create() {
+        int alfa_chanel = 0;
+        int cube = 1;
+        int brick = 2;
+        int branch = 3;
         RoomList1 = new ArrayList<>();
         Point start_point = new Point(75, MainMenu.height - 100);
         Room Room0 = new Room();
         Room0.addBall(start_point,50);
-        Room0.addLock(500, MainMenu.height / 2 - 100, 700, MainMenu.height / 2 + 100, 0, 0);
-        Room0.addItem(0, 300, 300, 400, 0, "key", 5);
-        Room0.addObstacle(0, 400,  300, 500, 0, 4);
-        Room0.addObstacle(500, 0, 700, MainMenu.height / 2 - 100, 0, 0);
-        Room0.addObstacle(500, MainMenu.height / 2 + 100, 700, MainMenu.height, 0, 0);
-        Room0.addObstacle(0, 0, MainMenu.width, MainMenu.height,0,1);
-        Room0.addGate(MainMenu.width - 200,  MainMenu.height - 100, MainMenu.width, MainMenu.height,0,1, 3);
+        Room0.addLock(500, MainMenu.height / 2 - 100, 700, MainMenu.height / 2 + 100, 0, brick);
+        Room0.addItem(0, 300, 300, 400, 0, "key", branch);
+        Room0.addObstacle(0, 400,  300, 500, 0, brick);
+        Room0.addObstacle(500, 0, 700, MainMenu.height / 2 - 100, 0, cube);
+        Room0.addObstacle(500, MainMenu.height / 2 + 100, 700, MainMenu.height, 0, cube);
+        Room0.addObstacle(0, 0, MainMenu.width, MainMenu.height,0, alfa_chanel);
+        Room0.addGate(MainMenu.width - 200,  MainMenu.height - 100, MainMenu.width, MainMenu.height,0,1, cube);
         RoomList1.add(Room0);
 
         Room Room1 = new Room();

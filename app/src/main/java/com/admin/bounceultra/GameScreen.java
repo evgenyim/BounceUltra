@@ -23,13 +23,12 @@ import android.view.View;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 
+import java.net.ResponseCache;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class GameScreen extends SurfaceView {
-    static ArrayList<GameObject> cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
-    static Ball cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
     public GameScreen(@NonNull Context context) {
         super(context);
     }
@@ -40,35 +39,45 @@ public class GameScreen extends SurfaceView {
         super(context, attrs, defStyleAttr);
     }
 
-    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
-    Bitmap bitmap_brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
-    Bitmap bitmap_branch = BitmapFactory.decodeResource(getResources(), R.drawable.branch);
+    static ArrayList<GameObject> cur_room_objects;
+    static Ball cur_ball;
 
-    Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
-    Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
-    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainMenu.height) * 3 / 4, false);
-    Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
-    Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
-    Bitmap branch = Bitmap.createScaledBitmap(bitmap_branch, 300, 100,false);
+    Bitmap cube = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
+    Bitmap brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
+    Bitmap branch = BitmapFactory.decodeResource(getResources(), R.drawable.branch);
+    Bitmap alfa_chanel = BitmapFactory.decodeResource(getResources(), R.drawable.alfa_chanel);
+
+    //    Bitmap cube = Bitmap.createScaledBitmap(bitmap_cube, 100, 100, false);
+//    Bitmap rect = Bitmap.createScaledBitmap(bitmap_cube, 200, 100, false);
+//    Bitmap wall = Bitmap.createScaledBitmap(bitmap_cube, 10,(int) (MainMenu.height) * 3 / 4, false);
+//    Bitmap gate = Bitmap.createScaledBitmap(bitmap_cube, 200, 100,false);
+//    Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
+//    Bitmap branch = Bitmap.createScaledBitmap(bitmap_branch, 300, 100,false);
+    ArrayList<Bitmap> imageList = new ArrayList<>();
     ArrayList<Bitmap> bitmapList = new ArrayList<>();
     Paint paint = new Paint();
     boolean firstTime = true;
-  
+
     protected void onDraw(Canvas canvas) {
+        cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
+        cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
         if (firstTime) {
-            createBitmap();
+            createImage();
+            for(int i = 0; i < cur_room_objects.size(); i++) {
+                Bitmap source = imageList.get(cur_room_objects.get(i).imageId);
+                Bitmap bMap = Bitmap.createScaledBitmap(source,
+                        (int) (cur_room_objects.get(i).x_right - cur_room_objects.get(i).x_left),
+                        (int) (cur_room_objects.get(i).y_bottom - cur_room_objects.get(i).y_top),
+                        false);
+                bitmapList.add(bMap);
+                cur_room_objects.get(i).bitmapId = bitmapList.size() - 1;
+            }
             firstTime = false;
         }
 
-        cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
-        cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
-
         paint.setColor(Color.RED);
-        if (bitmapList.size() == 0) {
-            createBitmap();
-        }
         for(int i = 0; i < cur_room_objects.size(); i++) {
-            Bitmap bMap = bitmapList.get(cur_room_objects.get(i).id);
+            Bitmap bMap = bitmapList.get(cur_room_objects.get(i).bitmapId);
             cur_room_objects.get(i).draw(canvas, paint, bMap);
             for (int j = 0; j < cur_room_objects.get(i).segments.size(); j++){
                 cur_room_objects.get(i).segments.get(j).draw(canvas,paint);
@@ -81,29 +90,24 @@ public class GameScreen extends SurfaceView {
         }
 
         drawInventory(cur_ball, canvas);
-//        MainActivity.RoomList.get(MainActivity.current_room).draw(0, 0, 2, canvas, paint, bitmapList);
-//        canvas.drawLine(0, MainActivity.height / 2, MainActivity.width / 2, MainActivity.height / 2, paint);
-//        canvas.drawLine(MainActivity.width / 2, 0, MainActivity.width / 2, MainActivity.height / 2, paint);
 
         cur_ball.draw(canvas, paint, cube);
         cur_ball.move(MainActivity.RoomList.get(MainActivity.current_room).objectList, false);
 
         postInvalidateDelayed(0);
     }
-    void createBitmap() {
-        bitmapList.add(cube);
-        bitmapList.add(rect);
-        bitmapList.add(wall);
-        bitmapList.add(gate);
-        bitmapList.add(brick);
-        bitmapList.add(branch);
+    void createImage() {
+        imageList.add(alfa_chanel);
+        imageList.add(cube);
+        imageList.add(brick);
+        imageList.add(branch);
     }
 
     void drawInventory(Ball ball, Canvas canvas) {
         for (int i = 0; i < ball.inventory.size(); i++) {
             Matrix m = new Matrix();
             m.setTranslate(i * 200, MainMenu.height - 100);
-            Bitmap bitmap = bitmapList.get(ball.inventory.get(i).id);
+            Bitmap bitmap = bitmapList.get(ball.inventory.get(i).bitmapId);
             canvas.drawBitmap(bitmap, m, null);
         }
     }

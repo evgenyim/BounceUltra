@@ -4,14 +4,14 @@ import static java.lang.Math.toRadians;
 
 class Gate extends GameObject implements Cloneable{
 
-    Gate(float x_left,float y_top,float x_right,float y_bottom, float degrees, int next_room_id, int id) {
+    Gate(float x_left,float y_top,float x_right,float y_bottom, float degrees, int next_room_id, int imageId) {
         this.x_left = x_left;
         this.x_right = x_right;
         this.y_bottom = y_bottom;
         this.y_top = y_top;
         this.degrees = degrees;
         this.next_room_id = next_room_id;
-        this.id = id;
+        this.imageId = imageId;
         degrees = (float) (toRadians(degrees));
         start_x = (this.x_left + this.x_right) / 2;
         start_y = this.y_top + 2;
