@@ -74,7 +74,7 @@ class Ball extends GameObject implements Cloneable{
             }
         }
         for (int i = 0; i < ObjectList.size(); i++) {
-            if(inside(ObjectList.get(i)) && ObjectList.get(i).id != 2) {
+            if(inside(ObjectList.get(i)) && ObjectList.get(i).imageId != 2) {
                 ObjectList.get(i).insideCommunicate(this, ObjectList, i, draft);
             }
         }

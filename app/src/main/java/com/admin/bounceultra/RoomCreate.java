@@ -28,7 +28,7 @@ public class RoomCreate {
         Room Room1 = new Room();
         Point start_point1 = new Point(100, MainMenu.height - 100);
         Room1.addBall(start_point1,50);
-        Room1.addObstacle(0, 0, MainMenu.width, MainMenu.height,0,2);
+        Room1.addObstacle(0, 0, MainMenu.width, MainMenu.height,0, alfa_chanel);
         Room1.addObstacle(0, 1000 ,  450, 1100 ,  0, 0);
         Room1.addHole(350, MainMenu.height - 10, 550, MainMenu.height,0,2,start_point1);
         Room1.addFlow(500, 1100, 1100, 1300, 90, 1,5);
