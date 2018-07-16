@@ -73,6 +73,11 @@ class Ball extends GameObject implements Cloneable{
                 }
             }
         }
+        for (int i = 0; i < ObjectList.size(); i++) {
+            if(inside(ObjectList.get(i)) && ObjectList.get(i).id != 2) {
+                ObjectList.get(i).insideCommunicate(this, ObjectList, i, draft);
+            }
+        }
 
         Segment cur_seg;
         if (intersected_seg_ind != -1) {
@@ -199,6 +204,29 @@ class Ball extends GameObject implements Cloneable{
         y = new_y;
     }
 
+    boolean inside (GameObject flow) {
+        Point ballCenter = new Point(x, y);
+        float x_left = flow.x_left;
+        float y_top = flow.y_top;
+        float x_right = flow.x_right;
+        float y_bottom = flow.y_bottom;
+        double degree = toRadians(flow.degrees);
+        Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
+        Point point_left_top = new Point(x_left, y_top);
+        Point point_left_bottom = new Point(x_left + (x_left - x_left)  * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_left - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        Point point_right_bottom = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_bottom - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_bottom - y_top) * (float) cos(degree));
+        Vector vec1 = new Vector(ballCenter, point_left_bottom);
+        Vector vec2 = new Vector(ballCenter, point_left_top);
+        Vector vec3 = new Vector(ballCenter, point_right_bottom);
+        Vector vec4 = new Vector(ballCenter, point_right_top);
+        float angleSum = vec1.bigOriantedAngle(vec2) + vec3.bigOriantedAngle(vec1) + vec4.bigOriantedAngle(vec3) + vec2.bigOriantedAngle(vec4);
+        if(Math.abs(angleSum) >= Math.PI) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     Ball(Point p, float r) {
         this.x = p.x;
         this.y = p.y;
@@ -218,4 +246,5 @@ class Ball extends GameObject implements Cloneable{
         newBall.velocity = (Vector) velocity.clone();
         return newBall;
     }
+
 }

@@ -52,6 +52,9 @@ abstract class GameObject implements Cloneable{
         y_bottom = y - hight / k / 2;
         y_top = y + hight / k / 2;
     }
+    void insideCommunicate(Ball ball, ArrayList<GameObject> objectList, int intersected_obj_ind, boolean draft) {
+
+    }
 
     GameObject() {
     }
