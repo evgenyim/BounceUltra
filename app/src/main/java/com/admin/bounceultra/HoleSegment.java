@@ -7,8 +7,8 @@ public class HoleSegment extends Segment {
         if(!draft) {
             ball.x_speed = 0;
             ball.y_speed = 0;
-            ball.x = objectList.get(intersected_obj_ind).x;
-            ball.y = objectList.get(intersected_obj_ind).y;
+            ball.x = objectList.get(intersected_obj_ind).start_x;
+            ball.y = objectList.get(intersected_obj_ind).start_y;
         }
     }
     HoleSegment(Point p1, Point p2) { super(p1,p2); }
