@@ -35,10 +35,10 @@ public class RoomCreate {
         Room1.addBall(start_point1,50);
         Room1.addObstacle(0, 0, MainMenu.width, MainMenu.height,0, alfa_chanel);
         Room1.addObstacle(0, 1000 ,  450, 1100 ,  0, brick);
-        Room1.addHole(350, MainMenu.height - 10, 550, MainMenu.height,0, brick, start_point1);
-        Room1.addFlow(500, 1100, 1100, 1300, 90, branch,5);
+        Room1.addHole(300, MainMenu.height - 10, 500, MainMenu.height,0, brick, start_point1);
+        Room1.addFlow(500, 1100, 1100, 1300, 90, branch,3);
         Room1.addObstacle(400, 600, MainMenu.width, 700,0, brick);
-        Room1.addFlow(600,700,1600,800,90, branch,35);
+        Room1.addFlow(600,700,1600,800,90, branch,20);
         Room1.addGate(MainMenu.width - 100, MainMenu.height,MainMenu.width + 100,MainMenu.height + 100, 270,4, cube);
         Room1.addGate(MainMenu.width, 100, MainMenu.width + 200, 200, 180, 0, cube);
         RoomList1.add(Room1);
