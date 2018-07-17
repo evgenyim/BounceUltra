@@ -143,7 +143,7 @@ class Ball extends GameObject implements Cloneable{
             Point E;
             if (centre().dist(segment.a) < centre().dist(segment.b)) {
                 E = segment.a;
-            } else {
+            } else{
                 E = segment.b;
             }
             Line p = new Line(E, normal);
@@ -163,7 +163,7 @@ class Ball extends GameObject implements Cloneable{
                 Line normal = new Line(n.b / n.a, -1, p.y - n.b * p.x / n.a);
                 Point inters = Line.intersect(normal, n);
                 float OI = (float) sqrt(r * r - (p.x - inters.x) * (p.x - inters.x) - (p.y - inters.y) * (p.y - inters.y));
-                Point Q = new Point(-n.c / n.a, 0);
+                Point Q = new Point(-n.c / n.a,0);
                 Vector vect_OI = new Vector(inters, Q);
                 vect_OI.unit();
                 vect_OI.multiplying(OI);
@@ -192,9 +192,17 @@ class Ball extends GameObject implements Cloneable{
                 new_y = y + (A.y - y) * (l - d) / l;
             }
         }
-    }
 
-        boolean inside (GameObject flow) {
+        Segment real_bias = new Segment(x, y, new_x, new_y);
+        if (bias.length() == 0) {
+            axil = 1;
+        } else {
+            axil = real_bias.length() / bias.length();
+        }
+        x = new_x;
+        y = new_y;
+    }
+    boolean inside (GameObject flow) {
         Point ballCenter = new Point(x, y);
         float x_left = flow.x_left;
         float y_top = flow.y_top;
