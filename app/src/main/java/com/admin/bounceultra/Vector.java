@@ -151,5 +151,4 @@ public class Vector implements Cloneable{
         Vector newVector = (Vector) super.clone();
         return newVector;
     }
-
 }

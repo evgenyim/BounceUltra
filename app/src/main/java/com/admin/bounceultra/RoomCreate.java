@@ -8,7 +8,7 @@ public class RoomCreate {
     static ArrayList<Room> RoomList1;
     public static ArrayList<Room> create() {
         RoomList1 = new ArrayList<>();
-        Point start_point = new Point(900, 51);
+        Point start_point = new Point(400, 60);
         Room Room0 = new Room();
         Room0.addBall(start_point,50);
         Room0.addItem(200, 200, 500, 300, 0, "branch", 5);

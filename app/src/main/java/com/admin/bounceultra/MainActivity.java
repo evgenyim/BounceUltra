@@ -16,8 +16,6 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    static int width;
-    static int height;
     static ArrayList<Room> RoomList;
     static int current_room = 0;
     static ArrayList <com.admin.bounceultra.Point> trajectory = new ArrayList<>();
@@ -71,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                             break;
                     }
-            }
-            if(unpress /*&& RoomList.get(current_room).ball.x_speed == 0 && RoomList.get(current_room).ball.y_speed == 0 */) {
-                RoomList.get(current_room).ball.shot(xPress - xUnpress,yPress - yUnpress);
-                trajectory.clear();
-            }
-            return true;
+                }
+                if(unpress /*&& RoomList.get(current_room).ball.x_speed == 0 && RoomList.get(current_room).ball.y_speed == 0 */) {
+                    RoomList.get(current_room).ball.shot(xPress - xUnpress,yPress - yUnpress);
+                    trajectory.clear();
+                }
+                return true;
             }
         };
         gameScreen.setOnTouchListener(list);

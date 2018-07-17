@@ -1,13 +1,15 @@
 package com.admin.bounceultra;
 
 import static java.lang.Math.*;
+
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
 import java.util.ArrayList;
 
-class Ball extends GameObject {
+class Ball extends GameObject implements Cloneable{
     float x;
     float y;
     float r;
@@ -28,13 +30,23 @@ class Ball extends GameObject {
         y_speed += (to_y) * k;
     }
 
-    void draw(Canvas canvas, Paint paint) {
+    @Override
+    void moveToXY(float newX, float newY) {
+        x = newX;
+        y = newY;
+    }
+
+    void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
         canvas.drawCircle(x, y, r, paint);
     }
 
     Point centre() {
         Point p = new Point(x, y);
         return p;
+    }
+
+    void compress(float k) {
+        r /= k;
     }
 
     void move(ArrayList<GameObject> ObjectList, boolean draft) {
@@ -71,8 +83,6 @@ class Ball extends GameObject {
             x += x_speed;
             y += y_speed;
         }
-        Log.d("x", String.valueOf(x));
-        Log.d("y", String.valueOf(y));
     }
 
     void roll(Segment segment) {
@@ -124,19 +134,19 @@ class Ball extends GameObject {
         float new_x;
         float new_y;
         if ((A == null)) {
-            Vector normal = Segment.normal(segment);
-            Point E;
-            if (centre().dist(segment.a) < centre().dist(segment.b)) {
-                E = segment.a;
-            } else{
-                E = segment.b;
-            }
-            Line p = new Line(E, normal);
-            Point B = Line.intersect(n, p);
-            l = (float) sqrt((x - B.x) * (x - B.x) + (y - B.y) * (y - B.y));
-            d = (float) sqrt(Math.abs(r * r - E.dist(B) * E.dist(B)));
-            new_x = x + (B.x - x) * (l - d) / l;
-            new_y = y + (B.y - y) * (l - d) / l;
+                Vector normal = Segment.normal(segment);
+                Point E;
+                if (centre().dist(segment.a) < centre().dist(segment.b)) {
+                    E = segment.a;
+                } else{
+                    E = segment.b;
+                }
+                Line p = new Line(E, normal);
+                Point B = Line.intersect(n, p);
+                l = (float) sqrt((x - B.x) * (x - B.x) + (y - B.y) * (y - B.y));
+                d = (float) sqrt(Math.abs(r * r - E.dist(B) * E.dist(B)));
+                new_x = x + (B.x - x) * (l - d) / l;
+                new_y = y + (B.y - y) * (l - d) / l;
         } else {
             if ((min_d == centre().dist(segment.a)) || (min_d == centre().dist(segment.b))) {
                 Point p;
@@ -145,57 +155,30 @@ class Ball extends GameObject {
                 } else {
                     p = segment.b;
                 }
+                Line normal = new Line(n.b / n.a, -1, p.y - n.b * p.x / n.a);
+                Point inters = Line.intersect(normal, n);
+                float OI = (float) sqrt(r * r - (p.x - inters.x) * (p.x - inters.x) - (p.y - inters.y) * (p.y - inters.y));
+                Point Q = new Point(-n.c / n.a,0);
+                Vector vect_OI = new Vector(inters, Q);
+                vect_OI.unit();
+                vect_OI.multiplying(OI);
 
+                    float new_x_1 = inters.x + vect_OI.x;
+                    float new_y_1 = inters.y + vect_OI.y;
+                    Point one = new Point(new_x_1, new_y_1);
+                    float dist_1 = one.dist(centre());
+                    float new_x_2 = inters.x - vect_OI.x;
+                    float new_y_2 = inters.y - vect_OI.y;
+                    Point two = new Point(new_x_2, new_y_2);
+                    float dist_2 = two.dist(centre());
 
-                float a = (n.a / n.b) * (n.a / n.b) + 1;
-                float b = (2 * (p.y + n.c / n.b) * (n.a / n.b) - 2 * p.x);
-                float c = (p.y + n.c / n.b) * (p.y + n.c / n.b) + p.x * p.x - r * r;
-                float discr = b * b - 4 * a * c;
-
-                float x1 = (float) ((-b + sqrt(discr)) / (2 * a));
-                float y1;
-                float y_1_1 = (float) (p.y - sqrt(r * r - (p.x - x1) * (p.x - x1)));
-                float y_1_2 = (float) (p.y + sqrt(r * r - (p.x - x1) * (p.x - x1)));
-                float check_1 = abs (n.b * y_1_1);
-                float check_2 = abs (n.b * y_1_2);
-                if (check_1 < check_2) {
-                    y1 = y_1_1;
-                } else {
-                    y1 = y_1_2;
-                }
-
-                float x2 = (float) ((-b - sqrt(discr)) / (2 * a));
-                float y2;
-                float y_2_1 = (float) (p.y - sqrt(r * r - (p.x - x2) * (p.x - x2)));
-                float y_2_2 = (float) (p.y + sqrt(r * r - (p.x - x2) * (p.x - x2)));
-                check_1 = abs (n.b * y_2_1);
-                check_2 = abs (n.b * y_2_2);
-                if (check_1 < check_2) {
-                    y2 = y_2_1;
-                } else {
-                    y2 = y_2_2;
-                }
-                Log.d("asdfghjk", "asdfghjk");
-                Log.d("x1", String.valueOf(x1));
-                Log.d("x2", String.valueOf(x2));
-                Log.d("y1", String.valueOf(y1));
-                Log.d("y2", String.valueOf(y2));
-                Log.d("y_1_1", String.valueOf(y_1_1));
-                Log.d("y_1_2", String.valueOf(y_1_2));
-                Log.d("y_2_1", String.valueOf(y_2_1));
-                Log.d("y_2_2", String.valueOf(y_2_2));
-                Log.d("n.a", String.valueOf(n.a));
-                Log.d("n.b", String.valueOf(n.b));
-                Log.d("n.c", String.valueOf(n.c));
-
-                Point centre1 = new Point(x1, y1);
-                if (Vector.dPointSegment(centre1, segment.a, segment.b) == r) {
-                    new_x = x1;
-                    new_y = y1;
-                } else {
-                    new_x = x2;
-                    new_y = y2;
-                }
+                    if (dist_1 < dist_2) {
+                        new_x = new_x_1;
+                        new_y = new_y_1;
+                    } else {
+                        new_x = new_x_2;
+                        new_y = new_y_2;
+                    }
             } else {
                 float alfa = Segment.angle(bias, segment);
                 l = (float) sqrt((x - A.x) * (x - A.x) + (y - A.y) * (y - A.y));
@@ -226,5 +209,12 @@ class Ball extends GameObject {
         this.x = x;
         this.y = y;
         this.r = r;
+    }
+
+    public Ball clone() throws CloneNotSupportedException{
+
+        Ball newBall = (Ball) super.clone();
+        newBall.velocity = (Vector) velocity.clone();
+        return newBall;
     }
 }

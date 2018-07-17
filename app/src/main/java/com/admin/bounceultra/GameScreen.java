@@ -87,6 +87,9 @@ public class GameScreen extends SurfaceView {
 
         cur_ball.draw(canvas, paint, cube);
         cur_ball.move(MainActivity.RoomList.get(MainActivity.current_room).objectList, false);
+        Log.d("x", String.valueOf(cur_ball.x));
+        Log.d("y", String.valueOf(cur_ball.y));
+
 
         postInvalidateDelayed(0);
     }
@@ -103,7 +106,6 @@ public class GameScreen extends SurfaceView {
         for (int i = 0; i < ball.inventory.size(); i++) {
             Matrix m = new Matrix();
             m.setTranslate(i * 200, MainMenu.height - 100);
-            Log.d("ki", String.valueOf(ball.inventory.get(i).id));
             Bitmap bitmap = bitmapList.get(ball.inventory.get(i).id);
             canvas.drawBitmap(bitmap, m, null);
         }
