@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList <com.admin.bounceultra.Point> trajectory = new ArrayList<>();
     int dots_in_trajectory = 20;
     int dist_between_dots =  1;
+    static float ball_r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

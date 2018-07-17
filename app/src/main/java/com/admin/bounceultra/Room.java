@@ -157,6 +157,7 @@ class Room {
 
     void addBall(Point p, float r) {
         ball = new Ball(p, r);
+        MainActivity.ball_r = r;
     }
 
     void addGate(float x_left, float y_top, float x_right, float y_bottom, float degree, int next_room_id, int imageId) {
