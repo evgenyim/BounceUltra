@@ -7,6 +7,7 @@ class Flow extends GameObject {
 
     float a;
     float v;
+    float sideV;
 
     void insideCommunicate(Ball ball, ArrayList<GameObject> objectList, int intersected_obj_ind, boolean draft){
         float angle =(float) Math.toRadians(objectList.get(intersected_obj_ind).degrees);
@@ -33,6 +34,30 @@ class Flow extends GameObject {
                     ball.y_speed = v * (float) Math.sin(angle);
                 }
             }
+
+            if(ball.x_speed > 0){
+                ball.x_speed -= sideV * (float) Math.sin(angle);
+                if(ball.x_speed < 0) {
+                    ball.x_speed = 0;
+                }
+            } else if(ball.x_speed <= 0) {
+                ball.x_speed += sideV * (float) Math.sin(angle);
+                if(ball.x_speed > 0) {
+                    ball.x_speed = 0;
+                }
+            }
+            if(ball.y_speed > 0) {
+                ball.y_speed -= sideV * (float) Math.cos(angle);
+                if(ball.y_speed < 0) {
+                    ball.y_speed = 0;
+                }
+            } else if (ball.y_speed <= 0)  {
+                ball.y_speed += sideV * (float) Math.cos(angle);
+                if(ball.y_speed > 0) {
+                    ball.y_speed = 0;
+                }
+            }
+
         }
     }
     Flow(float x_left, float y_top, float x_right, float y_bottom, float degrees, int imageId, float a) {
@@ -45,6 +70,7 @@ class Flow extends GameObject {
         this.x = (x_left + x_right) / 2;
         this.y = (y_bottom + y_top) / 2;
         this.a = a;
-        this.v = a * 3;
+        this.v = a * 2;
+        this.sideV = v / 3;
     }
 }
