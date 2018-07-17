@@ -51,16 +51,18 @@ public class GameScreen extends SurfaceView {
     Bitmap key = BitmapFactory.decodeResource(getResources(), R.drawable.key);
     Bitmap lock = BitmapFactory.decodeResource(getResources(), R.drawable.lock);
 
-    ArrayList<Bitmap> imageList = new ArrayList<>();
-    ArrayList<Bitmap> bitmapList = new ArrayList<>();
+
     Paint paint = new Paint();
-    static boolean newRoom = true;
+    ArrayList<Bitmap> imageList = new ArrayList<>();
 
     protected void onDraw(Canvas canvas) {
-        cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
-        cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
-        if (newRoom) {
+        if (imageList.size() == 0) {
             createImage();
+        }
+        cur_room_objects = MainActivity.RoomList.get(MainActivity.current_room).objectList;
+        ArrayList<Bitmap> bitmapList = MainActivity.RoomList.get(MainActivity.current_room).bitmapList;
+        cur_ball = MainActivity.RoomList.get(MainActivity.current_room).ball;
+        if (bitmapList.size() == 0) {
             for(int i = 0; i < cur_room_objects.size(); i++) {
                 Bitmap source = imageList.get(cur_room_objects.get(i).imageId);
                 Bitmap bMap = Bitmap.createScaledBitmap(source,
@@ -70,7 +72,6 @@ public class GameScreen extends SurfaceView {
                 bitmapList.add(bMap);
                 cur_room_objects.get(i).bitmapId = bitmapList.size() - 1;
             }
-            newRoom = false;
         }
 
         paint.setColor(Color.RED);
@@ -109,7 +110,7 @@ public class GameScreen extends SurfaceView {
         for (int i = 0; i < ball.inventory.size(); i++) {
             Matrix m = new Matrix();
             m.setTranslate(i * 200, MainMenu.height - 100);
-            Bitmap bitmap = bitmapList.get(ball.inventory.get(i).bitmapId);
+            Bitmap bitmap = MainActivity.RoomList.get(MainActivity.current_room).bitmapList.get(ball.inventory.get(i).bitmapId);
             canvas.drawBitmap(bitmap, m, null);
         }
     }

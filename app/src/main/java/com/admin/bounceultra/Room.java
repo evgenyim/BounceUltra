@@ -15,6 +15,7 @@ import static java.lang.Math.*;
 class Room {
 
     ArrayList<GameObject> objectList = new ArrayList<GameObject>();
+    ArrayList<Bitmap> bitmapList = new ArrayList<>();
     Ball ball;
     static Obstacle obstacle;
 
