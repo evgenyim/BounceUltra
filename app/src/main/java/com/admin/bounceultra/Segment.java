@@ -130,4 +130,5 @@ public class Segment {
         this.a = new Point(x1, y1);
         this.b = new Point(x2, y2);
     }
+    Segment(){}
 }

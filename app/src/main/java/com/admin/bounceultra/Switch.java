@@ -1,7 +1,16 @@
 package com.admin.bounceultra;
 
-public class Hole extends GameObject {
-    Hole(float x_left, float y_top, float x_right, float y_bottom, float degrees, int imageId , Point startPoint) {
+import java.util.ArrayList;
+
+public class Switch extends GameObject {
+
+    GameObject target;
+
+    void act() {
+        target.switchAction();
+    }
+
+    Switch(float x_left,float y_top, float x_right,float y_bottom, float degrees, int imageId, GameObject target) {
         this.x_left = x_left;
         this.x_right = x_right;
         this.y_bottom = y_bottom;
@@ -10,7 +19,8 @@ public class Hole extends GameObject {
         this.imageId = imageId;
         this.x = (x_left + x_right) / 2;
         this.y = (y_bottom + y_top) / 2;
-        this.start_x = startPoint.x;
-        this.start_y = startPoint.y;
+        this.target = target;
     }
+
+
 }

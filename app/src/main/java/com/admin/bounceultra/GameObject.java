@@ -27,6 +27,7 @@ abstract class GameObject implements Cloneable{
     int next_room_id;
     String name;
 
+    void switchAction(){};
     void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
         Matrix m = new Matrix();
         m.setTranslate(x_left, y_top);
