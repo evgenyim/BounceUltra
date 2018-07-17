@@ -28,45 +28,45 @@ public class LevelsScreen extends View {
     }
 
 
-    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
-    Bitmap bitmap_brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
-    Bitmap bitmap_branch = BitmapFactory.decodeResource(getResources(), R.drawable.branch);
+    Bitmap cube = BitmapFactory.decodeResource(getResources(), R.drawable.cube);
+    Bitmap brick = BitmapFactory.decodeResource(getResources(), R.drawable.brick);
+    Bitmap branch = BitmapFactory.decodeResource(getResources(), R.drawable.branch);
+    Bitmap alfa_chanel = BitmapFactory.decodeResource(getResources(), R.drawable.alfa_chanel);
+    Bitmap upLattice = BitmapFactory.decodeResource(getResources(), R.drawable.up_lattice);
+    Bitmap downLattice = BitmapFactory.decodeResource(getResources(), R.drawable.down_lattice);
+    Bitmap key = BitmapFactory.decodeResource(getResources(), R.drawable.key);
+    Bitmap lock = BitmapFactory.decodeResource(getResources(), R.drawable.lock);
 
-    Bitmap cube = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
-    Bitmap rect = Bitmap.createScaledBitmap(bitmap, 200, 100, false);
-    Bitmap wall = Bitmap.createScaledBitmap(bitmap, 10,(int) (MainMenu.height) * 2 / 4, false);
-    Bitmap gate = Bitmap.createScaledBitmap(bitmap, 200, 100,false);
-    Bitmap brick = Bitmap.createScaledBitmap(bitmap_brick, 300, 100,false);
-    Bitmap branch = Bitmap.createScaledBitmap(bitmap_branch, 300, 100,false);
-    ArrayList<Bitmap> bitmapList = new ArrayList<Bitmap>();
+
+    ArrayList<Bitmap> imageList = new ArrayList<>();
+
     Paint paint = new Paint();
 
     protected void onDraw(Canvas canvas) {
         paint.setColor(Color.RED);
-        if(bitmapList.size() == 0) {
-            createBitmap();
+        if(imageList.size() == 0) {
+            createImage();
         }
         int roomAmount =(int) Math.sqrt(MapActivity.roomAmount);
         for(int i = MapActivity.startRoom; i <= MapActivity.startRoom + MapActivity.roomAmount; i++) {
             int num = i - MapActivity.startRoom;
-            LevelsActivity.RoomList.get(i).draw(MainMenu.width / roomAmount * (num % roomAmount), MainMenu.height / roomAmount * (num / roomAmount), roomAmount, canvas, paint, bitmapList);
+            LevelsActivity.RoomList.get(i).draw(MainMenu.width / roomAmount * (num % roomAmount), MainMenu.height / roomAmount * (num / roomAmount), roomAmount, canvas, paint, imageList);
         }
         for(int i = 0; i < roomAmount; i++) {
             canvas.drawLine(MainMenu.width * (i + 1) / roomAmount, 0, MainMenu.width * (i + 1) / roomAmount, MainMenu.height, paint);
             canvas.drawLine(0, MainMenu.height * (i + 1) / roomAmount, MainMenu.width, MainMenu.height * (i + 1) / roomAmount, paint);
 
         }
-
-
     }
 
-    void createBitmap() {
-        bitmapList.add(cube);
-        bitmapList.add(rect);
-        bitmapList.add(wall);
-        bitmapList.add(gate);
-        bitmapList.add(brick);
-        bitmapList.add(branch);
+    void createImage() {
+        imageList.add(alfa_chanel);
+        imageList.add(cube);
+        imageList.add(brick);
+        imageList.add(branch);
+        imageList.add(upLattice);
+        imageList.add(downLattice);
+        imageList.add(key);
+        imageList.add(lock);
     }
-
 }
