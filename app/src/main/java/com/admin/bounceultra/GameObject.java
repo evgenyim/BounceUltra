@@ -21,7 +21,8 @@ abstract class GameObject implements Cloneable{
     float x_centre;
     float y_centre;
     float degrees;
-    int id;
+    int imageId;
+    int bitmapId;
     ArrayList<Segment> segments = new ArrayList<Segment>();
     int next_room_id;
     String name;
@@ -51,6 +52,9 @@ abstract class GameObject implements Cloneable{
         x_right = x + width / k / 2;
         y_bottom = y - hight / k / 2;
         y_top = y + hight / k / 2;
+    }
+    void insideCommunicate(Ball ball, ArrayList<GameObject> objectList, int intersected_obj_ind, boolean draft) {
+
     }
 
     GameObject() {
