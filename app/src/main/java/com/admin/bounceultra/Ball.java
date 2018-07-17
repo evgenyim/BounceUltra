@@ -25,6 +25,7 @@ class Ball extends GameObject implements Cloneable{
     ArrayList<GameObject> inventory = new ArrayList<>();
 
 
+
     void shot(float to_x, float to_y) {
         x_speed += (to_x) * k;
         y_speed += (to_y) * k;

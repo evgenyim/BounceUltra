@@ -1,5 +1,9 @@
 package com.admin.bounceultra;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -7,8 +11,20 @@ class Flow extends GameObject {
 
     float a;
     float v;
+    boolean active;
+
+    void switchAction() {
+        if (active) {
+            active = false;
+        } else {
+            active = true;
+        }
+    }
 
     void insideCommunicate(Ball ball, ArrayList<GameObject> objectList, int intersected_obj_ind, boolean draft){
+        if (!active) {
+            return;
+        }
         float angle =(float) Math.toRadians(objectList.get(intersected_obj_ind).degrees);
         if(!draft) {
             if(ball.x_speed > v * Math.cos(angle)){
@@ -35,7 +51,18 @@ class Flow extends GameObject {
             }
         }
     }
-    Flow(float x_left, float y_top, float x_right, float y_bottom, float degrees, int imageId, float a) {
+
+    void draw(Canvas canvas, Paint paint, Bitmap bitmap) {
+        if (!active) {
+            return;
+        }
+        Matrix m = new Matrix();
+        m.setTranslate(x_left, y_top);
+        m.preRotate(degrees);
+        canvas.drawBitmap(bitmap, m, null);
+    }
+
+    Flow(float x_left, float y_top, float x_right, float y_bottom, float degrees, int imageId, float a, boolean active) {
         this.x_left = x_left;
         this.x_right = x_right;
         this.y_bottom = y_bottom;
@@ -46,5 +73,6 @@ class Flow extends GameObject {
         this.y = (y_bottom + y_top) / 2;
         this.a = a;
         this.v = a * 3;
+        this.active = active;
     }
 }
