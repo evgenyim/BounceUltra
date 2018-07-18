@@ -19,7 +19,7 @@ class Room {
     ArrayList<Bitmap> bitmapList = new ArrayList<>();
     Ball ball;
     static Obstacle obstacle;
-    static boolean complited = false;
+    boolean complited = false;
 
     void draw(float x, float y, float k, Canvas canvas, Paint paint, ArrayList<Bitmap> imageList) {
         float x_left = x;
@@ -51,10 +51,13 @@ class Room {
 
     static void restart() {
         ArrayList<Room> roomArrayList = RoomCreate.create();
-        for(int i= 0;i < roomArrayList.size(); i++) {
-            MainActivity.RoomList.get(i).objectList = roomArrayList.get(i).objectList;
-            MainActivity.RoomList.get(i).ball = new Ball(MainActivity.RoomList.get(i).startPoint, MainActivity.RoomList.get(i).ball.r);
-            MainActivity.RoomList.get(i).bitmapList = roomArrayList.get(i).bitmapList;
+        for(int i= 0;i < MainActivity.RoomList.size(); i++) {
+            Log.d(String.valueOf(i), String.valueOf(MainActivity.RoomList.get(i).complited));
+            if(!MainActivity.RoomList.get(i).complited) {
+                MainActivity.RoomList.get(i).objectList = roomArrayList.get(i).objectList;
+                MainActivity.RoomList.get(i).ball = new Ball(MainActivity.RoomList.get(i).startPoint, MainActivity.RoomList.get(i).ball.r);
+                MainActivity.RoomList.get(i).bitmapList = roomArrayList.get(i).bitmapList;
+            }
         }
     }
 

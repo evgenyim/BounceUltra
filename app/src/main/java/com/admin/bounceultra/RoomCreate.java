@@ -30,7 +30,7 @@ public class RoomCreate {
         Room0.addObstacle(500, 0, 700, MainMenu.height / 2 - 100, 0, upLattice);
         Room0.addObstacle(500, MainMenu.height / 2 + 100, 700, MainMenu.height, 0, downLattice);
         Room0.addObstacle(0, 0, MainMenu.width, MainMenu.height,0, alfa_chanel);
-        Room0.addGate(MainMenu.width - 200,  MainMenu.height - 100, MainMenu.width, MainMenu.height,0,1, cube, true);
+        Room0.addGate(MainMenu.width - 200,  MainMenu.height - 100, MainMenu.width, MainMenu.height,0,1, cube, false);
         RoomList1.add(Room0);
 
         Room Room1 = new Room();
