@@ -6,10 +6,15 @@ import java.util.TimerTask;
 
 public class Water extends GameObject {
 
+    boolean isSwitched;
+
     void switchAction() {
-        Timer timer = new Timer();
-        MyTimerTask myTimerTask = new MyTimerTask();
-        timer.schedule(myTimerTask, 0, 3000);
+        if (!isSwitched) {
+            Timer timer = new Timer();
+            MyTimerTask myTimerTask = new MyTimerTask();
+            timer.schedule(myTimerTask, 0, 3000);
+            isSwitched = true;
+        }
     }
 
     void insideCommunicate(Ball ball, ArrayList<GameObject> objectList, int intersected_obj_ind, boolean draft) {
@@ -19,6 +24,7 @@ public class Water extends GameObject {
             }
         }
     }
+
     Water(float x_left, float y_top, float x_right, float y_bottom, int imageId){
         this.x_left = x_left;
         this.x_right = x_right;
@@ -28,6 +34,7 @@ public class Water extends GameObject {
         this.x = (x_left + x_right) / 2;
         this.y = (y_bottom + y_top) / 2;
         this.imageId = imageId;
+        this.isSwitched = false;
     }
 
     class MyTimerTask extends TimerTask {

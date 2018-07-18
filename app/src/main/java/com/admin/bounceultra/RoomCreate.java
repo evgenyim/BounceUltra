@@ -65,7 +65,7 @@ public class RoomCreate {
         target.add(Room1.objectList.get(5));
         target.add(Room2.objectList.get(0));
         target.add(Room1.objectList.get(6));
-        Room2.addSwitch(0, n - 200, 200, n, 0, switchRight, target);
+        Room2.addSwitch(0, n - 200, 300, n, 0, switchRight, target);
 
         Room2.addObstacle(0, 0, MainMenu.width, MainMenu.height,0,alfa_chanel);
         Room2.addGate(100, MainMenu.height - 200, 300, MainMenu.height - 100, 90, 1, cube);
@@ -86,5 +86,4 @@ public class RoomCreate {
         RoomList1.add(Room1);
         return RoomList1;
     }
-
 }
