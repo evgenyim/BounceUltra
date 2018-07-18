@@ -11,4 +11,10 @@ public class Lock extends GameObject {
         this.x = (x_left + x_right) / 2;
         this.y = (y_bottom + y_top) / 2;
     }
+
+    public Lock clone() throws CloneNotSupportedException{
+
+        Lock newLock = (Lock) super.clone();
+        return newLock;
+    }
 }

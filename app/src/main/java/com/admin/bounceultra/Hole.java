@@ -13,4 +13,10 @@ public class Hole extends GameObject {
         this.start_x = startPoint.x;
         this.start_y = startPoint.y;
     }
+
+    public Hole clone() throws CloneNotSupportedException{
+
+        Hole newHole = (Hole) super.clone();
+        return newHole;
+    }
 }

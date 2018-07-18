@@ -20,7 +20,7 @@ public class Water extends GameObject {
     void insideCommunicate(Ball ball, ArrayList<GameObject> objectList, int intersected_obj_ind, boolean draft) {
         if (!draft) {
             if (ball.centre().y - y_top >= ball.r) {
-                Room.restart(MainActivity.current_room);
+                Room.restart();
             }
         }
     }
@@ -43,5 +43,11 @@ public class Water extends GameObject {
         public void run() {
             moveToXY(x, y - 10);
         }
+    }
+
+    public Water clone() throws CloneNotSupportedException{
+
+        Water newWater = (Water) super.clone();
+        return newWater;
     }
 }
