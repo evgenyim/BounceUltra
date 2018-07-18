@@ -24,5 +24,10 @@ public class Switch extends GameObject {
         this.target = target;
     }
 
+    public Switch clone() throws CloneNotSupportedException{
+
+        Switch newSwitch = (Switch) super.clone();
+        return newSwitch;
+    }
 
 }

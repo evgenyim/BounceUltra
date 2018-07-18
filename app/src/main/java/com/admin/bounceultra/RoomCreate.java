@@ -30,7 +30,7 @@ public class RoomCreate {
         Room0.addObstacle(500, 0, 700, MainMenu.height / 2 - 100, 0, upLattice);
         Room0.addObstacle(500, MainMenu.height / 2 + 100, 700, MainMenu.height, 0, downLattice);
         Room0.addObstacle(0, 0, MainMenu.width, MainMenu.height,0, alfa_chanel);
-        Room0.addGate(MainMenu.width - 200,  MainMenu.height - 100, MainMenu.width, MainMenu.height,0,1, cube);
+        Room0.addGate(MainMenu.width - 200,  MainMenu.height - 100, MainMenu.width, MainMenu.height,0,1, cube, true);
         RoomList1.add(Room0);
 
         Room Room1 = new Room();
@@ -45,8 +45,8 @@ public class RoomCreate {
         Room1.addObstacle(400, 600, MainMenu.width, 700,0, brick);
         Room1.addFlow(600,700,1600,800,90, branch,20, true);
         Room1.addWater(0, MainMenu.height, MainMenu.width, MainMenu.height * 2, cube);
-        Room1.addGate(MainMenu.width - 100, MainMenu.height,MainMenu.width + 100,MainMenu.height + 100, 270,4, cube);
-        Room1.addGate(MainMenu.width, 100, MainMenu.width + 200, 200, 180, 0, cube);
+        Room1.addGate(MainMenu.width - 100, MainMenu.height,MainMenu.width + 100,MainMenu.height + 100, 270,4, cube, false);
+        Room1.addGate(MainMenu.width, 100, MainMenu.width + 200, 200, 180, 0, cube, true);
         RoomList1.add(Room1);
 
         float n = (float) (MainMenu.height * 7.0 / 40);
@@ -68,7 +68,7 @@ public class RoomCreate {
         Room2.addSwitch(0, n - 200, 200, n, 0, switchRight, target);
 
         Room2.addObstacle(0, 0, MainMenu.width, MainMenu.height,0,alfa_chanel);
-        Room2.addGate(100, MainMenu.height - 200, 300, MainMenu.height - 100, 90, 1, cube);
+        Room2.addGate(100, MainMenu.height - 200, 300, MainMenu.height - 100, 90, 1, cube, false);
 
         RoomList1.add(Room0);
         RoomList1.add(Room1);

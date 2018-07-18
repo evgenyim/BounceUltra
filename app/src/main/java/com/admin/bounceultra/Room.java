@@ -19,6 +19,7 @@ class Room {
     ArrayList<Bitmap> bitmapList = new ArrayList<>();
     Ball ball;
     static Obstacle obstacle;
+    static boolean complited = false;
 
     void draw(float x, float y, float k, Canvas canvas, Paint paint, ArrayList<Bitmap> imageList) {
         float x_left = x;
@@ -48,11 +49,13 @@ class Room {
         }
     }
 
-    static void restart(int i) {
+    static void restart() {
         ArrayList<Room> roomArrayList = RoomCreate.create();
-        MainActivity.RoomList.get(i).objectList = roomArrayList.get(i).objectList;
-        MainActivity.RoomList.get(i).ball = new Ball(MainActivity.RoomList.get(i).startPoint, MainActivity.RoomList.get(i).ball.r);
-        MainActivity.RoomList.get(i).bitmapList = roomArrayList.get(i).bitmapList;
+        for(int i= 0;i < roomArrayList.size(); i++) {
+            MainActivity.RoomList.get(i).objectList = roomArrayList.get(i).objectList;
+            MainActivity.RoomList.get(i).ball = new Ball(MainActivity.RoomList.get(i).startPoint, MainActivity.RoomList.get(i).ball.r);
+            MainActivity.RoomList.get(i).bitmapList = roomArrayList.get(i).bitmapList;
+        }
     }
 
     void addItem(float x_left, float y_top, float x_right, float y_bottom, float degree, String name, int imageId) {
@@ -180,8 +183,8 @@ class Room {
         MainActivity.ball_r = r;
     }
 
-    void addGate(float x_left, float y_top, float x_right, float y_bottom, float degree, int next_room_id, int imageId) {
-        Gate gate = new Gate(x_left, y_top, x_right, y_bottom, degree, next_room_id, imageId);
+    void addGate(float x_left, float y_top, float x_right, float y_bottom, float degree, int next_room_id, int imageId, boolean compliting) {
+        Gate gate = new Gate(x_left, y_top, x_right, y_bottom, degree, next_room_id, imageId, compliting);
         degree = (float) toRadians(degree);
         Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
         Point point_left_top = new Point(x_left, y_top);

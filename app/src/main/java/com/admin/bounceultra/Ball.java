@@ -21,7 +21,7 @@ class Ball extends GameObject implements Cloneable{
     float decreas = (float) 0.2;
     float eps = (float) 1e-1;
     boolean stop;
-    Vector velocity;
+    Vector velocity = new Vector(0,0);
     ArrayList<GameObject> inventory = new ArrayList<>();
 
 

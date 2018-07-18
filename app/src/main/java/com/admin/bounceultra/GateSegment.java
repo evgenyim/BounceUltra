@@ -18,6 +18,7 @@ class GateSegment extends Segment {
                     room.ball.y = room.objectList.get(j).start_y;
                     }
             }
+            MainActivity.RoomList.get(MainActivity.current_room).complited = objectList.get(intersected_obj_ind).compliting;
             MainActivity.current_room = objectList.get(intersected_obj_ind).next_room_id;
         }
     }
