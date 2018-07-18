@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 public class Switch extends GameObject {
 
-    GameObject target;
+    ArrayList <GameObject> target;
 
     void act() {
-        target.switchAction();
+        for (int i = 0; i < target.size(); i++) {
+            target.get(i).switchAction();
+        }
     }
 
-    Switch(float x_left,float y_top, float x_right,float y_bottom, float degrees, int imageId, GameObject target) {
+    Switch(float x_left,float y_top, float x_right,float y_bottom, float degrees, int imageId, ArrayList<GameObject> target) {
         this.x_left = x_left;
         this.x_right = x_right;
         this.y_bottom = y_bottom;
