@@ -25,6 +25,7 @@ class Ball extends GameObject implements Cloneable{
     ArrayList<GameObject> inventory = new ArrayList<>();
 
 
+
     void shot(float to_x, float to_y) {
         x_speed += (to_x) * k;
         y_speed += (to_y) * k;
@@ -160,30 +161,29 @@ class Ball extends GameObject implements Cloneable{
                 } else {
                     p = segment.b;
                 }
+                Line normal = new Line(n.b / n.a, -1, p.y - n.b * p.x / n.a);
+                Point inters = Line.intersect(normal, n);
+                float OI = (float) sqrt(r * r - (p.x - inters.x) * (p.x - inters.x) - (p.y - inters.y) * (p.y - inters.y));
+                Point Q = new Point(-n.c / n.a,0);
+                Vector vect_OI = new Vector(inters, Q);
+                vect_OI.unit();
+                vect_OI.multiplying(OI);
 
+                float new_x_1 = inters.x + vect_OI.x;
+                float new_y_1 = inters.y + vect_OI.y;
+                Point one = new Point(new_x_1, new_y_1);
+                float dist_1 = one.dist(centre());
+                float new_x_2 = inters.x - vect_OI.x;
+                float new_y_2 = inters.y - vect_OI.y;
+                Point two = new Point(new_x_2, new_y_2);
+                float dist_2 = two.dist(centre());
 
-                float a = (n.a / n.b) * (n.a / n.b) + 1;
-                float b = (2 * (p.y + n.c / n.b) * (n.a / n.b) - 2 * p.x);
-                float c = (p.y + n.c / n.b) * (p.y + n.c / n.b) + p.x * p.x - r * r;
-                float discr = b * b - 4 * a * c;
-
-                float x1 = (float) ((-b + sqrt(discr)) / (2 * a));
-                float x2 = (float) ((-b - sqrt(discr)) / (2 * a));
-                float y_1_1 = (float) (p.y - sqrt(r * r - (p.x - x1) * (p.x - x1)));
-                float y_1_2 = (float) (p.y + sqrt(r * r - (p.x - x1) * (p.x - x1)));
-                float y_2_1 = (float) (p.y - sqrt(r * r - (p.x - x2) * (p.x - x2)));
-                float y_2_2 = (float) (p.y + sqrt(r * r - (p.x - x2) * (p.x - x2)));
-
-                Point centre1 = new Point(x1, y_1_1);
-                Point centre2 = new Point(x1, y_1_2);
-                Point centre3 = new Point(x1, y_2_1);
-                Point centre4 = new Point(x1, y_2_2);
-                if (Vector.dPointSegment(centre1, segment.a, segment.b) >= r) {
-                    new_x = x1;
-                    new_y = y_1_1;
+                if (dist_1 < dist_2) {
+                    new_x = new_x_1;
+                    new_y = new_y_1;
                 } else {
-                    new_x = x2;
-                    new_y = y_2_1;
+                    new_x = new_x_2;
+                    new_y = new_y_2;
                 }
             } else {
                 float alfa = Segment.angle(bias, segment);
@@ -203,7 +203,6 @@ class Ball extends GameObject implements Cloneable{
         x = new_x;
         y = new_y;
     }
-
     boolean inside (GameObject flow) {
         Point ballCenter = new Point(x, y);
         float x_left = flow.x_left;
