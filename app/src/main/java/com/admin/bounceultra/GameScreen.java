@@ -50,8 +50,8 @@ public class GameScreen extends SurfaceView {
     Bitmap downLattice = BitmapFactory.decodeResource(getResources(), R.drawable.down_lattice);
     Bitmap key = BitmapFactory.decodeResource(getResources(), R.drawable.key);
     Bitmap lock = BitmapFactory.decodeResource(getResources(), R.drawable.lock);
-    Bitmap switch_right = BitmapFactory.decodeResource(getResources(), R.drawable.switch_left);
-    Bitmap switch_left = BitmapFactory.decodeResource(getResources(), R.drawable.switch_right);
+    Bitmap switch_right = BitmapFactory.decodeResource(getResources(), R.drawable.switch_right);
+    Bitmap switch_left = BitmapFactory.decodeResource(getResources(), R.drawable.switch_left);
 
 
     Paint paint = new Paint();
