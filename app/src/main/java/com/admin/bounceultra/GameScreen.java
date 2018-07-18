@@ -92,6 +92,9 @@ public class GameScreen extends SurfaceView {
 
         cur_ball.draw(canvas, paint, cube);
         cur_ball.move(MainActivity.RoomList.get(MainActivity.current_room).objectList, false);
+        Log.d("x", String.valueOf(cur_ball.x));
+        Log.d("y", String.valueOf(cur_ball.y));
+
 
         postInvalidateDelayed(0);
     }

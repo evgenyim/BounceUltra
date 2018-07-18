@@ -128,6 +128,9 @@ class Ball extends GameObject implements Cloneable{
     }
 
     void MindTheGap(Segment segment, float axil, float min_d) {
+        Ball future_ball = new Ball(x + x_speed, y + y_speed, r);
+        float new_min_d = Vector.dPointSegment(segment.a, segment.b, centre());
+
         if (velocity.x == 0 && velocity.y == 0) {
             return;
         }
@@ -154,9 +157,9 @@ class Ball extends GameObject implements Cloneable{
             new_x = x + (B.x - x) * (l - d) / l;
             new_y = y + (B.y - y) * (l - d) / l;
         } else {
-            if ((min_d == centre().dist(segment.a)) || (min_d == centre().dist(segment.b))) {
+            if ((new_min_d == future_ball.centre().dist(segment.a)) || (new_min_d == future_ball.centre().dist(segment.b))) {
                 Point p;
-                if (min_d == centre().dist(segment.a)) {
+                if (new_min_d == future_ball.centre().dist(segment.a)) {
                     p = segment.a;
                 } else {
                     p = segment.b;
