@@ -14,12 +14,17 @@ import static java.lang.Math.*;
 
 class Room {
 
+    Point startPoint;
     ArrayList<GameObject> objectList = new ArrayList<GameObject>();
     ArrayList<Bitmap> bitmapList = new ArrayList<>();
     Ball ball;
     static Obstacle obstacle;
 
     void draw(float x, float y, float k, Canvas canvas, Paint paint, ArrayList<Bitmap> imageList) {
+        float x_left = x;
+        float x_right = (float) (x + MainMenu.width * 1.0 / k);
+        float y_top = y;
+        float y_bottom = (float) (y + MainMenu.height * 1.0 / k);
         for (int i = 0; i < objectList.size(); i++) {
             GameObject cur_object = null;
             try {
@@ -27,10 +32,13 @@ class Room {
             } catch (CloneNotSupportedException ex){
                 System.out.println("Clonable not implemented");
             }
-            float newX = cur_object.x / k + x;
-            float newY = cur_object.y / k + y;
+            float newX = (float)  (cur_object.x * 1.0 / k + x);
+            float newY = (float) (cur_object.y * 1.0 / k + y);
             cur_object.moveToXY(newX, newY);
             cur_object.compress(k);
+            if (cur_object.x_right <= x_left || cur_object.x_left >= x_right || cur_object.y_bottom <= y_top || cur_object.y_top >= y_bottom) {
+                continue;
+            }
             Bitmap source = Bitmap.createBitmap(imageList.get(cur_object.imageId));
             Bitmap cur_bitmap = Bitmap.createScaledBitmap(source,
                     (int) (cur_object.x_right - cur_object.x_left),
@@ -38,6 +46,13 @@ class Room {
                     false);
             cur_object.draw(canvas, paint, cur_bitmap);
         }
+    }
+
+    static void restart(int i) {
+        ArrayList<Room> roomArrayList = RoomCreate.create();
+        MainActivity.RoomList.get(i).objectList = roomArrayList.get(i).objectList;
+        MainActivity.RoomList.get(i).ball = new Ball(MainActivity.RoomList.get(i).startPoint, MainActivity.RoomList.get(i).ball.r);
+        MainActivity.RoomList.get(i).bitmapList = roomArrayList.get(i).bitmapList;
     }
 
     void addItem(float x_left, float y_top, float x_right, float y_bottom, float degree, String name, int imageId) {
@@ -58,7 +73,12 @@ class Room {
         objectList.add(item);
     }
 
-    void addSwitch(float x_left, float y_top, float x_right, float y_bottom, float degree, int imageId, GameObject target) {
+    void addWater(float x_left, float y_top, float x_right, float y_bottom, int imageId) {
+        Water water = new Water(x_left, y_top, x_right, y_bottom, imageId);
+        objectList.add(water);
+    }
+
+    void addSwitch(float x_left, float y_top, float x_right, float y_bottom, float degree, int imageId, ArrayList <GameObject> target) {
         Switch aSwitch = new Switch(x_left, y_top, x_right, y_bottom, degree, imageId, target);
         degree = (float) toRadians(degree);
         Point point_right_top = new Point(x_left + (x_right - x_left) * (float) cos(degree) - (y_top - y_top) * (float) sin(degree), y_top + (x_right - x_left) * (float) sin(degree) + (y_top - y_top) * (float) cos(degree));
