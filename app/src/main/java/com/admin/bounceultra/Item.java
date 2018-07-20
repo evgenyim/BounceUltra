@@ -12,4 +12,10 @@ class Item extends GameObject{
         this.y = (y_bottom + y_top) / 2;
         this.name = name;
     }
+
+    public Item clone() throws CloneNotSupportedException{
+
+        Item newItem = (Item) super.clone();
+        return newItem;
+    }
 }

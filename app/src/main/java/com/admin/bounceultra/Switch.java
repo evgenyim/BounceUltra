@@ -23,6 +23,10 @@ public class Switch extends GameObject {
         this.y = (y_bottom + y_top) / 2;
         this.target = target;
     }
+  
+    public Switch clone() throws CloneNotSupportedException{
 
-
+        Switch newSwitch = (Switch) super.clone();
+        return newSwitch;
+    
 }

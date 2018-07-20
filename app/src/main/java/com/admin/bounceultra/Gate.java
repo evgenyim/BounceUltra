@@ -3,8 +3,7 @@ package com.admin.bounceultra;
 import static java.lang.Math.toRadians;
 
 class Gate extends GameObject implements Cloneable{
-
-    Gate(float x_left,float y_top,float x_right,float y_bottom, float degrees, int next_room_id, int imageId) {
+    Gate(float x_left,float y_top,float x_right,float y_bottom, float degrees, int next_room_id, int imageId, boolean compliting) {
         this.x_left = x_left;
         this.x_right = x_right;
         this.y_bottom = y_bottom;
@@ -23,6 +22,7 @@ class Gate extends GameObject implements Cloneable{
         start_y = this.y_top + new_vec.y;
         this.x = (x_left + x_right) / 2;
         this.y = (y_bottom + y_top) / 2;
+        this.compliting = compliting;
     }
 
     public Gate clone() throws CloneNotSupportedException{
