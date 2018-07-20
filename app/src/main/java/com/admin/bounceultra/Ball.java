@@ -21,7 +21,7 @@ class Ball extends GameObject implements Cloneable{
     float decreas = (float) 0.2;
     float eps = (float) 1e-1;
     boolean stop;
-    Vector velocity;
+    Vector velocity = new Vector(0,0);
     ArrayList<GameObject> inventory = new ArrayList<>();
 
 
@@ -206,6 +206,7 @@ class Ball extends GameObject implements Cloneable{
         x = new_x;
         y = new_y;
     }
+
     boolean inside (GameObject flow) {
         Point ballCenter = new Point(x, y);
         float x_left = flow.x_left;
@@ -245,7 +246,7 @@ class Ball extends GameObject implements Cloneable{
     public Ball clone() throws CloneNotSupportedException{
 
         Ball newBall = (Ball) super.clone();
-        newBall.velocity = (Vector) velocity.clone();
+        newBall.velocity = velocity.clone();
         return newBall;
     }
 

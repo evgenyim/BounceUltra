@@ -101,4 +101,10 @@ class Flow extends GameObject {
         this.active = active;
 
     }
+
+    public Flow clone() throws CloneNotSupportedException{
+
+        Flow newFlow = (Flow) super.clone();
+        return newFlow;
+    }
 }

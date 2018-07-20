@@ -1,4 +1,6 @@
 package com.admin.bounceultra;
+import android.util.Log;
+
 import java.util.ArrayList;
 
 
@@ -17,6 +19,9 @@ class GateSegment extends Segment {
                     room.ball.x = room.objectList.get(j).start_x;
                     room.ball.y = room.objectList.get(j).start_y;
                     }
+            }
+            if(!MainActivity.RoomList.get(MainActivity.current_room).complited) {
+                MainActivity.RoomList.get(MainActivity.current_room).complited = objectList.get(intersected_obj_ind).compliting;
             }
             MainActivity.current_room = objectList.get(intersected_obj_ind).next_room_id;
         }

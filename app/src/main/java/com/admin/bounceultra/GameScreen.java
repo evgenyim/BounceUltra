@@ -50,6 +50,8 @@ public class GameScreen extends SurfaceView {
     Bitmap downLattice = BitmapFactory.decodeResource(getResources(), R.drawable.down_lattice);
     Bitmap key = BitmapFactory.decodeResource(getResources(), R.drawable.key);
     Bitmap lock = BitmapFactory.decodeResource(getResources(), R.drawable.lock);
+    Bitmap switch_right = BitmapFactory.decodeResource(getResources(), R.drawable.switch_right);
+    Bitmap switch_left = BitmapFactory.decodeResource(getResources(), R.drawable.switch_left);
 
 
     Paint paint = new Paint();
@@ -107,6 +109,8 @@ public class GameScreen extends SurfaceView {
         imageList.add(downLattice);
         imageList.add(key);
         imageList.add(lock);
+        imageList.add(switch_left);
+        imageList.add(switch_right);
     }
 
     void drawInventory(Ball ball, Canvas canvas) {
