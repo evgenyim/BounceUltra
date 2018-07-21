@@ -95,8 +95,12 @@ class Ball extends GameObject implements Cloneable{
         Vector horizon = new Vector(1, 0);
         Vector seg = new Vector(segment);
         float betta = Math.abs(Vector.good_angle(seg, horizon));
+        Log.d("betta", String.valueOf(betta));
         float a = (float) (g * Math.sin(betta));
+        Log.d("a", String.valueOf(a));
         Vector vel = new Vector(x_speed, y_speed);
+        Log.d("x_speed", String.valueOf(x_speed));
+        Log.d("y_speed", String.valueOf(y_speed));
         float alfa = Vector.good_angle(vel, seg);
         vel = Vector.rotate_by_angle(vel, alfa);
         float sin = seg.y / seg.length();
@@ -106,10 +110,14 @@ class Ball extends GameObject implements Cloneable{
             axi.reverse();
         }
         vel.add(axi);
+        Log.d("vel.x", String.valueOf(vel.x));
+        Log.d("vel.y", String.valueOf(vel.y));
         if (vel.length() < eps) {
+            Log.d("yes", "yes");
             vel.x = 0;
             vel.y = 0;
         }
+
         vel.x *= mu;
         vel.y *= mu;
         velocity.x = vel.x;
@@ -128,9 +136,6 @@ class Ball extends GameObject implements Cloneable{
     }
 
     void MindTheGap(Segment segment, float axil, float min_d) {
-        Ball future_ball = new Ball(x + x_speed, y + y_speed, r);
-        float new_min_d = Vector.dPointSegment(segment.a, segment.b, centre());
-
         if (velocity.x == 0 && velocity.y == 0) {
             return;
         }
@@ -157,9 +162,9 @@ class Ball extends GameObject implements Cloneable{
             new_x = x + (B.x - x) * (l - d) / l;
             new_y = y + (B.y - y) * (l - d) / l;
         } else {
-            if ((new_min_d == future_ball.centre().dist(segment.a)) || (new_min_d == future_ball.centre().dist(segment.b))) {
+            if ((min_d == centre().dist(segment.a)) || (min_d == centre().dist(segment.b))) {
                 Point p;
-                if (new_min_d == future_ball.centre().dist(segment.a)) {
+                if (min_d == centre().dist(segment.a)) {
                     p = segment.a;
                 } else {
                     p = segment.b;
