@@ -139,10 +139,6 @@ public class Vector implements Cloneable{
         return false;
     }
 
-    void write() {
-        Log.d("vector_x", String.valueOf(this.x));
-        Log.d("vector_y", String.valueOf(this.y));
-    }
 
     static float good_angle(Vector vec1, Vector vec2) {
         if (vec1.angle(vec2) > Math.PI / 2) {
@@ -177,5 +173,4 @@ public class Vector implements Cloneable{
         Vector newVector = (Vector) super.clone();
         return newVector;
     }
-
 }

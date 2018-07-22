@@ -15,15 +15,19 @@ class SimpleSegment extends Segment {
             min_d = Vector.dPointSegment(segments.get(intersected_seg_ind).a, segments.get(intersected_seg_ind).b, ball.centre());
             Vector segment = new Vector(segments.get(intersected_seg_ind));
             if (min_d  == ball.centre().dist(segments.get(intersected_seg_ind).a) || min_d  == ball.centre().dist(segments.get(intersected_seg_ind).b)) {
-                Vector new_velocity;
+                Point p;
                 if (min_d  == ball.centre().dist(segments.get(intersected_seg_ind).a)) {
-                    new_velocity = new Vector(segments.get(intersected_seg_ind).a, ball.centre());
+                    p = segments.get(intersected_seg_ind).a;
                 } else {
-                    new_velocity = new Vector(segments.get(intersected_seg_ind).b, ball.centre());
+                    p = segments.get(intersected_seg_ind).b;
                 }
-                new_velocity.unit();
-                new_velocity.multiplying(ball.velocity.length());
-                ball.velocity = new_velocity;
+                float a = p.x - ball.centre().x;
+                float b = p.y - ball.centre().y;
+                float c = 12;
+                Segment seg = new Segment(a, b, c);
+                Vector vec = new Vector(seg);
+                ball.velocity = Vector.reflect(ball.velocity, vec);
+
             } else {
                 if (!ball.velocity.if_null()) {
                     ball.velocity = Vector.reflect(ball.velocity, segment);

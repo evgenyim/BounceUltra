@@ -16,6 +16,5 @@ class FlowSegment extends Segment {
             ball.y += ball.y_speed;
         }
     }
-
     FlowSegment(Point p1, Point p2) { super(p1,p2); }
 }

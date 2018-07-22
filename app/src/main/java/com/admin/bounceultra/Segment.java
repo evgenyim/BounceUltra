@@ -130,5 +130,15 @@ public class Segment {
         this.a = new Point(x1, y1);
         this.b = new Point(x2, y2);
     }
+    Segment(float a, float b, float c) {
+        if (a != 0) {
+            this.a = new Point(- c / a, 0);
+            this.b = new Point((- c - b) / a, 1);
+        }
+        else {
+            this.a = new Point(0, -c / b);
+            this.b = new Point(1, - c / b);
+        }
+    }
     Segment(){}
 }

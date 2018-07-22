@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                             break;
                     }
-            }
-            if(unpress /*&& RoomList.get(current_room).ball.x_speed == 0 && RoomList.get(current_room).ball.y_speed == 0 */) {
-                RoomList.get(current_room).ball.shot(xPress - xUnpress,yPress - yUnpress);
-                trajectory.clear();
-            }
-            return true;
+                }
+                if(unpress /*&& RoomList.get(current_room).ball.x_speed == 0 && RoomList.get(current_room).ball.y_speed == 0 */) {
+                    RoomList.get(current_room).ball.shot(xPress - xUnpress,yPress - yUnpress);
+                    trajectory.clear();
+                }
+                return true;
             }
         };
         gameScreen.setOnTouchListener(list);

@@ -95,8 +95,12 @@ class Ball extends GameObject implements Cloneable{
         Vector horizon = new Vector(1, 0);
         Vector seg = new Vector(segment);
         float betta = Math.abs(Vector.good_angle(seg, horizon));
+        Log.d("betta", String.valueOf(betta));
         float a = (float) (g * Math.sin(betta));
+        Log.d("a", String.valueOf(a));
         Vector vel = new Vector(x_speed, y_speed);
+        Log.d("x_speed", String.valueOf(x_speed));
+        Log.d("y_speed", String.valueOf(y_speed));
         float alfa = Vector.good_angle(vel, seg);
         vel = Vector.rotate_by_angle(vel, alfa);
         float sin = seg.y / seg.length();
@@ -106,10 +110,14 @@ class Ball extends GameObject implements Cloneable{
             axi.reverse();
         }
         vel.add(axi);
+        Log.d("vel.x", String.valueOf(vel.x));
+        Log.d("vel.y", String.valueOf(vel.y));
         if (vel.length() < eps) {
+            Log.d("yes", "yes");
             vel.x = 0;
             vel.y = 0;
         }
+
         vel.x *= mu;
         vel.y *= mu;
         velocity.x = vel.x;
@@ -139,14 +147,14 @@ class Ball extends GameObject implements Cloneable{
         float d;
         float new_x;
         float new_y;
+        Point E;
+        if (centre().dist(segment.a) < centre().dist(segment.b)) {
+            E = segment.a;
+        } else{
+            E = segment.b;
+        }
         if ((A == null)) {
             Vector normal = Segment.normal(segment);
-            Point E;
-            if (centre().dist(segment.a) < centre().dist(segment.b)) {
-                E = segment.a;
-            } else{
-                E = segment.b;
-            }
             Line p = new Line(E, normal);
             Point B = Line.intersect(n, p);
             l = (float) sqrt((x - B.x) * (x - B.x) + (y - B.y) * (y - B.y));
@@ -154,16 +162,11 @@ class Ball extends GameObject implements Cloneable{
             new_x = x + (B.x - x) * (l - d) / l;
             new_y = y + (B.y - y) * (l - d) / l;
         } else {
-            if ((min_d == centre().dist(segment.a)) || (min_d == centre().dist(segment.b))) {
-                Point p;
-                if (min_d == centre().dist(segment.a)) {
-                    p = segment.a;
-                } else {
-                    p = segment.b;
-                }
-                Line normal = new Line(n.b / n.a, -1, p.y - n.b * p.x / n.a);
+            Ball new_ball = new Ball(E.x, E.y, r);
+            if (bias.intersect_ball(new_ball)) {
+                Line normal = new Line(n.b / n.a, -1, E.y - n.b * E.x / n.a);
                 Point inters = Line.intersect(normal, n);
-                float OI = (float) sqrt(r * r - (p.x - inters.x) * (p.x - inters.x) - (p.y - inters.y) * (p.y - inters.y));
+                float OI = (float) sqrt(r * r - (E.x - inters.x) * (E.x - inters.x) - (E.y - inters.y) * (E.y - inters.y));
                 Point Q = new Point(-n.c / n.a,0);
                 Vector vect_OI = new Vector(inters, Q);
                 vect_OI.unit();
