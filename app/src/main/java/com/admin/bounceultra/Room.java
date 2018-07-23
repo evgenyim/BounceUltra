@@ -17,9 +17,29 @@ class Room {
     Point startPoint;
     ArrayList<GameObject> objectList = new ArrayList<GameObject>();
     ArrayList<Bitmap> bitmapList = new ArrayList<>();
+    ArrayList<Bitmap> mapBitmapList = new ArrayList<>();
     Ball ball;
     static Obstacle obstacle;
     boolean complited = false;
+
+    void createMapBitmapList(float k, ArrayList<Bitmap> imageList) {
+        for (int i = 0; i < objectList.size(); i++) {
+            GameObject cur_object = null;
+            try {
+                cur_object = objectList.get(i).clone();
+            } catch (CloneNotSupportedException ex) {
+                System.out.println("Clonable not implemented");
+            }
+            cur_object.compress(k);
+            Bitmap source = Bitmap.createBitmap(imageList.get(cur_object.imageId));
+            Bitmap cur_bitmap = Bitmap.createScaledBitmap(source,
+                    (int) (cur_object.x_right - cur_object.x_left),
+                    (int) (cur_object.y_bottom - cur_object.y_top),
+                    false);
+            mapBitmapList.add(cur_bitmap);
+            objectList.get(i).mapBitmapId = mapBitmapList.size() - 1;
+        }
+    }
 
     void draw(float x, float y, float k, Canvas canvas, Paint paint, ArrayList<Bitmap> imageList) {
         float x_left = x;
@@ -40,12 +60,7 @@ class Room {
             if (cur_object.x_right <= x_left || cur_object.x_left >= x_right || cur_object.y_bottom <= y_top || cur_object.y_top >= y_bottom) {
                 continue;
             }
-            Bitmap source = Bitmap.createBitmap(imageList.get(cur_object.imageId));
-            Bitmap cur_bitmap = Bitmap.createScaledBitmap(source,
-                    (int) (cur_object.x_right - cur_object.x_left),
-                    (int) (cur_object.y_bottom - cur_object.y_top),
-                    false);
-            cur_object.draw(canvas, paint, cur_bitmap);
+            cur_object.draw(canvas, paint, mapBitmapList.get(cur_object.mapBitmapId));
         }
     }
 
