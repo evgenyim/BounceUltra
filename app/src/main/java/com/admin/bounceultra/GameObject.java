@@ -23,6 +23,7 @@ abstract class GameObject implements Cloneable{
     float degrees;
     int imageId;
     int bitmapId;
+    int mapBitmapId;
     ArrayList<Segment> segments = new ArrayList<Segment>();
     int next_room_id;
     String name;

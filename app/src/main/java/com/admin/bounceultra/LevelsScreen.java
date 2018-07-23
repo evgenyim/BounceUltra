@@ -36,8 +36,8 @@ public class LevelsScreen extends View {
     Bitmap downLattice = BitmapFactory.decodeResource(getResources(), R.drawable.down_lattice);
     Bitmap key = BitmapFactory.decodeResource(getResources(), R.drawable.key);
     Bitmap lock = BitmapFactory.decodeResource(getResources(), R.drawable.lock);
-    Bitmap switch_right = BitmapFactory.decodeResource(getResources(), R.drawable.switch_left);
-    Bitmap switch_left = BitmapFactory.decodeResource(getResources(), R.drawable.switch_right);
+    Bitmap switch_right = BitmapFactory.decodeResource(getResources(), R.drawable.switch_right);
+    Bitmap switch_left = BitmapFactory.decodeResource(getResources(), R.drawable.switch_left);
 
 
 
@@ -50,9 +50,13 @@ public class LevelsScreen extends View {
         if(imageList.size() == 0) {
             createImage();
         }
+
         int roomAmount =(int) Math.sqrt(MapActivity.roomAmount);
         for(int i = MapActivity.startRoom; i <= MapActivity.startRoom + MapActivity.roomAmount; i++) {
             int num = i - MapActivity.startRoom;
+            if (LevelsActivity.RoomList.get(i).mapBitmapList.size() == 0){
+                LevelsActivity.RoomList.get(i).createMapBitmapList(roomAmount, imageList);
+            }
             LevelsActivity.RoomList.get(i).draw(MainMenu.width / roomAmount * (num % roomAmount), MainMenu.height / roomAmount * (num / roomAmount), roomAmount, canvas, paint, imageList);
         }
         for(int i = 0; i < roomAmount; i++) {

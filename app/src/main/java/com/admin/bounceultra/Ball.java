@@ -95,12 +95,8 @@ class Ball extends GameObject implements Cloneable{
         Vector horizon = new Vector(1, 0);
         Vector seg = new Vector(segment);
         float betta = Math.abs(Vector.good_angle(seg, horizon));
-        Log.d("betta", String.valueOf(betta));
         float a = (float) (g * Math.sin(betta));
-        Log.d("a", String.valueOf(a));
         Vector vel = new Vector(x_speed, y_speed);
-        Log.d("x_speed", String.valueOf(x_speed));
-        Log.d("y_speed", String.valueOf(y_speed));
         float alfa = Vector.good_angle(vel, seg);
         vel = Vector.rotate_by_angle(vel, alfa);
         float sin = seg.y / seg.length();
@@ -110,10 +106,7 @@ class Ball extends GameObject implements Cloneable{
             axi.reverse();
         }
         vel.add(axi);
-        Log.d("vel.x", String.valueOf(vel.x));
-        Log.d("vel.y", String.valueOf(vel.y));
         if (vel.length() < eps) {
-            Log.d("yes", "yes");
             vel.x = 0;
             vel.y = 0;
         }

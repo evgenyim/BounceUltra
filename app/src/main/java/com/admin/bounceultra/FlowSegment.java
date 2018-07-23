@@ -1,9 +1,7 @@
 package com.admin.bounceultra;
 
 import android.util.Log;
-
 import java.util.ArrayList;
-
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
