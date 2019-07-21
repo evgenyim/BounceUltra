@@ -23,9 +23,7 @@ class SimpleSegment extends Segment {
                 }
                 float a = p.x - ball.centre().x;
                 float b = p.y - ball.centre().y;
-                float c = 12;
-                Segment seg = new Segment(a, b, c);
-                Vector vec = new Vector(seg);
+                Vector vec = new Vector(1, -a / b);
                 ball.velocity = Vector.reflect(ball.velocity, vec);
 
             } else {
